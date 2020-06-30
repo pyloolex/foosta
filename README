@@ -1,0 +1,10 @@
+sudo apt install docker.io
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo reboot
+
+docker build -t basic:latest .
+docker run --name=basic -d -p 5000:5000 basic
+
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+npm i -g create-react-app@3.4.1
