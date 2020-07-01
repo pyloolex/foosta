@@ -9,4 +9,4 @@ RUN pip3 install flask
 COPY . /app
 
 ENTRYPOINT ["python3"]
-CMD ["basic.py"]
+CMD ["foosta.py"]
