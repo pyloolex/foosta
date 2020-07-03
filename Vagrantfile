@@ -13,7 +13,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.synced_folder ".", "/vagrant", type: "nfs"
 
   config.vm.network "forwarded_port", guest: 9001, host: 8801
-  config.vm.network "private_network", type: "dhcp"
+  #config.vm.network "private_network", type: "dhcp"
+  config.vm.network "private_network", ip: "172.28.128.4"
 
 
   config.vm.provider "virtualbox" do |vb|

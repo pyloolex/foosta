@@ -3,23 +3,28 @@ import React, { Component } from 'react';
 class Counter extends Component
 {
   state = {
-    count: 0
+    value: this.props.counter.value,
   };
+
+  handleIncrement = () => {
+    this.setState({value: this.state.value + 1})
+  }
 
   render()
   {
     return (
       <div>
-        <span>{this.formatCount()}</span>
-        <button>Increment</button>
+        <span>{this.formatValue()}</span>
+        <button onClick={this.handleIncrement}>Increment</button>
+        <button onClick={() => this.props.onDelete(this.props.counter.id)}>Delete</button>
       </div>
     );
   }
 
-  formatCount()
+  formatValue()
   {
-    const { count } = this.state;
-    return count === 0 ? 'Zero' : count;
+    const { value } = this.state;
+    return value === 0 ? 'Zero' : value;
   }
 }
 
