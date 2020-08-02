@@ -29,7 +29,13 @@ Recreating container
 ====================
 If ``docker-compose up -d`` is executed again, all the data will be
 preserved and initialization scripts won't be run. If clean run is
-needed, ``docker-compose stop && docker-compose rm -f`` should be used.
+needed,
+
+.. sourcecode:: text
+
+    docker-compose stop && docker-compose rm -f 
+    
+should be used.
 
 Debugging DB through psql
 =========================
