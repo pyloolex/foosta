@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+
+    environment:
+      # This password doesn't matter. However, it's mandatory
+      # for creating a postgreSQL container.
+      POSTGRES_PASSWORD: example
+
+    ports:
+      # The host listens on port 7001 and passes all the requests
+      # to the container's port 5432 (which is the default port
+      # of postgreSQL).
+      - 7001:5432
+
+    volumes:
+      # When "docker-compose up -d" is executed after the
+      # "docker-compose stop && docker-compose rm -f",
+      # all the SQL scripts from /docker-entrypoint-initdb.d/
+      # directory are executed inside the container.
+      #
+      # This mount allows passing all the custom scripts
+      # to the container.
+      - ./initdb_scripts:/docker-entrypoint-initdb.d
