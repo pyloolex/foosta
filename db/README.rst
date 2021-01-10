@@ -15,11 +15,11 @@ In order to launch docker container, the command
 
 should be executed.
 
-``-d`` flag means running in detached mode. If this flag is not 
+``-d`` flag means running in detached mode. If this flag is not
 specified, the terminal will hang and show logs.
 
 As a result, the container is launched and the database accepts
-connections on port ``7001`` (or whatever is specified in 
+connections on port ``7001`` (or whatever is specified in
 docker-compose.yml under "ports" section).
 
 This availability could be checked by the basic python script "test.py"
@@ -33,8 +33,8 @@ needed,
 
 .. sourcecode:: text
 
-    docker-compose stop && docker-compose rm -f 
-    
+    docker-compose stop && docker-compose rm -f
+
 should be used.
 
 Debugging DB through psql

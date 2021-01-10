@@ -1,3 +1,4 @@
+
 sudo apt install docker.io
 sudo groupadd docker
 sudo usermod -aG docker $USER
@@ -11,8 +12,6 @@ sudo apt-get install nodejs
 sudo npm i -g create-react-app@3.4.1
 
 
-
-=============
 
 If
 ERROR: for postgre_postgre_1  Cannot start service postgre: driver failed programming external connectivity on endpoint postgre_postgre_1 (ee917a910adf626b7de139363610d3b9388ca2a9a2a7bc225828a2e885ef0d50): Error starting userland proxy: listen tcp 0.0.0.0:5432: bind: address already in use
