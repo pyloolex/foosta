@@ -58,3 +58,16 @@ Install `psycopg2` package for python through pip3.
     pip3 install psycopg2
 ```
 This package is needed in order to connect to DB from python code.
+
+Now, navigate to `foosta/db` directory and run `test.py`:
+```bash
+    cd foosta/db
+    python3 test.py
+```
+The result should be as follows:
+```bash
+    2 ['fa', 'be']
+    3 ['fa', 'be', 'patrick']
+```
+
+Now, it could be concluded that the database is launched and works properly.

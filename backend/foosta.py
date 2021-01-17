@@ -8,14 +8,19 @@ from flask import request
 app = Flask(__name__)
 
 
+# NOTE: I'm not sure it's the most reliable approach.
+# Need to find a better way of accessing machine localhost.
+DOCKER_HOST_GATEWAY_IP = "172.17.0.1"
+
+
 @app.route('/', methods=['GET', 'POST'])
 def blah():
     connection = psycopg2.connect(
         database="foostadb",
         user='foostauser',
-        password='foostauser',
-        host="localhost",
-        port=5432,
+        password='foostapassword',
+        host=DOCKER_HOST_GATEWAY_IP,
+        port=7001,
     )
     cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
     if request.method == 'GET':
@@ -53,4 +58,4 @@ def blah():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=7050)
