@@ -1,7 +1,7 @@
 # Setting up database
 
 ## Install Docker and docker-compose
-Guide - [/doc/installation/docker_and_docker_compose.rst](/doc/installation/docker_and_docker_compose.rst)
+Guide - [/doc/install/docker_and_docker_compose.rst](/doc/install/docker_and_docker_compose.rst)
 
 ## Launch DB
 All the necessary settings are in `/db/docker-compose.yml`.
