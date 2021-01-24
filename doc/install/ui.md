@@ -58,3 +58,31 @@ in a vagrant VM in order to see a fresh version of the website.
 ## Deploying an existing app.
 
 TBD
+
+
+
+
+
+
+
+
+Add this to /etc/nginx/nginx.conf
+
+       server {
+            listen 3003;
+
+            location /api {
+                  proxy_pass http://localhost:7070/;
+            }
+
+            location / {
+                  proxy_pass http://localhost:3000/;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "Upgrade";
+            }
+        }
+
+under `http` key.
+
+And use 172.28.128.4:3000 as an entry point in the browser.

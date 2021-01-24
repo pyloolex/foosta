@@ -50,7 +50,7 @@ def blah():
         )
         connection.commit()
 
-        return 'Okay, got you, motherfucker.\n', 201
+        return jsonify('Okay, got you, motherfucker'), 201
 
 
         #print(, file=sys.stderr)
