@@ -49,6 +49,12 @@ Verify that it works by typing:
 ```
 and checking out `172.28.128.4:3000` in a browser.
 
+After you do any changes, react automatically reloads a development server. The thing is the timestamp of the files is updated in vagrant not immediately - after you saved changes on the host, you have to do
+```bash
+    touch src/index.jsx
+```
+in a vagrant VM in order to see a fresh version of the website.
+
 ## Deploying an existing app.
 
 TBD
