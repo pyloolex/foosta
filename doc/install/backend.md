@@ -9,7 +9,7 @@ Navigate to `foosta/backend/` directory and build docker image:
 
 The image is ready to start a container from:
 ```bash
-    docker run -p 7070:7050 -d --name=foosta_backend foosta_backend_img
+    docker run -p 7070:7050 -d --restart always --name=foosta_backend foosta_backend_img
 ```
 `-d` means "detached". You run the command and it continues to live in the background.
 
@@ -20,7 +20,7 @@ Now you can access "curl http://localhost:7070" from the Vagrant VM and
 1. Repeat the "build" command: `docker build -t foosta_backend_img:latest .`
 2. Stop an existing container: `docker container stop foosta_backend`
 3. Remove an existing container: `docker container rm foosta_backend`
-4. Run new container again: `docker run -p 7070:7050 -d --name=foosta_backend foosta_backend_img`
+4. Run new container again: `docker run -p 7070:7050 -d --restart always --name=foosta_backend foosta_backend_img`
 
 It's not very fast process. During the development, it could make sense to run a container in an attached mode. Then you won't have to stop the container before removing and always use one command:
 ```bash

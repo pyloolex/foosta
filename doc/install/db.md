@@ -21,7 +21,7 @@ As a result, the container is launched and the database accepts connections on p
 
 The fastest verification is to get into the postgresql-cli:
 ```bash
-    docker exec -ti postgre_db_1 psql -U foostauser -d foostadb
+    docker exec -ti foosta_db psql -U foostauser -d foostadb
 ```
 
 You should be able to see data in `users` table:
