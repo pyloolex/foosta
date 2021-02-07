@@ -13,10 +13,10 @@ services:
       POSTGRES_PASSWORD: example
 
     ports:
-      # The host listens on port 7001 and passes all the requests
+      # The host listens on port 7100 and passes all the requests
       # to the container's port 5432 (which is the default port
       # of postgreSQL).
-      - 7001:5432
+      - 7100:5432
 
     volumes:
       # When "docker-compose up -d" is executed after the

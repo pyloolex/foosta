@@ -9,7 +9,7 @@ Install package
 
 .. sourcecode:: bash
 
-    sudo apt install docker.io
+    sudo apt install docker.io -y
 
 If you try to verify it by
 
@@ -76,7 +76,7 @@ Just one command
 
 .. sourcecode:: bash
 
-    sudo apt install docker-compose
+    sudo apt install docker-compose -y
 
 Verification is the following. The command
 

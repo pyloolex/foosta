@@ -16,7 +16,7 @@ def main():
         user='foostauser',
         password='foostapassword',
         host="localhost",
-        port=7001,
+        port=7100,
     )
     cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
     print_usernames(cursor)

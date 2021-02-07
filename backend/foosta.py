@@ -20,7 +20,7 @@ def blah():
         user='foostauser',
         password='foostapassword',
         host=DOCKER_HOST_GATEWAY_IP,
-        port=7001,
+        port=7100,
     )
     cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
     if request.method == 'GET':
@@ -58,4 +58,4 @@ def blah():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7050)
+    app.run(host='0.0.0.0', port=7250)

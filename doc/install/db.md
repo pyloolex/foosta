@@ -15,7 +15,7 @@ You should just run `docker-compose` inside that directory.
 
 `-d` flag means running in detached mode. If this flag is not specified, the terminal will hang and show logs.
 
-As a result, the container is launched and the database accepts connections on port `7001` (or whatever is specified in `docker-compose.yml` under "ports" section).
+As a result, the container is launched and the database accepts connections on port `7100` (or whatever is specified in `docker-compose.yml` under "ports" section).
 
 ## Verification
 
@@ -31,7 +31,7 @@ You should be able to see data in `users` table:
 
 ## Recreating container
 
-If docker-compose up -d is executed again, all the data will be preserved and initialization scripts won't be run. If clean run is needed,
+If `docker-compose up -d` is executed again, all the data will be preserved and initialization scripts won't be run. If clean run is needed,
 ```bash
     docker-compose stop && docker-compose rm -f
 ```

@@ -7,4 +7,4 @@
 # `yarn start`, they were moved out to the separate script
 # which is executed during the container launch.
 nginx
-yarn --cwd /my_workdir_foosta_ui/foosta_react start
+yarn --cwd /my_workdir_foosta_ui/react_app start

@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install yarn -y
 WORKDIR /my_workdir_foosta_ui
 COPY . /my_workdir_foosta_ui
 
-RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/foosta_react", "install"]
+RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/react_app", "install"]
 
 # Update nginx configuration.
 RUN apt-get install nginx -y

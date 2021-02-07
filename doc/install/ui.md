@@ -9,7 +9,7 @@ Go to `foosta/ui` and build a docker image:
 
 Launch docker container from that image:
 ```bash
-    docker run -p 7373:7350 -d --restart always --name=foosta_ui foosta_ui_img
+    docker run -p 7300:7350 -d --restart always --name=foosta_ui foosta_ui_img
 ```
 
 
@@ -20,7 +20,7 @@ If you need to rebuild it with the new changes, do:
 1. Repeat the "build" command: `docker build -t foosta_ui_img:latest .`
 2. Stop an existing container: `docker container stop foosta_ui`
 3. Remove an existing container: `docker container rm foosta_ui`
-4. Run new container again: `docker run -p 7373:7350 -d --restart always --name=foosta_ui foosta_ui_img`
+4. Run new container again: `docker run -p 7300:7350 -d --restart always --name=foosta_ui foosta_ui_img`
 
 
 
@@ -49,25 +49,8 @@ That is, after you modify some file on the host, do
 inside the VM and you **don't** have to restart the server.
 
 UI makes HTTP requests to backend which listens on another port. So that everything works properly, you need to add `nginx` config.
-Put the following into `/etc/nginx/conf.d/foosta_dev_nginx.conf`:
-```bash
-       server {
-            listen 7350;
+Put the `foosta/ui/foosta_dev_nginx.conf` into `/etc/nginx/conf.d/` and use `172.28.128.4:7350` as an entry point in the browser.
 
-            location /api {
-                  proxy_pass http://localhost:7200/;
-            }
-
-            location / {
-                  proxy_pass http://localhost:3000/;
-                  proxy_http_version 1.1;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection "Upgrade";
-            }
-        }
-```
-
-And use `172.28.128.4:7350` as an entry point in the browser.
 
 
 ## Creating new app
