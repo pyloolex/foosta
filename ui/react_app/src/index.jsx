@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import TrashUsers from './trashcan/users';
+import Matches from './matches/matches';
 
-
+/*
 class AddUser extends React.Component {
   constructor(props)
   {
@@ -110,6 +114,79 @@ class UserList extends React.Component {
 }
 
 
+class Matches extends React.Component {
+  constructor(props)
+  {
+    super(props);
+
+    this.state = {
+      items: [],
+    };
+  }
+
+  componentDidMount()
+  {
+    this.fetchMatches();
+  }
+
+  fetchMatches = () => {
+    fetch('/api/matches').then(
+      response => response.json()).then(
+        responseJson => this.handleFetchedMatches(responseJson));
+  };
+
+  handleFetchedMatches = (responseJson) => {
+    console.log('jj resp', responseJson);
+    this.setState({items: responseJson.items});
+  };
+
+
+  render()
+  {
+    return (
+      <div>
+        <Link to='/matches/new'>
+          <p>New Match</p>
+        </Link>
+        <div>
+          {this.state.items.map((match, idx) => (
+            <div className="read-match" key={match.date + match.match_number}>
+
+              <div className="read-match-block
+                            read-match-team
+                            read-red-team">
+                {match.teams.red.map((player, pn) => (
+                  <p key={player}>{player}</p>
+                ))}
+              </div>
+
+              <div className="read-match-block
+                            read-score">
+                <p className="read-match-date">
+                  {match.date}
+                </p>
+                <p className="read-score-text">
+                  {match.red_score + ':' + match.blue_score}
+                </p>
+              </div>
+
+              <div className="read-match-block
+                            read-match-team
+                            read-blue-team">
+                {match.teams.blue.map((player, pn) => (
+                  <p key={player}>{player}</p>
+                ))}
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+}
+
+
 class Home extends React.Component {
   constructor(props)
   {
@@ -145,9 +222,99 @@ class Home extends React.Component {
   }
 }
 
+
+class NewMatch extends React.Component {
+  constructor(props)
+  {
+    super(props);
+
+    this.state = {
+      items: [],
+    };
+  }
+
+  componentDidMount()
+  {
+    this.fetchMatches();
+  }
+
+  fetchMatches = () => {
+    fetch('/api/matches').then(
+      response => response.json()).then(
+        responseJson => this.handleFetchedMatches(responseJson));
+  };
+
+  handleFetchedMatches = (responseJson) => {
+    console.log('jj resp', responseJson);
+    this.setState({items: responseJson.items});
+  };
+
+
+  render()
+  {
+    return (
+      <div>
+        <Link to='/matches/new'>
+          <p>New Match</p>
+        </Link>
+        <div>
+          {this.state.items.map((match, idx) => (
+            <div className="read-match" key={match.date + match.match_number}>
+
+              <div className="read-match-block
+                            read-match-team
+                            read-red-team">
+                {match.teams.red.map((player, pn) => (
+                  <p key={player}>{player}</p>
+                ))}
+              </div>
+
+              <div className="read-match-block
+                            read-score">
+                <p className="read-match-date">
+                  {match.date}
+                </p>
+                <p className="read-score-text">
+                  {match.red_score + ':' + match.blue_score}
+                </p>
+              </div>
+
+              <div className="read-match-block
+                            read-match-team
+                            read-blue-team">
+                {match.teams.blue.map((player, pn) => (
+                  <p key={player}>{player}</p>
+                ))}
+              </div>
+
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+}
+*/
+
+class MyRouter extends React.Component {
+  render()
+  {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={Matches.Matches} />
+          <Route path="/rest" exact component={TrashUsers.Home} />
+          {/* TODO: Create another router inside Matches. */}
+          <Route path="/matches/new" exact component={Matches.NewMatch} />
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
+
 // ========================================
 
 ReactDOM.render(
-  <Home />,
+  <MyRouter />,
   document.getElementById('root')
 );

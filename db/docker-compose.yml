@@ -27,3 +27,6 @@ services:
       # This mount allows passing all the custom scripts
       # to the container.
       - ./initdb_scripts:/docker-entrypoint-initdb.d
+
+      # Shared directory where you could put some scripts to test.
+      - ./shared:/tmp/foosta_shared

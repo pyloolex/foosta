@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.read-match {
+    background-color: green;
+    border: 1px solid black;
+    height: 250px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 1000px;
+}
+
+.read-match-block {
+    box-sizing: border-box;
+    display: inline-block;
+    height: 250px;
+    vertical-align: top;
+}
+
+.read-match-team {
+    width: 40%;
+    font-size: 20px;
+}
+
+.read-score {
+    background-color: grey;
+    padding-top: 10px;
+    text-align: center;
+    width: 20%;
+}
+
+.read-score-text {
+    font-size: 40px;
+}
+
+.read-red-team {
+    background-color: red;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.read-blue-team {
+    background-color: blue;
+    padding-top: 10px;
+    padding-right: 10px;
+    text-align: right;
+}

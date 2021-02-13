@@ -9,5 +9,7 @@ RUN pip3 install psycopg2
 
 COPY . /my_workdir_foosta
 
+ENV PYTHONPATH="${PYTHONPATH}:/my_workdir_foosta/flask_app/"
+
 ENTRYPOINT ["python3"]
-CMD ["foosta.py"]
+CMD ["flask_app/foosta/app.py"]
