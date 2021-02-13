@@ -1,0 +1,23 @@
+.input-player {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    width: 100%;
+}
+
+.add-players {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.add-input {
+    text-align: center;
+    width: 80px;
+    heigh: 40px;
+    font-size: 20px;
+}
+
+.container-new-players {
+    text-align: center;
+}

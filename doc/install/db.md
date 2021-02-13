@@ -3,6 +3,8 @@
 ## Install Docker and docker-compose
 Guide - [/doc/install/docker_and_docker_compose.rst](/doc/install/docker_and_docker_compose.rst)
 
+
+
 ## Launch DB
 All the necessary settings are in `/db/docker-compose.yml`.
 It has inline comments so that every line looks clear.
@@ -17,6 +19,8 @@ You should just run `docker-compose` inside that directory.
 
 As a result, the container is launched and the database accepts connections on port `7100` (or whatever is specified in `docker-compose.yml` under "ports" section).
 
+
+
 ## Verification
 
 The fastest verification is to get into the postgresql-cli:
@@ -24,10 +28,12 @@ The fastest verification is to get into the postgresql-cli:
     docker exec -ti foosta_db psql -U foostauser -d foostadb
 ```
 
-You should be able to see data in `users` table:
+You should be able to see data in `MatchMeta` table:
 ```bash
-    foostadb=# select * from users;
+    foostadb=# select * from "MatchMeta";
 ```
+
+
 
 ## Recreating container
 
@@ -36,6 +42,8 @@ If `docker-compose up -d` is executed again, all the data will be preserved and 
     docker-compose stop && docker-compose rm -f
 ```
 should be used.
+
+
 
 ## Connecting to the DB through Python
 Install `pip3`:
@@ -59,7 +67,7 @@ Install `psycopg2` package for python through pip3.
 ```
 This package is needed in order to connect to DB from python code.
 
-Now, navigate to `foosta/db` directory and run `test.py`:
+Now, navigate to `foosta/db` directory and run `test.py` [Outdated]:
 ```bash
     cd foosta/db
     python3 test.py

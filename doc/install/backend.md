@@ -27,7 +27,6 @@ Now you can access "curl http://localhost:7200" from the Vagrant VM and
 
 
 ## Development process [WIP]
-TBD
 
 Rebuilding an image is not a very fast process. During the development, it could make sense to run a container in an attached mode. Then you won't have to stop the container before removing and always use one command:
 ```bash
