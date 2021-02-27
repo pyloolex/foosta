@@ -20,3 +20,7 @@ def connect_to_db():
     cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
 
     return connection, cursor
+
+
+def make_event_key(date, event_number):
+    return date + ':{:02d}'.format(event_number)
