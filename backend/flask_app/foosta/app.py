@@ -10,96 +10,134 @@ app = flask.Flask(__name__)
 LOGGER = logging.getLogger(__name__)
 
 
+def get_event_number(cursor, date):
+    cursor.execute(
+        "SELECT date, array_agg(event_number) AS event_numbers "
+        "FROM \"EventMeta\" "
+        "WHERE date='{date}'"
+        "GROUP BY date".format(date=date)
+    )
 
-@app.route('/matches', methods=['POST'])
-def add_match():
+    existing_events = cursor.fetchall()
+    if not existing_events:
+        return 0
+    assert len(existing_events) == 1
+
+    event_numbers = sorted(existing_events[0]['event_numbers'])
+    if len(event_numbers) >= 100:
+        return None
+
+    for i, event_number in enumerate(event_numbers):
+        assert i <= event_number
+        if (i < event_number):
+            return i
+
+    return len(event_numbers)
+
+
+@app.route('/events', methods=['POST'])
+def add_event():
     connection, cursor = util.connect_to_db()
     payload = flask.request.get_json()
-    cursor.execute(
-        "SELECT date, array_agg(match_number) AS match_numbers "
-        "FROM \"MatchMeta\" "
-        "WHERE date='{date}'"
-        "GROUP BY date".format(date=payload['date'])
-    )
 
-    data = cursor.fetchall()
-    if not data:
-        match_number = 0
-    else:
-        assert len(data) == 1
-        match_numbers = sorted(data[0]['match_numbers'])
-        assert len(match_numbers) <= 100
+    event_number = get_event_number(cursor, payload['date'])
+    if event_number is None:
+        return flask.jsonify({
+            'error': 'Too many events within one day'}), 409
 
-        for i, match in enumerate(match_numbers):
-            assert i <= match
-            if (i < match):
-                match_number = i
-                break
-        else:
-            match_number = len(match_numbers)
-
-    cursor.execute(
-        "insert into \"MatchMeta\" "
-        "(date, match_number, red_score, blue_score) "
-        "values ('{date}', {match_number}, {red_score}, {blue_score})".format(
-            date=payload['date'],
-            match_number=match_number,
-            red_score=payload['red_score'],
-            blue_score=payload['blue_score'],
+    # TODO(ferc): Validate that there are exactly two teams in case
+    # of "match" event.
+    event_results = []
+    event_squads = []
+    for i, team_info in enumerate(payload['teams']):
+        event_results.append(
+            "('{date}', {event_number}, {team}, {result})".format(
+                date=payload['date'],
+                event_number=event_number,
+                team=i,
+                result=team_info['result'],
+            )
         )
-    )
-
-    inserted_rows = []
-    for colour, team in payload['teams'].items():
-        for player in team:
-            inserted_rows.append(
-                "('{date}', {match_number}, '{player}', '{team}')".format(
+        for player in team_info['squad']:
+            event_squads.append(
+                "('{date}', {event_number}, '{player}', {team})".format(
                     date=payload['date'],
-                    match_number=match_number,
+                    event_number=event_number,
                     player=player,
-                    team=colour,
+                    team=i,
                 )
             )
 
     cursor.execute(
-        "INSERT INTO \"MatchSquads\" "
-        "(date, match_number, player, team) "
+        "insert into \"EventMeta\" "
+        "(date, event_number, event_type) "
+        "values ('{date}', {event_number}, '{event_type}')".format(
+            date=payload['date'],
+            event_number=event_number,
+            event_type=payload['event_type'],
+        )
+    )
+    cursor.execute(
+        "INSERT INTO \"EventResult\" "
+        "(date, event_number, team, result) "
         "VALUES {values};".format(
-            values=', '.join(inserted_rows),
+            values=', '.join(event_results),
+        )
+    )
+    cursor.execute(
+        "INSERT INTO \"EventSquad\" "
+        "(date, event_number, player, team) "
+        "VALUES {values};".format(
+            values=', '.join(event_squads),
         )
     )
 
     connection.commit()
 
-    match_id = payload['date'] + ':{:02d}'.format(match_number)
-    return flask.jsonify({'id': match_id}), 201
+    event_id = util.make_event_key(payload['date'], event_number)
+    return flask.jsonify({'id': event_id}), 201
 
 
-@app.route('/matches', methods=['GET'])
-def get_matches():
+@app.route('/events', methods=['GET'])
+def get_events():
     connection, cursor = util.connect_to_db()
 
-    cursor.execute("select * from \"MatchMeta\"")
-    match_metas = cursor.fetchall()
-    matches = {}
-    for match in match_metas:
-        matches[match['date'], match['match_number']] = {
-            'date': match['date'].strftime("%Y-%m-%d"),
-            'match_number': match['match_number'],
-            'red_score': match['red_score'],
-            'blue_score': match['blue_score'],
-            'teams': {'red': [], 'blue': []},
+    events = {}
+
+    cursor.execute('SELECT * FROM "EventMeta"')
+    metas = cursor.fetchall()
+    for row in metas:
+        events[row['date'], row['event_number']] = {
+            'date': row['date'].strftime("%Y-%m-%d"),
+            'event_number': row['event_number'],
+            'event_type': row['event_type'],
+            'teams': {},
         }
 
-    cursor.execute("select * from \"MatchSquads\"")
-    match_squads = cursor.fetchall()
-    for row in match_squads:
-        matches[
-            row['date'], row['match_number']][
-                'teams'][row['team']].append(
-                    row['player'])
+    cursor.execute('SELECT * FROM "EventResult"')
+    results = cursor.fetchall()
+    for row in results:
+        events[row['date'], row['event_number']]['teams'][
+            row['team']] = {
+                'result': row['result'],
+                'squad': [],
+            }
 
-    return flask.jsonify({'items': list(matches.values())})
+    cursor.execute('SELECT * FROM "EventSquad"')
+    squads = cursor.fetchall()
+    for row in squads:
+        events[row['date'], row['event_number']]['teams'][
+            row['team']]['squad'].append(row['player'])
+
+    items = {
+        util.make_event_key(event['date'], event['event_number']): dict(
+            event,
+            teams=list(event['teams'].values())
+        )
+        for event in events.values()
+    }
+
+    return flask.jsonify({'items': items})
 
 
 @app.route('/', methods=['GET', 'POST'])

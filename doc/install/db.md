@@ -28,9 +28,9 @@ The fastest verification is to get into the postgresql-cli:
     docker exec -ti foosta_db psql -U foostauser -d foostadb
 ```
 
-You should be able to see data in `MatchMeta` table:
+You should be able to see data in `EventMeta` table:
 ```bash
-    foostadb=# select * from "MatchMeta";
+    foostadb=# select * from "EventMeta";
 ```
 
 

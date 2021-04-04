@@ -1,0 +1,35 @@
+.navbar {
+    height: 100px;
+    background-color: #447755;
+    display:flex;
+    align-items:center;
+    /*justify-content:center;*/
+}
+
+#foosta-logo-navbar {
+    margin-left: 15px;
+    height: 80px;
+    margin-right: 15px;
+    width: auto;
+    vertical-align: middle;
+}
+
+.navbar-button {
+    font-size: 16px;
+    width: 150px;
+    margin-right: 15px;
+    height: 50px;
+    cursor: pointer;
+    background-color: #669977;
+    border: 1px solid #336644;
+    border-radius: 10px;
+}
+
+.navbar-button:hover {
+    background-color: #558866;
+}
+
+.navbar-button:focus {
+    outline: none;
+    border: 3px solid #336644;
+}

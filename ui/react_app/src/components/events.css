@@ -1,0 +1,14 @@
+.event-header {
+    place-self: stretch;
+
+    font-size: 30px;
+    border: 1px solid black;
+
+    display: grid;
+    place-content: center;
+}
+
+.player-name {
+    font-size: 20px;
+    margin: 10px;
+}
