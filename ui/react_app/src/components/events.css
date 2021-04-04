@@ -1,109 +1,14 @@
-* {
-    padding: 0;
-    margin: 0;
-}
+.event-header {
+    place-self: stretch;
 
-.read-match {
-    background-color: green;
+    font-size: 30px;
     border: 1px solid black;
-    height: 250px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    width: 1000px;
+
+    display: grid;
+    place-content: center;
 }
 
-.read-match-block {
-    box-sizing: border-box;
-    display: inline-block;
-    height: 250px;
-    vertical-align: top;
-}
-
-.read-match-team {
-    width: 40%;
+.player-name {
     font-size: 20px;
-}
-
-.read-score {
-    background-color: grey;
-    padding-top: 10px;
-    text-align: center;
-    width: 20%;
-}
-
-.read-score-text {
-    font-size: 40px;
-}
-
-.read-red-team {
-    background-color: red;
-    padding-top: 10px;
-    padding-left: 10px;
-}
-
-.read-blue-team {
-    background-color: blue;
-    padding-top: 10px;
-    padding-right: 10px;
-    text-align: right;
-}
-
-/* Write */
-
-.write-match {
-    background-color: lime;
-    border: 1px solid black;
-    height: 250px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    width: 1000px;
-}
-
-.write-match-block {
-    box-sizing: border-box;
-    display: inline-block;
-    height: 250px;
-    vertical-align: top;
-}
-
-.write-match-team {
-    width: 40%;
-    font-size: 20px;
-}
-.write-red-team {
-    background-color: pink;
-}
-.write-blue-team {
-    background-color: cyan;
-}
-
-.write-score {
-    background-color: lightgrey;
-    padding-top: 10px;
-    text-align: center;
-    width: 20%;
-    white-space: nowrap;
-}
-.write-score-text {
-    font-size: 40px;
-}
-
-.put-score {
-    display: inline-block;
-    width: 40%;
-    font-size: 40px;
-    margin-top: 10px;
-}
-.put-red-score {
-    text-align: right;
-}
-.put-blue-score {
-    text-align: left;
-}
-
-.colon {
-    display: inline-block;
-    padding-left: 2px;
-    padding-right: 2px;
-    font-size: 40px;
+    margin: 10px;
 }

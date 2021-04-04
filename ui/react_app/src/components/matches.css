@@ -1,8 +1,63 @@
-* {
-    padding: 0;
-    margin: 0;
+.match-container {
+    display: grid;
+    grid-template-rows: 50px 450px;  /* Fits 13 players */
+    grid-template-columns: 250px 150px 250px;
+    grid-template-areas:
+        "header header header"
+        "first score second";
+
+    width: 650px;
+    margin: 10px;
 }
 
+.match-header {
+    grid-area: header;
+}
+
+.first-team-list {
+    grid-area: first;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
+
+    background-color: #d6ffd1;
+}
+
+.match-score-cell {
+    grid-area: score;
+    place-self: stretch;
+
+    border-bottom: 1px solid black;
+
+    display: grid;
+    place-content: center;
+}
+
+.second-team-list {
+    grid-area: second;
+    justify-self: stretch;
+
+    text-align: right;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
+
+    background-color: #ebf0ff;
+}
+
+.match-player-name {
+    font-size: 20px;
+    margin: 10px;
+}
+
+.match-score-text {
+    font-size: 50px;
+}
+
+
+/*
 .read-match {
     background-color: green;
     border: 1px solid black;
@@ -47,6 +102,7 @@
     padding-right: 10px;
     text-align: right;
 }
+*/
 
 /* Write */
 

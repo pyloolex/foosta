@@ -3,6 +3,8 @@ import './events.css';
 //import { Link, Redirect } from 'react-router-dom';
 //import Utils from '../utils/utils';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Matches from './matches';
+import Tournaments from './tournaments';
 
 /*
 class Matches extends React.Component {
@@ -210,12 +212,71 @@ class NewMatch extends React.Component {
 */
 
 class ListEvents extends React.Component {
+  constructor(props)
+  {
+    super(props);
+
+    this.state = {
+      events: {},
+    };
+  }
+
+  componentDidMount()
+  {
+    this.fetchEvents();
+  }
+
+  fetchEvents = () => {
+    fetch('/api/events').then(
+      response => response.json()).then(
+        responseJson => this.handleFetchedEvents(responseJson));
+  };
+
+  handleFetchedEvents = (responseJson) =>
+  {
+    console.log('resp', responseJson.items);
+    this.setState({events: responseJson.items});
+  };
+
+  getEvents = () =>
+  {
+    const result = [];
+    const events = this.state.events;
+    for (let id of Object.keys(events).sort().reverse())
+    {
+      console.log(id, events[id]);
+      if (events[id].event_type === 'match')
+      {
+        result.push(
+          <Matches.GetMatch
+            key={id}
+            event={events[id]}
+          />
+        );
+      }
+      else
+      {
+        result.push(
+          <Tournaments.GetTournament
+            key={id}
+            event={events[id]}
+          />
+        );
+      }
+    }
+
+    console.log('res', result);
+    return result;
+  };
+
   render()
   {
     return (
-      <div>List Events</div>
+      <div>
+        {this.getEvents()}
+      </div>
     );
-  }
+  };
 }
 
 

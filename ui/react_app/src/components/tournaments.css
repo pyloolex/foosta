@@ -1,0 +1,38 @@
+.tournament-container {
+    display: grid;
+    grid-template-columns: 250px 150px;
+    grid-template-rows: 50px;
+    grid-auto-rows: 300px;  /* Fits 7 players */
+
+    width: 400px;
+    margin: 10px;
+}
+
+.tournament-header {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.tournament-team-list {
+    border-color: black;
+    border-style: solid;
+    border-width: 0px 1px 1px 1px;
+}
+
+.tournament-player-name {
+    font-size: 20px;
+    margin: 10px;
+}
+
+.tournament-result-cell {
+    place-self: stretch;
+
+    font-size: 100px;
+    text-align: center;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 0px 1px 1px 0px;
+}

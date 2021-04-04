@@ -24,106 +24,106 @@ def print_usernames(cursor):
     print(len(names), names)
 
 
+def clear(connection, cursor):
+    cursor.execute('DELETE FROM "EventMeta"')
+    cursor.execute('DELETE FROM "EventResult"')
+    cursor.execute('DELETE FROM "EventSquad"')
+    connection.commit()
+
+
 def dump(connection, cursor, file_name):
-    cursor.execute("select * from \"MatchMeta\"")
-    match_metas = cursor.fetchall()
-    matches = {}
-    for match in match_metas:
-        matches[match['date'], match['match_number']] = {
-            'date': match['date'].strftime("%Y-%m-%d"),
-            'match_number': match['match_number'],
-            'red_score': match['red_score'],
-            'blue_score': match['blue_score'],
-            'teams': {'red': [], 'blue': []},
+    cursor.execute('SELECT * FROM "EventMeta"')
+    metas = cursor.fetchall()
+
+    events = {}
+    for row in metas:
+        events[row['date'], row['event_number']] = {
+            'date': row['date'].strftime("%Y-%m-%d"),
+            'event_number': row['event_number'],
+            'event_type': row['event_type'],
+            'teams': {},
         }
 
-    cursor.execute("select * from \"MatchSquads\"")
-    match_squads = cursor.fetchall()
-    for row in match_squads:
-        matches[
-            row['date'], row['match_number']][
-                'teams'][row['team']].append(
-                    row['player'])
+    cursor.execute('SELECT * FROM "EventResult"')
+    results = cursor.fetchall()
+    for row in results:
+        events[row['date'], row['event_number']]['teams'][
+            row['team']] = {
+                'result': row['result'],
+                'squad': [],
+            }
+
+    cursor.execute('SELECT * FROM "EventSquad"')
+    squads = cursor.fetchall()
+    for row in squads:
+        events[row['date'], row['event_number']]['teams'][
+            row['team']]['squad'].append(row['player'])
+
+    for event in events.values():
+        event['teams'] = list(event['teams'].values())
 
     json.dump(
-        sorted(matches.values(),
-               key=lambda elem: (elem['date'], elem['match_number'])),
+        sorted(events.values(),
+               key=lambda elem: (elem['date'], elem['event_number'])),
         open(file_name, 'w'),
         indent=2,
     )
 
 
 def load(connection, cursor, file_name):
-    matches = json.load(open(file_name))
+    clear(connection, cursor)
 
-    '''
-    payload = flask.request.get_json()
-    cursor.execute(
-        "SELECT date, array_agg(match_number) AS match_numbers "
-        "FROM \"MatchMeta\" "
-        "WHERE date='{date}'"
-        "GROUP BY date".format(date=payload['date'])
-    )
+    events = json.load(open(file_name))
 
-    data = cursor.fetchall()
-    if not data:
-        match_number = 0
-    else:
-        assert len(data) == 1
-        match_numbers = sorted(data[0]['match_numbers'])
-        assert len(match_numbers) <= 100
-
-        for i, match in enumerate(match_numbers):
-            assert i <= match
-            if (i < match):
-                match_number = i
-                break
-        else:
-            match_number = len(match_numbers)
-    '''
-
-    for match in matches:
+    event_results = []
+    event_squads = []
+    for payload in events:
         # Not sure but the performance might be better if all match
         # metas are collected in python object first and inserted into
         # DB at the very end as a single operation.
-        cursor.execute(
-            "insert into \"MatchMeta\" "
-            "(date, match_number, red_score, blue_score) "
-            "values ('{date}', {match_number}, "
-            "{red_score}, {blue_score})".format(
-                date=match['date'],
-                match_number=match['match_number'],
-                red_score=match['red_score'],
-                blue_score=match['blue_score'],
+        for i, team_info in enumerate(payload['teams']):
+            event_results.append(
+                "('{date}', {event_number}, {team}, {result})".format(
+                    date=payload['date'],
+                    event_number=payload['event_number'],
+                    team=i,
+                    result=team_info['result'],
+                )
             )
-        )
-
-        inserted_rows = []
-        for colour, team in match['teams'].items():
-            for player in team:
-                inserted_rows.append(
-                    "('{date}', {match_number}, '{player}', '{team}')".format(
-                        date=match['date'],
-                        match_number=match['match_number'],
+            for player in team_info['squad']:
+                event_squads.append(
+                    "('{date}', {event_number}, '{player}', {team})".format(
+                        date=payload['date'],
+                        event_number=payload['event_number'],
                         player=player,
-                        team=colour,
+                        team=i,
                     )
                 )
 
         cursor.execute(
-            "INSERT INTO \"MatchSquads\" "
-            "(date, match_number, player, team) "
-            "VALUES {values};".format(
-                values=', '.join(inserted_rows),
+            "insert into \"EventMeta\" "
+            "(date, event_number, event_type) "
+            "values ('{date}', {event_number}, '{event_type}')".format(
+                date=payload['date'],
+                event_number=payload['event_number'],
+                event_type=payload['event_type'],
             )
         )
+    cursor.execute(
+        "INSERT INTO \"EventResult\" "
+        "(date, event_number, team, result) "
+        "VALUES {values};".format(
+            values=', '.join(event_results),
+        )
+    )
+    cursor.execute(
+        "INSERT INTO \"EventSquad\" "
+        "(date, event_number, player, team) "
+        "VALUES {values};".format(
+            values=', '.join(event_squads),
+        )
+    )
 
-    connection.commit()
-
-
-def clear(connection, cursor):
-    cursor.execute('DELETE FROM "MatchMeta"')
-    cursor.execute('DELETE FROM "MatchSquads"')
     connection.commit()
 
 
