@@ -3,19 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import TrashUsers from './trashcan/users';
-//import Matches from './matches/matches';
 import Navbar from './navbar';
 import Events from './components/events';
-
-
-class FutureMain extends React.Component {
-  render()
-  {
-    return (
-      <div>Future Main</div>
-    );
-  }
-}
+import Elo from './components/elo';
 
 
 class MainRouter extends React.Component {
@@ -25,7 +15,7 @@ class MainRouter extends React.Component {
       <BrowserRouter>
         <Navbar.Navbar />
         <Switch>
-          <Route path="/" exact component={FutureMain} />
+          <Route path="/" exact component={Elo.Elo} />
           <Route path="/rest" exact component={TrashUsers.Home} />
           <Route path="/events" component={Events.EventsRouter} />
         </Switch>
