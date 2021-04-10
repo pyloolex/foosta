@@ -9,6 +9,10 @@ app = flask.Flask(__name__)
 
 LOGGER = logging.getLogger(__name__)
 
+DEFAULT_ELO = 1200
+ELO_DIFF = 200
+ELO_MULTIPLIER = 30
+
 
 def get_event_number(cursor, date):
     cursor.execute(
@@ -102,32 +106,7 @@ def add_event():
 def get_events():
     connection, cursor = util.connect_to_db()
 
-    events = {}
-
-    cursor.execute('SELECT * FROM "EventMeta"')
-    metas = cursor.fetchall()
-    for row in metas:
-        events[row['date'], row['event_number']] = {
-            'date': row['date'].strftime("%Y-%m-%d"),
-            'event_number': row['event_number'],
-            'event_type': row['event_type'],
-            'teams': {},
-        }
-
-    cursor.execute('SELECT * FROM "EventResult"')
-    results = cursor.fetchall()
-    for row in results:
-        events[row['date'], row['event_number']]['teams'][
-            row['team']] = {
-                'result': row['result'],
-                'squad': [],
-            }
-
-    cursor.execute('SELECT * FROM "EventSquad"')
-    squads = cursor.fetchall()
-    for row in squads:
-        events[row['date'], row['event_number']]['teams'][
-            row['team']]['squad'].append(row['player'])
+    events = util.translate_events(connection, cursor)
 
     items = {
         util.make_event_key(event['date'], event['event_number']): dict(
@@ -138,6 +117,71 @@ def get_events():
     }
 
     return flask.jsonify({'items': items})
+
+
+@app.route('/stats/elo', methods=['GET'])
+def get_elo():
+    connection, cursor = util.connect_to_db()
+
+    events = util.translate_events(connection, cursor)
+
+    player_elo = collections.defaultdict(lambda: DEFAULT_ELO)
+    participated = collections.defaultdict(int)
+    for event in sorted(events.values(), key=lambda event: event['date']):
+        teams = list(event['teams'].values())
+        team_elo = {}
+        for i, team in enumerate(teams):
+            total = 0
+            for player in team['squad']:
+                total += player_elo[player]
+                participated[player] += 1
+            team_elo[i] = total // len(team['squad'])
+
+        team_elo_diff = {i: 0 for i, _ in enumerate(teams)}
+        for i, _ in enumerate(teams):
+            for j in range(i + 1, len(teams)):
+                win_odds = (
+                    1
+                    /
+                    (1 + 10 ** ((team_elo[j] - team_elo[i]) / ELO_DIFF))
+                )
+                if teams[i]['result'] == teams[j]['result']:
+                    actual_res = 0.5
+                elif event['event_type'] == 'match':
+                    actual_res = float(teams[i]['result'] > teams[j]['result'])
+                else:
+                    assert event['event_type'] == 'tournament'
+                    actual_res = float(teams[i]['result'] < teams[j]['result'])
+
+                coef = int(ELO_MULTIPLIER * (actual_res - win_odds))
+                team_elo_diff[i] += coef
+                team_elo_diff[j] -= coef
+
+        for i, team in enumerate(teams):
+            for player in team['squad']:
+                player_elo[player] += team_elo_diff[i]
+
+        '''
+        LOGGER.error('--ELO DIFF--')
+        for i, team in enumerate(teams):
+            LOGGER.error(
+                '%s %s : %s',
+                team_elo[i], team['result'], team_elo_diff[i],
+            )
+        LOGGER.error('==ELO DIFF==')
+        '''
+
+    response = {
+        player: {
+            'participated': played,
+            'elo': player_elo[player],
+        }
+        for player, played in participated.items()
+    }
+
+    return flask.jsonify({'items': response})
+
+
 
 
 @app.route('/', methods=['GET', 'POST'])

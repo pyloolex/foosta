@@ -24,3 +24,34 @@ def connect_to_db():
 
 def make_event_key(date, event_number):
     return date + ':{:02d}'.format(event_number)
+
+
+def translate_events(connection, cursor):
+    events = {}
+
+    cursor.execute('SELECT * FROM "EventMeta"')
+    metas = cursor.fetchall()
+    for row in metas:
+        events[row['date'], row['event_number']] = {
+            'date': row['date'].strftime("%Y-%m-%d"),
+            'event_number': row['event_number'],
+            'event_type': row['event_type'],
+            'teams': {},
+        }
+
+    cursor.execute('SELECT * FROM "EventResult"')
+    results = cursor.fetchall()
+    for row in results:
+        events[row['date'], row['event_number']]['teams'][
+            row['team']] = {
+                'result': row['result'],
+                'squad': [],
+            }
+
+    cursor.execute('SELECT * FROM "EventSquad"')
+    squads = cursor.fetchall()
+    for row in squads:
+        events[row['date'], row['event_number']]['teams'][
+            row['team']]['squad'].append(row['player'])
+
+    return events
