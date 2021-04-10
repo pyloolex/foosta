@@ -1,0 +1,90 @@
+.elo-container {
+    display: grid;
+    grid-template-rows: 50px;
+    grid-template-columns: 50px 250px 100px 100px;
+    grid-template-areas:
+        "number-header player-header participated-header elo-header";
+    grid-auto-rows: 50px;
+
+    width: 450px;
+    margin: 10px;
+}
+
+.cell {
+    border-color: black;
+    border-style: solid;
+}
+
+.header-cell {
+    font-size: 20px;
+    font-weight: bold;
+
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+
+.data-cell {
+    font-size: 20px;
+}
+
+.number-header {
+    grid-area: number-header;
+
+    border-width: 1px;
+}
+
+.player-header {
+    grid-area: player-header;
+
+    border-width: 1px 1px 1px 0px;
+}
+
+.participated-header {
+    grid-area: participated-header;
+
+    border-width: 1px 1px 1px 0px;
+}
+
+.elo-header {
+    grid-area: elo-header;
+
+    border-width: 1px 1px 1px 0px;
+}
+
+.number {
+    border-width: 0px 1px 1px 1px;
+
+    display: grid;
+    place-content: center;
+}
+
+.player {
+    border-width: 0px 1px 1px 0px;
+
+    display: grid;
+    align-content: center;
+}
+
+.participated {
+    border-width: 0px 1px 1px 0px;
+
+    display: grid;
+    place-content: center;
+}
+
+.elo {
+    border-width: 0px 1px 1px 0px;
+
+    display: grid;
+    place-content: center;
+}
+
+.player-name {
+    margin-left: 10px;
+}
+
+.sorting {
+    width: 10px;
+    margin-left: 5px;
+}
