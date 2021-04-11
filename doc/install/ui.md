@@ -6,6 +6,7 @@ First of all, make sure that `package.json` and `yarn.lock` are present in the d
 
 Go to `foosta/ui` and build a docker image:
 ```bash
+    cd foosta/ui
     docker build -t foosta_ui_img:latest .
 ```
 
@@ -13,6 +14,8 @@ Launch docker container from that image:
 ```bash
     docker run -p 7300:7350 -d --restart always --name=foosta_ui foosta_ui_img
 ```
+
+Now the website should be available on 172.28.128.4:7300 in your browser on the host.
 
 
 

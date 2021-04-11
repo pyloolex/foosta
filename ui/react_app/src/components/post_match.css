@@ -1,0 +1,85 @@
+.post_match__match-container {
+    display: grid;
+    grid-template-rows: 50px 450px;
+    grid-template-columns: 250px 150px 250px;
+    grid-template-areas:
+        "header header header"
+        "first score second";
+
+    width: 650px;
+}
+
+
+.post_match__header {
+    grid-area: header;
+    place-self: stretch;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+
+    display: grid;
+    place-content: center;
+
+}
+
+
+.post_match__date {
+
+}
+
+
+.post_match__first-team {
+    grid-area: first;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+
+    background-color: #d6ffd1;
+}
+
+
+.post_match__score-area {
+    grid-area: score;
+    place-self: stretch;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+
+    display: grid;
+    place-content: center;
+}
+
+
+.post_match__second-team {
+    grid-area: second;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+
+    background-color: #ebf0ff;
+    text-align: right;
+}
+
+
+.post_match__player-input {
+    margin: 10px 10px 0px 10px;
+}
+
+
+.post_match__score-input {
+    display: inline-block;
+    width: 50px;
+    font-size: 30px;
+}
+
+
+.colon {
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 40px;
+}

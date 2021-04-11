@@ -1,8 +1,10 @@
 import React from 'react';
 import './events.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Matches from './matches';
 import Tournaments from './tournaments';
+import PostEvent from './post_event';
+import { Link } from 'react-router-dom';
 
 
 class ListEvents extends React.Component {
@@ -28,7 +30,6 @@ class ListEvents extends React.Component {
 
   handleFetchedEvents = (responseJson) =>
   {
-    console.log('resp', responseJson.items);
     this.setState({events: responseJson.items});
   };
 
@@ -38,7 +39,6 @@ class ListEvents extends React.Component {
     const events = this.state.events;
     for (let id of Object.keys(events).sort().reverse())
     {
-      console.log(id, events[id]);
       if (events[id].event_type === 'match')
       {
         result.push(
@@ -59,7 +59,6 @@ class ListEvents extends React.Component {
       }
     }
 
-    console.log('res', result);
     return result;
   };
 
@@ -67,6 +66,10 @@ class ListEvents extends React.Component {
   {
     return (
       <div>
+        <Link to="/events/new">
+          create new match
+        </Link>
+
         {this.getEvents()}
       </div>
     );
@@ -78,11 +81,10 @@ class EventsRouter extends React.Component {
   render()
   {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route path="/events" exact component={ListEvents} />
-        </Switch>
-      </BrowserRouter>
+      <Switch>
+        <Route path="/events" exact component={ListEvents} />
+        <Route path="/events/new" exact component={PostEvent.PostEvent} />
+      </Switch>
     );
   }
 }
