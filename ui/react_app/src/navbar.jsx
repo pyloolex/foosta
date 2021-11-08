@@ -12,7 +12,7 @@ class Navbar extends React.Component {
     return (
       <div className="navbar">
         <Link to="/">
-          <img id="foosta-logo-navbar" src="foosta_logo.png" alt="logo" />
+          <img id="foosta-logo-navbar" src='/foosta_logo.png' alt="logo" />
         </Link>
 
         <Link to="/">

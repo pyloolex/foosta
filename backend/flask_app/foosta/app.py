@@ -51,6 +51,8 @@ def add_event():
 
     # TODO(ferc): Validate that there are exactly two teams in case
     # of "match" event.
+    # TODO(ferc): Validate all the players are different.
+    # TODO(ferc): Validate all the fields are set.
     event_results = []
     event_squads = []
     for i, team_info in enumerate(payload['teams']):

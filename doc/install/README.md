@@ -7,4 +7,4 @@
 [/doc/install/backend.md](/doc/install/backend.md)
 
 ## Set up UI
-TB
+[/doc/install/ui.md](/doc/install/ui.md)
