@@ -53,6 +53,9 @@ class PostEvent extends React.Component {
       response => response.json()).then(
         responseJson => {
           console.log(responseJson);
+          // TODO(ferc): Reset form only when the event has been
+          // successfully created. Otherwise, it's convenient to
+          // see a form in order to figure out where the error is.
           this.resetForm();
           this.cachePlayers();
         }

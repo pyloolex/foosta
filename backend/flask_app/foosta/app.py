@@ -3,6 +3,7 @@ import flask
 import logging
 
 from foosta import util
+import foosta.foosta_lollipop as s
 
 
 app = flask.Flask(__name__)
@@ -28,8 +29,6 @@ def get_event_number(cursor, date):
     assert len(existing_events) == 1
 
     event_numbers = sorted(existing_events[0]['event_numbers'])
-    if len(event_numbers) >= 100:
-        return None
 
     for i, event_number in enumerate(event_numbers):
         assert i <= event_number
@@ -39,27 +38,88 @@ def get_event_number(cursor, date):
     return len(event_numbers)
 
 
+POST_EVENT_SCHEMA = s.Object(
+    {
+        'event_type': s.Enum(['match', 'tournament']),
+        'date': s.Transform(
+            s.Date('iso8601'),
+            post_load=str,
+        ),
+        'teams': s.List(
+            s.Object(
+                {
+                    'result': s.Integer(validate=s.Range(min=0, max=99)),
+                    'squad': s.List(
+                        s.String(),
+                        validate=[s.Length(min=1), s.Unique()],
+                    )
+                },
+                allow_extra_fields=False,
+            ),
+            validate=s.Length(min=2),
+        ),
+    },
+    allow_extra_fields=False,
+)
+
+
+def validate_new_event(payload):
+    data = POST_EVENT_SCHEMA.load(payload)
+
+    if data['event_type'] == 'match' and len(data['teams']) != 2:
+        raise s.ValidationError(
+            'There should be exactly two teams '
+            'in case of "match" event type.')
+
+    errors = s.ValidationErrorBuilder()
+    players = set()
+    for i, team in enumerate(data['teams']):
+        invalid_players = set(team['squad']) & players
+        if invalid_players:
+            errors.add_errors({
+                'teams': {
+                    i: "One player can't play for multiple teams: {}.".format(
+                        list(invalid_players)
+                    )
+                }
+            })
+
+        players |= set(team['squad'])
+
+    errors.raise_errors()
+
+    return data
+
+
+def validate_and_prepare_data(cursor, payload):
+    data = validate_new_event(payload)
+
+    event_number = get_event_number(cursor, data['date'])
+    if event_number >= 100:
+        raise s.ValidationError('Too many events within one day.')
+
+    data['event_number'] = event_number
+
+    return data
+
+
 @app.route('/events', methods=['POST'])
 def add_event():
     connection, cursor = util.connect_to_db()
     payload = flask.request.get_json()
 
-    event_number = get_event_number(cursor, payload['date'])
-    if event_number is None:
-        return flask.jsonify({
-            'error': 'Too many events within one day'}), 409
+    try:
+        data = validate_and_prepare_data(cursor, payload)
+    except s.ValidationError as exc:
+        return flask.jsonify({'errors': exc.messages}), 422
 
-    # TODO(ferc): Validate that there are exactly two teams in case
-    # of "match" event.
-    # TODO(ferc): Validate all the players are different.
-    # TODO(ferc): Validate all the fields are set.
     event_results = []
     event_squads = []
-    for i, team_info in enumerate(payload['teams']):
+    for i, team_info in enumerate(data['teams']):
         event_results.append(
             "('{date}', {event_number}, {team}, {result})".format(
-                date=payload['date'],
-                event_number=event_number,
+                date=data['date'],
+                event_number=data['event_number'],
                 team=i,
                 result=team_info['result'],
             )
@@ -67,8 +127,8 @@ def add_event():
         for player in team_info['squad']:
             event_squads.append(
                 "('{date}', {event_number}, '{player}', {team})".format(
-                    date=payload['date'],
-                    event_number=event_number,
+                    date=data['date'],
+                    event_number=data['event_number'],
                     player=player,
                     team=i,
                 )
@@ -78,9 +138,9 @@ def add_event():
         "insert into \"EventMeta\" "
         "(date, event_number, event_type) "
         "values ('{date}', {event_number}, '{event_type}')".format(
-            date=payload['date'],
-            event_number=event_number,
-            event_type=payload['event_type'],
+            date=data['date'],
+            event_number=data['event_number'],
+            event_type=data['event_type'],
         )
     )
     cursor.execute(
@@ -100,7 +160,7 @@ def add_event():
 
     connection.commit()
 
-    event_id = util.make_event_key(payload['date'], event_number)
+    event_id = util.make_event_key(data['date'], data['event_number'])
     return flask.jsonify({'id': event_id}), 201
 
 
@@ -182,8 +242,6 @@ def get_elo():
     }
 
     return flask.jsonify({'items': response})
-
-
 
 
 @app.route('/', methods=['GET', 'POST'])
