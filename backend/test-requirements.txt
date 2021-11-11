@@ -1,0 +1,8 @@
+# Product requirements.
+flask==2.0.2
+lollipop==1.1.7
+psycopg2==2.9.1
+
+# Testing requirements.
+mock==4.0.3
+pytest==6.2.5
