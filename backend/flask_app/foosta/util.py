@@ -1,5 +1,3 @@
-# Foosta, 2021-present.
-
 import psycopg2
 from psycopg2 import extras
 

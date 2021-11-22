@@ -59,3 +59,27 @@ Now you can launch the development server:
 It automatically refereshes with any code change. Unlike React app, the changes
 on the host are visible in the vagrant VM, and you don't need to do `touch`.
 The development server will be refreshed after code change on the host.
+
+## Auto-tests [WIP]
+### Prepare DB
+In order to run tests, you need to install postgres locally:
+```bash
+    sudo apt install postgresql
+```
+
+And add tables:
+```bash
+    sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
+    sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=foostapassword" -af db/initdb_scripts/02-create-tables.sql
+```
+
+### Run tests.
+First of all, install python testing requirements:
+```bash
+    pip3 install -r backend/test-requirements.txt
+```
+
+Now you can run tests:
+```bash
+    pytest --disable-warnings backend
+```

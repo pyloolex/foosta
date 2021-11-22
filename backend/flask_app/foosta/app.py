@@ -50,7 +50,7 @@ POST_EVENT_SCHEMA = s.Object(
                 {
                     'result': s.Integer(validate=s.Range(min=0, max=99)),
                     'squad': s.List(
-                        s.String(),
+                        s.String(validate=[s.Length(min=1)]),
                         validate=[s.Length(min=1), s.Unique()],
                     )
                 },
@@ -79,7 +79,7 @@ def validate_new_event(payload):
             errors.add_errors({
                 'teams': {
                     i: "One player can't play for multiple teams: {}.".format(
-                        list(invalid_players)
+                        sorted(invalid_players)
                     )
                 }
             })
@@ -103,16 +103,7 @@ def validate_and_prepare_data(cursor, payload):
     return data
 
 
-@app.route('/events', methods=['POST'])
-def add_event():
-    connection, cursor = util.connect_to_db()
-    payload = flask.request.get_json()
-
-    try:
-        data = validate_and_prepare_data(cursor, payload)
-    except s.ValidationError as exc:
-        return flask.jsonify({'errors': exc.messages}), 422
-
+def flatten_event_to_db(connection, cursor, data):
     event_results = []
     event_squads = []
     for i, team_info in enumerate(data['teams']):
@@ -159,6 +150,19 @@ def add_event():
     )
 
     connection.commit()
+
+
+@app.route('/events', methods=['POST'])
+def add_event():
+    connection, cursor = util.connect_to_db()
+    payload = flask.request.get_json()
+
+    try:
+        data = validate_and_prepare_data(cursor, payload)
+    except s.ValidationError as exc:
+        return flask.jsonify({'errors': exc.messages}), 422
+
+    flatten_event_to_db(connection, cursor, data)
 
     event_id = util.make_event_key(data['date'], data['event_number'])
     return flask.jsonify({'id': event_id}), 201
