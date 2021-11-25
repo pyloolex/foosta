@@ -1,0 +1,34 @@
+name: Foosta-CI
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    backend-tests:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Install-Postgres
+          run: |
+              sudo apt-get install postgresql
+
+        - name: Fill-out-database
+          run: |
+              sudo systemctl start postgresql.service
+              sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
+              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=foostapassword" -af db/initdb_scripts/02-create-tables.sql
+
+        - name: Install-Python-requirements
+          run: |
+              sudo apt install -y python3-pip python3-dev libpq-dev
+              pip3 install -r backend/test-requirements.txt
+
+        - name: Run-tests
+          run: |
+              source foosta.env
+              pytest --disable-warnings backend
