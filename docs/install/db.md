@@ -28,9 +28,14 @@ The fastest verification is to get into the postgresql-cli:
     docker exec -ti foosta_db psql -U foostauser -d foostadb
 ```
 
-You should be able to see data in `EventMeta` table:
+You should be able to see existing tables:
 ```bash
-    foostadb=# select * from "EventMeta";
+    foostadb=# \d
+```
+
+Also, you can find a table schema:
+```bash
+    foostadb=# \d "EventMeta"
 ```
 
 
@@ -46,6 +51,7 @@ should be used.
 
 
 ## Connecting to the DB through Python
+### Install requirements
 Install `pip3`:
 ```bash
     sudo apt install python3-pip
@@ -67,15 +73,45 @@ Install `psycopg2` package for python through pip3.
 ```
 This package is needed in order to connect to DB from python code.
 
-Now, navigate to `foosta/db` directory and run `test.py` [Outdated]:
+Now `manage_db.py` tool can be used.
+
+
+### Uploading to the database
+If you want to upload some data to the database, do:
 ```bash
-    cd foosta/db
-    python3 test.py
-```
-The result should be as follows:
-```bash
-    2 ['fa', 'be']
-    3 ['fa', 'be', 'patrick']
+    python3 manage_db.py load <file_name>
 ```
 
-Now, it could be concluded that the database is launched and works properly.
+For example:
+```bash
+    python3 manage_db.py load 2021_february.json
+```
+
+
+### Dumping from the database to a file
+If you want, on the contrary, save DB state to a file, do:
+```bash
+    python3 manage_db.py dump <file_name>
+```
+
+For example:
+```bash
+    python3 manage_db.py dump current_state.json
+```
+
+
+### Clearing the database
+You can also clear all the entries in DB by doing:
+```bash
+    python3 manage_db.py clear
+```
+
+
+### Verification
+If you can successfully load data to the DB and query it through
+```bash
+    docker exec -ti foosta_db psql -U foostauser -d foostadb
+    foostadb=# SELECT * FROM "EventMeta";
+```
+
+, it could be concluded that the database is launched and works properly.

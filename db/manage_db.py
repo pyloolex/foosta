@@ -1,6 +1,5 @@
 import argparse
 import json
-import sys
 import psycopg2
 from psycopg2 import extras
 
@@ -17,12 +16,6 @@ def connect_to_db():
 
     return connection, cursor
 
-def print_usernames(cursor):
-    cursor.execute("select * from users")
-    data = cursor.fetchall()
-    names = [item['username'] for item in data]
-    print(len(names), names)
-
 
 def clear(connection, cursor):
     cursor.execute('DELETE FROM "EventMeta"')
@@ -31,7 +24,7 @@ def clear(connection, cursor):
     connection.commit()
 
 
-def dump(connection, cursor, file_name):
+def dump(cursor, file_name):
     cursor.execute('SELECT * FROM "EventMeta"')
     metas = cursor.fetchall()
 
@@ -62,18 +55,20 @@ def dump(connection, cursor, file_name):
     for event in events.values():
         event['teams'] = list(event['teams'].values())
 
-    json.dump(
-        sorted(events.values(),
-               key=lambda elem: (elem['date'], elem['event_number'])),
-        open(file_name, 'w'),
-        indent=2,
-    )
+    with open(file_name, 'w', encoding='UTF-8') as output_file:
+        json.dump(
+            sorted(events.values(),
+                   key=lambda elem: (elem['date'], elem['event_number'])),
+            output_file,
+            indent=2,
+        )
 
 
 def load(connection, cursor, file_name):
     clear(connection, cursor)
 
-    events = json.load(open(file_name))
+    with open(file_name, encoding='UTF8') as input_file:
+        events = json.load(input_file)
 
     event_results = []
     event_squads = []
@@ -83,45 +78,31 @@ def load(connection, cursor, file_name):
         # DB at the very end as a single operation.
         for i, team_info in enumerate(payload['teams']):
             event_results.append(
-                "('{date}', {event_number}, {team}, {result})".format(
-                    date=payload['date'],
-                    event_number=payload['event_number'],
-                    team=i,
-                    result=team_info['result'],
-                )
+                f"""('{payload["date"]}', {payload["event_number"]}, {i}, """
+                f"""{team_info["result"]})"""
             )
             for player in team_info['squad']:
                 event_squads.append(
-                    "('{date}', {event_number}, '{player}', {team})".format(
-                        date=payload['date'],
-                        event_number=payload['event_number'],
-                        player=player,
-                        team=i,
-                    )
+                    f"""('{payload["date"]}', {payload["event_number"]}, """
+                    f"""'{player}', {i})"""
                 )
 
         cursor.execute(
-            "insert into \"EventMeta\" "
-            "(date, event_number, event_type) "
-            "values ('{date}', {event_number}, '{event_type}')".format(
-                date=payload['date'],
-                event_number=payload['event_number'],
-                event_type=payload['event_type'],
-            )
+            f"""INSERT INTO "EventMeta" """
+            f"""(date, event_number, event_type) """
+            f"""VALUES ('{payload["date"]}', {payload["event_number"]}, """
+            f"""'{payload["event_type"]}')"""
         )
+
     cursor.execute(
-        "INSERT INTO \"EventResult\" "
-        "(date, event_number, team, result) "
-        "VALUES {values};".format(
-            values=', '.join(event_results),
-        )
+        f"""INSERT INTO "EventResult" """
+        f"""(date, event_number, team, result) """
+        f"""VALUES {", ".join(event_results)};"""
     )
     cursor.execute(
-        "INSERT INTO \"EventSquad\" "
-        "(date, event_number, player, team) "
-        "VALUES {values};".format(
-            values=', '.join(event_squads),
-        )
+        f"""INSERT INTO "EventSquad" """
+        f"""(date, event_number, player, team) """
+        f"""VALUES {', '.join(event_squads)};"""
     )
 
     connection.commit()
@@ -143,22 +124,24 @@ def parse_arguments():
 
     if args.operation == 'clear':
         return args.operation, None
+
     if args.file_name is None:
         arg_parser.error(
-            'positional argument "file_name" is required in case of '
-            '"{operation}"'.format(operation=args.operation)
+            f'positional argument "file_name" is required in case of '
+            f'"{args.operation}"'
         )
 
     return args.operation, args.file_name
 
 
 def main():
+    # TODO(ferc): Create tests for manage_db.py
     operation, file_name = parse_arguments()
 
     connection, cursor = connect_to_db()
 
     if operation == 'dump':
-        dump(connection, cursor, file_name)
+        dump(cursor, file_name)
     elif operation == 'load':
         load(connection, cursor, file_name)
     else:

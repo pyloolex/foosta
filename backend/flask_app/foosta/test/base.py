@@ -1,7 +1,8 @@
+import unittest
+
 import mock
 import psycopg2
 from psycopg2 import extras
-import unittest
 
 from foosta import app as endpoints
 
@@ -20,7 +21,8 @@ class BaseFoostaDbTest(unittest.TestCase):
 
         super().tearDown(*args, **kwargs)
 
-    def get_test_connection_and_cursor(self):
+    @staticmethod
+    def get_test_connection_and_cursor():
         connection = psycopg2.connect(
             database="foostadb",
             user='foostauser',

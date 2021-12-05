@@ -21,10 +21,10 @@ def connect_to_db():
 
 
 def make_event_key(date, event_number):
-    return date + ':{:02d}'.format(event_number)
+    return date + f':{event_number:02d}'
 
 
-def translate_events(connection, cursor):
+def translate_events(cursor):
     events = {}
 
     cursor.execute('SELECT * FROM "EventMeta"')

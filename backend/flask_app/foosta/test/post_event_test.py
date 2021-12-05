@@ -1,19 +1,14 @@
-import datetime
-import mock
-import psycopg2
-from psycopg2 import extras
 import unittest
 
-from foosta import app as endpoints
 from foosta import util
 from foosta.test import base
 
 
 class PostEventTest(base.BaseFoostaApiTest):
-    def setUp(self):
-        super().setUp()
+    def setUp(self, *args, **kwargs):
+        super().setUp(*args, **kwargs)
 
-        self.maxDiff = None
+        self.maxDiff = None  # pylint: disable=invalid-name
 
         # Fill up the database with some predefined events.
         self.add_event({
@@ -90,10 +85,7 @@ class PostEventTest(base.BaseFoostaApiTest):
         ])
 
     def assert_events(self, expected_events):
-        translated_events = util.translate_events(
-            self.db_connection,
-            self.db_cursor,
-        )
+        translated_events = util.translate_events(self.db_cursor)
         actual_events = {
             (str(key[0]), key[1]): dict(
                 event,

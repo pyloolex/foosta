@@ -1,6 +1,7 @@
 import collections
-import flask
 import logging
+
+import flask
 
 from foosta import util
 import foosta.foosta_lollipop as s
@@ -17,10 +18,10 @@ ELO_MULTIPLIER = 30
 
 def get_event_number(cursor, date):
     cursor.execute(
-        "SELECT date, array_agg(event_number) AS event_numbers "
-        "FROM \"EventMeta\" "
-        "WHERE date='{date}'"
-        "GROUP BY date".format(date=date)
+        f"""SELECT date, array_agg(event_number) AS event_numbers """
+        f"""FROM "EventMeta" """
+        f"""WHERE date='{date}'"""
+        f"""GROUP BY date"""
     )
 
     existing_events = cursor.fetchall()
@@ -32,7 +33,7 @@ def get_event_number(cursor, date):
 
     for i, event_number in enumerate(event_numbers):
         assert i <= event_number
-        if (i < event_number):
+        if i < event_number:
             return i
 
     return len(event_numbers)
@@ -78,9 +79,8 @@ def validate_new_event(payload):
         if invalid_players:
             errors.add_errors({
                 'teams': {
-                    i: "One player can't play for multiple teams: {}.".format(
-                        sorted(invalid_players)
-                    )
+                    i: (f"""One player can't play for multiple """
+                        f"""teams: {sorted(invalid_players)}.""")
                 }
             })
 
@@ -108,45 +108,30 @@ def flatten_event_to_db(connection, cursor, data):
     event_squads = []
     for i, team_info in enumerate(data['teams']):
         event_results.append(
-            "('{date}', {event_number}, {team}, {result})".format(
-                date=data['date'],
-                event_number=data['event_number'],
-                team=i,
-                result=team_info['result'],
-            )
+            f"""('{data["date"]}', {data["event_number"]}, {i}, """
+            f"""{team_info["result"]})"""
         )
         for player in team_info['squad']:
             event_squads.append(
-                "('{date}', {event_number}, '{player}', {team})".format(
-                    date=data['date'],
-                    event_number=data['event_number'],
-                    player=player,
-                    team=i,
-                )
+                f"""('{data["date"]}', {data["event_number"]}, """
+                f"""'{player}', {i})"""
             )
 
     cursor.execute(
-        "insert into \"EventMeta\" "
-        "(date, event_number, event_type) "
-        "values ('{date}', {event_number}, '{event_type}')".format(
-            date=data['date'],
-            event_number=data['event_number'],
-            event_type=data['event_type'],
-        )
+        f"""INSERT INTO "EventMeta" """
+        f"""(date, event_number, event_type) """
+        f"""VALUES ('{data["date"]}', {data["event_number"]}, """
+        f"""'{data["event_type"]}')"""
     )
     cursor.execute(
-        "INSERT INTO \"EventResult\" "
-        "(date, event_number, team, result) "
-        "VALUES {values};".format(
-            values=', '.join(event_results),
-        )
+        f"""INSERT INTO "EventResult" """
+        f"""(date, event_number, team, result) """
+        f"""VALUES {", ".join(event_results)};"""
     )
     cursor.execute(
-        "INSERT INTO \"EventSquad\" "
-        "(date, event_number, player, team) "
-        "VALUES {values};".format(
-            values=', '.join(event_squads),
-        )
+        f"""INSERT INTO "EventSquad" """
+        f"""(date, event_number, player, team) """
+        f"""VALUES {', '.join(event_squads)};"""
     )
 
     connection.commit()
@@ -170,9 +155,9 @@ def add_event():
 
 @app.route('/events', methods=['GET'])
 def get_events():
-    connection, cursor = util.connect_to_db()
+    _, cursor = util.connect_to_db()
 
-    events = util.translate_events(connection, cursor)
+    events = util.translate_events(cursor)
 
     items = {
         util.make_event_key(event['date'], event['event_number']): dict(
@@ -187,9 +172,12 @@ def get_events():
 
 @app.route('/stats/elo', methods=['GET'])
 def get_elo():
-    connection, cursor = util.connect_to_db()
+    # This method will be refactored.
+    # pylint: disable=too-many-locals
 
-    events = util.translate_events(connection, cursor)
+    _, cursor = util.connect_to_db()
+
+    events = util.translate_events(cursor)
 
     player_elo = collections.defaultdict(lambda: DEFAULT_ELO)
     participated = collections.defaultdict(int)
@@ -227,15 +215,13 @@ def get_elo():
             for player in team['squad']:
                 player_elo[player] += team_elo_diff[i]
 
-        '''
-        LOGGER.error('--ELO DIFF--')
-        for i, team in enumerate(teams):
-            LOGGER.error(
-                '%s %s : %s',
-                team_elo[i], team['result'], team_elo_diff[i],
-            )
-        LOGGER.error('==ELO DIFF==')
-        '''
+        # LOGGER.error('--ELO DIFF--')
+        # for i, team in enumerate(teams):
+        #     LOGGER.error(
+        #         '%s %s : %s',
+        #         team_elo[i], team['result'], team_elo_diff[i],
+        #     )
+        # LOGGER.error('==ELO DIFF==')
 
     response = {
         player: {
@@ -246,43 +232,6 @@ def get_elo():
     }
 
     return flask.jsonify({'items': response})
-
-
-@app.route('/', methods=['GET', 'POST'])
-def blah():
-    connection, cursor = util.connect_to_db()
-    if flask.request.method == 'GET':
-        cursor.execute("select * from users")
-        data = cursor.fetchall()
-
-        return flask.jsonify({'items': data})
-    elif flask.request.method == 'POST':
-        data = {
-            'salary': 100,
-            'married': False,
-        }
-        payload = flask.request.get_json()
-        if 'username' not in payload:
-            return "'username' must be specified", 422
-
-        for field in payload:
-            data[field] = payload[field]
-
-        cursor.execute(
-            "insert into users (username, salary, married) "
-            "values ('{username}', {salary}, {married})".format(
-                username=data['username'],
-                salary=data['salary'],
-                married=data['married'],
-            )
-        )
-        connection.commit()
-
-        return flask.jsonify('Okay, got you, motherfucker'), 201
-
-
-        #print(, file=sys.stderr)
-
 
 
 if __name__ == '__main__':
