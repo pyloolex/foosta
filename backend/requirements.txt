@@ -1,3 +1,4 @@
-flask
-lollipop
-psycopg2
+# Product requirements.
+flask==2.0.2
+lollipop==1.1.7
+psycopg2==2.9.1
