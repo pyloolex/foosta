@@ -33,3 +33,29 @@ jobs:
           run: |
               source foosta.env
               pytest --disable-warnings backend
+
+    pep8:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Install-Python-requirements
+          run: |
+              sudo apt-get install -y python3-pip python3-dev libpq-dev
+              pip3 install -r backend/requirements.txt
+              pip3 install -r backend/test-requirements.txt
+
+        - name: Run-checks
+          run: |
+              source foosta.env
+
+              # Using two separate commands for pylint in order to exclude
+              # messages like "Similar lines in 2 files".
+              # Yes, there are similar lines in `db/` and `backend/`, and it's
+              # expected because `db/` is a kinda standalone package.
+              pylint -j8 --rcfile=pep8/pylintrc db/
+              pylint -j8 --rcfile=pep8/pylintrc backend/
+
+              flake8 -j8 --config=pep8/flake8 db/
+              flake8 -j8 --config=pep8/flake8 backend/

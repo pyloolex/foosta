@@ -1,0 +1,13 @@
+[MESSAGES CONTROL]
+
+disable=missing-class-docstring,
+        missing-function-docstring,
+        missing-module-docstring,
+        # Sometimes, it's ridiculous.
+        R0801,  # Similar lines in 2 files
+
+
+[MISCELLANEOUS]
+
+# List of note tags to take in consideration, separated by a comma.
+notes=@@@

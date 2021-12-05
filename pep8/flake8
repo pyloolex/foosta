@@ -1,0 +1,13 @@
+[flake8]
+ignore=
+    # Closing bracket does not match - wrong.
+    E123,
+    # Binary operator is allowed to have line break before/after.
+    W503,
+    W504,
+
+
+per-file-ignores =
+     # This module is supposed to contain all
+     # the lollipop-related stuff for the subsequent reimporting.
+     backend/flask_app/foosta/foosta_lollipop.py: F401
