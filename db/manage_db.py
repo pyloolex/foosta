@@ -4,13 +4,13 @@ import psycopg2
 from psycopg2 import extras
 
 
-def connect_to_db():
+def connect_to_db(port):
     connection = psycopg2.connect(
         database="foostadb",
         user='foostauser',
         password='foostapassword',
         host="localhost",
-        port=7100,
+        port=port,
     )
     cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
 
@@ -120,10 +120,17 @@ def parse_arguments():
         nargs='?',
         help="json file to be loaded from/ dumped to",
     )
+    arg_parser.add_argument(
+        '--port',
+        type=int,
+        required=True,
+        help=("DB port. 5432 is usually a local one. "
+              "7100 is usually production"),
+    )
     args = arg_parser.parse_args()
 
     if args.operation == 'clear':
-        return args.operation, None
+        return args.port, args.operation, None
 
     if args.file_name is None:
         arg_parser.error(
@@ -131,14 +138,14 @@ def parse_arguments():
             f'"{args.operation}"'
         )
 
-    return args.operation, args.file_name
+    return args.port, args.operation, args.file_name
 
 
 def main():
     # TODO(ferc): Create tests for manage_db.py
-    operation, file_name = parse_arguments()
+    port, operation, file_name = parse_arguments()
 
-    connection, cursor = connect_to_db()
+    connection, cursor = connect_to_db(port)
 
     if operation == 'dump':
         dump(cursor, file_name)

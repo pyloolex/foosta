@@ -7,6 +7,33 @@ on:
         branches: [ master ]
 
 jobs:
+    db-tests:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Install-Postgres
+          run: |
+              sudo apt-get install postgresql
+
+        - name: Fill-out-database
+          run: |
+              sudo systemctl start postgresql.service
+              sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
+              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=foostapassword" -af db/initdb_scripts/02-create-tables.sql
+
+        - name: Install-Python-requirements
+          run: |
+              sudo apt-get install -y python3-pip python3-dev libpq-dev
+              pip3 install -r db/test-requirements.txt
+
+        - name: Run-tests
+          run: |
+              source foosta.env
+              pytest --disable-warnings db/
+
+
     backend-tests:
         runs-on: ubuntu-latest
 
@@ -32,7 +59,8 @@ jobs:
         - name: Run-tests
           run: |
               source foosta.env
-              pytest --disable-warnings backend
+              pytest --disable-warnings backend/
+
 
     pep8:
         runs-on: ubuntu-latest
@@ -54,8 +82,8 @@ jobs:
               # messages like "Similar lines in 2 files".
               # Yes, there are similar lines in `db/` and `backend/`, and it's
               # expected because `db/` is a kinda standalone package.
-              pylint -j8 --rcfile=pep8/pylintrc db/
-              pylint -j8 --rcfile=pep8/pylintrc backend/
+              pylint -j8 --rcfile=pep8/pylintrc -sn db/
+              pylint -j8 --rcfile=pep8/pylintrc -sn backend/
 
               flake8 -j8 --config=pep8/flake8 db/
               flake8 -j8 --config=pep8/flake8 backend/
