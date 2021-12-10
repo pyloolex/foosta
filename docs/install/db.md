@@ -67,11 +67,10 @@ And again, in order to install `psycopg2`, you need to install `libpq-dev` first
     sudo apt install libpq-dev
 ```
 
-Install `psycopg2` package for python through pip3.
+Install Python requirements to work with the DB locally.
 ```bash
-    pip3 install psycopg2
+    pip3 install -r db/test-requirements.txt
 ```
-This package is needed in order to connect to DB from python code.
 
 Now `manage_db.py` tool can be used.
 
@@ -79,31 +78,31 @@ Now `manage_db.py` tool can be used.
 ### Uploading to the database
 If you want to upload some data to the database, do:
 ```bash
-    python3 manage_db.py load <file_name>
+    python3 manage_db.py --port=<DB port> load <file_name>
 ```
 
 For example:
 ```bash
-    python3 manage_db.py load 2021_february.json
+    python3 manage_db.py --port=7100 load 2021_february.json
 ```
 
 
 ### Dumping from the database to a file
 If you want, on the contrary, save DB state to a file, do:
 ```bash
-    python3 manage_db.py dump <file_name>
+    python3 manage_db.py --port=<DB port> dump <file_name>
 ```
 
 For example:
 ```bash
-    python3 manage_db.py dump current_state.json
+    python3 manage_db.py --port=7100 dump current_state.json
 ```
 
 
 ### Clearing the database
 You can also clear all the entries in DB by doing:
 ```bash
-    python3 manage_db.py clear
+    python3 manage_db.py --port=7100 clear
 ```
 
 
