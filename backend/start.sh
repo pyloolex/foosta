@@ -1,0 +1,2 @@
+nginx
+uwsgi uwsgi.ini

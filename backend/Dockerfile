@@ -7,7 +7,9 @@ COPY . /my_workdir_foosta
 
 RUN pip3 install -r requirements.txt
 
-ENV PYTHONPATH="${PYTHONPATH}:/my_workdir_foosta/flask_app/"
+# Update nginx configuration.
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install nginx -y
 
-ENTRYPOINT ["python3"]
-CMD ["flask_app/foosta/app.py"]
+COPY foosta_nginx_backend.conf /etc/nginx/conf.d/
+
+CMD ["bash", "start.sh"]
