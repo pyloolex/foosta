@@ -13,10 +13,17 @@ RUN apt-get update && apt-get install yarn -y
 WORKDIR /my_workdir_foosta_ui
 COPY . /my_workdir_foosta_ui
 
-RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/react_app", "install"]
+# This optimizes the build for a production:
+# - logging is kept to a minimum, essential level
+# - more caching levels take place to optimize performance
+ENV NODE_ENV production
+
+RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/react_app", "install", "--production"]
+RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/react_app", "build"]
 
 # Update nginx configuration.
 RUN apt-get update && apt-get install nginx -y
 COPY foosta_nginx.conf /etc/nginx/conf.d/
+RUN cp -r /my_workdir_foosta_ui/react_app/build /usr/share/nginx/html/foosta
 
-CMD ["bash", "start.sh"]
+CMD ["nginx", "-g", "daemon off;"]

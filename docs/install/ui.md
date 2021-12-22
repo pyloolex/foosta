@@ -30,6 +30,26 @@ If you need to rebuild it with the new changes, do:
 
 
 ## Development process
+### Rebuilding an image every time
+Do once
+```bash
+    docker container stop foosta_ui
+```
+
+Then use this command
+```bash
+    docker build -t foosta_ui_img:latest . && docker container rm foosta_ui && docker run -p 7300:7350 --name=foosta_ui foosta_ui_img
+```
+
+Ctrl+C might not help to stop the process. Then use
+```bash
+    docker container stop foosta_ui
+```
+in a separate terminal.
+
+
+
+### Building locally
 
 Rebuilding an image and recreating a container after every change during development is too long. It makes sense to build a react app right in a VM, develep everything and only after that deploy a docker container.
 
