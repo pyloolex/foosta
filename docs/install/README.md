@@ -1,10 +1,10 @@
 # Installation
 
 ## Set up database
-[/doc/install/db.md](/doc/install/db.md)
+[/docs/install/db.md](/docs/install/db.md)
 
 ## Set up flask backend
-[/doc/install/backend.md](/doc/install/backend.md)
+[/docs/install/backend.md](/docs/install/backend.md)
 
 ## Set up UI
-[/doc/install/ui.md](/doc/install/ui.md)
+[/docs/install/ui.md](/docs/install/ui.md)

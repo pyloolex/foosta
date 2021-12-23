@@ -87,3 +87,25 @@ jobs:
 
               flake8 -j8 --config=pep8/flake8 db/
               flake8 -j8 --config=pep8/flake8 backend/
+
+    deploy-tests:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Deploy-Project
+          run: |
+              # Set password.
+              echo '"smoke-t2t"' > backend/password.json
+              # Deploy.
+              ./deploy/build_all.sh
+
+        - name: Install-test-requirements
+          run: |
+              sudo apt-get install chromium-chromedriver -y
+              pip3 install -r deploy/requirements.txt
+
+        - name: Smoke-test
+          run: |
+              ./deploy/smoke_test.sh
