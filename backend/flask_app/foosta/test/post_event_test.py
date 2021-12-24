@@ -1,3 +1,6 @@
+import json
+import os
+import os.path
 import unittest
 
 from foosta import util
@@ -45,6 +48,18 @@ class PostEventTest(base.BaseFoostaApiTest):
                 },
             ],
         })
+
+        self.password_file_name = os.path.dirname(
+            __file__) + '/../../../password.json'
+
+        with open(self.password_file_name, 'w',
+                  encoding='UTF-8') as password_file:
+            json.dump("Good morning!", password_file)
+
+    def tearDown(self, *args, **kwargs):
+        os.remove(self.password_file_name)
+
+        super().tearDown(*args, **kwargs)
 
     def assert_db_is_intact(self):
         self.assert_events([
@@ -125,6 +140,7 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'squad': ['Marty'],
                     }
                 ],
+                'password': 'Good morning!',
             },
         )
 
@@ -203,6 +219,7 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'squad': ['Vincent', 'Ben', 'Tim'],
                     },
                 ],
+                'password': 'Good morning!',
             },
         )
 
@@ -279,6 +296,7 @@ class PostEventTest(base.BaseFoostaApiTest):
                     'date': 'Value is required',
                     'event_type': 'Value is required',
                     'teams': 'Value is required',
+                    'password': 'Value is required',
                     'abacaba': 'Unknown field',
                 },
             },
@@ -295,7 +313,8 @@ class PostEventTest(base.BaseFoostaApiTest):
                 'teams': {
                     'red': 'dre',
                     'blue': 'uebl',
-                }
+                },
+                'password': 142,
             },
         )
 
@@ -305,6 +324,7 @@ class PostEventTest(base.BaseFoostaApiTest):
                     'date': 'Value should match date format',
                     'event_type': 'Invalid choice',
                     'teams': 'Value should be list',
+                    'password': 'Value should be string',
                 },
             },
             response.json,
@@ -330,7 +350,8 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'result': 500,
                         'squad': True,
                     },
-                ]
+                ],
+                'password': 'Good morning!',
             },
         )
 
@@ -379,7 +400,8 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'result': 1,
                         'squad': ['a', 'a'],
                     },
-                ]
+                ],
+                'password': 'Good morning!',
             },
         )
 
@@ -412,7 +434,8 @@ class PostEventTest(base.BaseFoostaApiTest):
             json={
                 'date': '2010-10-10',
                 'event_type': 'tournament',
-                'teams': []
+                'teams': [],
+                'password': 'Good morning!',
             },
         )
 
@@ -445,14 +468,15 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'result': 3,
                         'squad': ['c'],
                     },
-                ]
+                ],
+                'password': 'Good morning!',
             },
         )
 
         self.assertEqual(
             {
-                'errors': ('There should be exactly two teams '
-                           'in case of "match" event type.'),
+                'errors': {'teams': ('There should be exactly two teams '
+                                     'in case of "match" event type.')},
             },
             response.json,
         )
@@ -477,7 +501,8 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'result': 2,
                         'squad': ['a', 'b', 'd'],
                     },
-                ]
+                ],
+                'password': 'Good morning!',
             },
         )
 
@@ -526,7 +551,8 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'result': 2,
                         'squad': ['b', 'c'],
                     },
-                ]
+                ],
+                'password': 'Good morning!',
             },
         )
         self.assertEqual({'id': '2011-02-12:99'}, response.json)
@@ -546,11 +572,40 @@ class PostEventTest(base.BaseFoostaApiTest):
                         'result': 2,
                         'squad': ['b', 'c'],
                     },
-                ]
+                ],
+                'password': 'Good morning!',
             },
         )
         self.assertEqual(
             {'errors': 'Too many events within one day.'},
+            response.json,
+        )
+        self.assertEqual(422, response.status_code)
+
+    def test_invalid_password(self):
+        response = self.client.post(
+            '/events',
+            json={
+                'date': '2010-10-10',
+                'event_type': 'match',
+                'teams': [
+                    {
+                        'result': 1,
+                        'squad': ['a'],
+                    },
+                    {
+                        'result': 2,
+                        'squad': ['b'],
+                    },
+                ],
+                'password': 'Good evening!',
+            },
+        )
+
+        self.assertEqual(
+            {
+                'errors': {'password': 'Invalid password'}
+            },
             response.json,
         )
         self.assertEqual(422, response.status_code)

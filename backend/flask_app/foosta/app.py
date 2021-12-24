@@ -1,5 +1,7 @@
 import collections
+import json
 import logging
+import os.path
 
 import flask
 
@@ -59,6 +61,7 @@ POST_EVENT_SCHEMA = s.Object(
             ),
             validate=s.Length(min=2),
         ),
+        'password': s.String(validate=[s.Length(min=1)]),
     },
     allow_extra_fields=False,
 )
@@ -67,11 +70,19 @@ POST_EVENT_SCHEMA = s.Object(
 def validate_new_event(payload):
     data = POST_EVENT_SCHEMA.load(payload)
 
-    if data['event_type'] == 'match' and len(data['teams']) != 2:
-        raise s.ValidationError(
-            'There should be exactly two teams '
-            'in case of "match" event type.')
+    # Verify password.
+    with open(os.path.dirname(__file__) + '/../../password.json',
+              encoding='UTF-8') as password_file:
+        if data['password'] != json.load(password_file):
+            raise s.ValidationError({'password': 'Invalid password'})
 
+    # Verify number of teams.
+    if data['event_type'] == 'match' and len(data['teams']) != 2:
+        raise s.ValidationError({'teams': (
+            'There should be exactly two teams '
+            'in case of "match" event type.')})
+
+    # Verify uniqueness of player names.
     errors = s.ValidationErrorBuilder()
     players = set()
     for i, team in enumerate(data['teams']):
