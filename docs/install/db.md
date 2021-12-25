@@ -1,7 +1,7 @@
 # Setting up database
 
 ## Install Docker and docker-compose
-Guide - [/doc/install/docker_and_docker_compose.rst](/doc/install/docker_and_docker_compose.rst)
+Guide - [/docs/install/docker_and_docker_compose.rst](/docs/install/docker_and_docker_compose.rst)
 
 
 

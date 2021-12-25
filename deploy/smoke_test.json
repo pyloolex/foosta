@@ -1,0 +1,15 @@
+{
+  "date": "2022-01-01",
+  "event_type": "match",
+  "teams": [
+    {
+      "result": 3,
+      "squad": ["First_player_ever"]
+    },
+    {
+      "result": 14,
+      "squad": ["Indispensable warrior"]
+    }
+  ],
+  "password": "smoke-t2t"
+}
