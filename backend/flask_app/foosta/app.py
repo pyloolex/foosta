@@ -71,7 +71,8 @@ def validate_new_event(payload):
     data = POST_EVENT_SCHEMA.load(payload)
 
     # Verify password.
-    with open(os.path.dirname(__file__) + '/../../password.json',
+    with open(os.path.join(os.path.dirname(__file__),
+                           'password_backend.json'),
               encoding='UTF-8') as password_file:
         if data['password'] != json.load(password_file):
             raise s.ValidationError({'password': 'Invalid password'})

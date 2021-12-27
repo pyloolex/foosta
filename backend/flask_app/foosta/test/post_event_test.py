@@ -49,8 +49,10 @@ class PostEventTest(base.BaseFoostaApiTest):
             ],
         })
 
-        self.password_file_name = os.path.dirname(
-            __file__) + '/../../../password.json'
+        self.password_file_name = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            'password_backend.json',
+        )
 
         with open(self.password_file_name, 'w',
                   encoding='UTF-8') as password_file:

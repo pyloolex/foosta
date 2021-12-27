@@ -16,12 +16,17 @@ jobs:
         - name: Install-Postgres
           run: |
               sudo apt-get install postgresql
+              sudo systemctl start postgresql.service
 
         - name: Fill-out-database
           run: |
-              sudo systemctl start postgresql.service
+              # Configure password.
+              mkdir /tmp/foosta_shared
+              echo '"db-pass"' > /tmp/foosta_shared/password_db.json
+
+              # Create role and tables.
               sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
-              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=foostapassword" -af db/initdb_scripts/02-create-tables.sql
+              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=db-pass" -af db/initdb_scripts/02-create-tables.sql
 
         - name: Install-Python-requirements
           run: |
@@ -43,12 +48,17 @@ jobs:
         - name: Install-Postgres
           run: |
               sudo apt-get install postgresql
+              sudo systemctl start postgresql.service
 
         - name: Fill-out-database
           run: |
-              sudo systemctl start postgresql.service
+              # Configure DB password.
+              mkdir /tmp/foosta_shared
+              echo '"db-pass"' > /tmp/foosta_shared/password_db.json
+
+              # Create role and tables.
               sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
-              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=foostapassword" -af db/initdb_scripts/02-create-tables.sql
+              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=db-pass" -af db/initdb_scripts/02-create-tables.sql
 
         - name: Install-Python-requirements
           run: |
@@ -96,8 +106,14 @@ jobs:
 
         - name: Deploy-Project
           run: |
-              # Set password.
-              echo '"smoke-t2t"' > backend/password.json
+              # Configure DB password.
+              mkdir /tmp/foosta_shared
+              echo '"s3e-db"' > db/shared/password_db.json
+              cp db/shared/password_db.json backend/flask_app/foosta/password_db.json
+
+              # Set backend password.
+              echo '"smoke-t2t"' > backend/flask_app/foosta/password_backend.json
+
               # Deploy.
               ./deploy/build_all.sh
 

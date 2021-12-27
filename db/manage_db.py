@@ -1,17 +1,24 @@
 import argparse
 import json
+import os.path
+
 import psycopg2
 from psycopg2 import extras
 
 
 def connect_to_db(port):
-    connection = psycopg2.connect(
-        database="foostadb",
-        user='foostauser',
-        password='foostapassword',
-        host="localhost",
-        port=port,
-    )
+    with open(os.path.join(os.path.dirname(__file__),
+                           'shared',
+                           'password_db.json'),
+              encoding='UTF-8') as password_file:
+        connection = psycopg2.connect(
+            database="foostadb",
+            user='foostauser',
+            password=json.load(password_file),
+            host="localhost",
+            port=port,
+        )
+
     cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
 
     return connection, cursor

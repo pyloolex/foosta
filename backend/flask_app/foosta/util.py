@@ -1,3 +1,6 @@
+import json
+import os.path
+
 import psycopg2
 from psycopg2 import extras
 
@@ -8,13 +11,16 @@ DOCKER_HOST_GATEWAY_IP = "172.17.0.1"
 
 
 def connect_to_db():
-    connection = psycopg2.connect(
-        database="foostadb",
-        user='foostauser',
-        password='foostapassword',
-        host=DOCKER_HOST_GATEWAY_IP,
-        port=7100,
-    )
+    with open(os.path.join(os.path.dirname(__file__), 'password_db.json'),
+              encoding='UTF-8') as password_file:
+        connection = psycopg2.connect(
+            database='foostadb',
+            user='foostauser',
+            password=json.load(password_file),
+            host=DOCKER_HOST_GATEWAY_IP,
+            port=7100,
+        )
+
     cursor = connection.cursor(cursor_factory=extras.RealDictCursor)
 
     return connection, cursor
