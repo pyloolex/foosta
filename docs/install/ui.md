@@ -82,9 +82,9 @@ Install nginx:
     sudo apt install -y nginx
 ```
 
-Put the `foosta/ui/foosta_dev_nginx.conf` into `/etc/nginx/conf.d/`:
+Put the `foosta/ui/nginx_foosta_ui_dev.conf` into `/etc/nginx/conf.d/`:
 ```bash
-    sudo cp foosta/ui/foosta_dev_nginx.conf /etc/nginx/conf.d/
+    sudo cp foosta/ui/nginx_foosta_ui_dev.conf /etc/nginx/conf.d/
 ```
 
 Restart nginx:

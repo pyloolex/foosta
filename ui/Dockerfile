@@ -23,7 +23,7 @@ RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/react_app", "build"]
 
 # Update nginx configuration.
 RUN apt-get update && apt-get install nginx -y
-COPY foosta_nginx.conf /etc/nginx/conf.d/
+COPY nginx_foosta_ui.conf /etc/nginx/conf.d/
 RUN cp -r /my_workdir_foosta_ui/react_app/build /usr/share/nginx/html/foosta
 
 CMD ["nginx", "-g", "daemon off;"]
