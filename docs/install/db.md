@@ -114,3 +114,28 @@ If you can successfully load data to the DB and query it through
 ```
 
 , it could be concluded that the database is launched and works properly.
+
+
+## Running tests
+Connect to the DB and remove previous configuration if it is present.
+```bash
+    $ sudo -u postgres psql
+    postgres=# drop database foostadb;
+    postgres=# drop role foostauser;
+```
+
+Create database password.
+```bash
+    echo '"local-db"' > /tmp/foosta_shared/password_db.json
+```
+
+Create tables (use the password here).
+```bash
+    sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
+    sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=local-db" -af db/initdb_scripts/02-create-tables.sql
+```
+
+Now you can run tests.
+```bash
+    pytest --disable-warnings db
+```

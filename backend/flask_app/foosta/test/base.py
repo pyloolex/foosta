@@ -26,7 +26,7 @@ class BaseFoostaDbTest(unittest.TestCase):
         connection = psycopg2.connect(
             database="foostadb",
             user='foostauser',
-            password='foostapassword',
+            password='db-pass',
             host='localhost',
             port=5432,
         )
