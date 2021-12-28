@@ -10,6 +10,6 @@ RUN pip3 install -r requirements.txt
 # Update nginx configuration.
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install nginx -y
 
-COPY foosta_nginx_backend.conf /etc/nginx/conf.d/
+COPY nginx_foosta_backend.conf /etc/nginx/conf.d/
 
 CMD ["bash", "start.sh"]
