@@ -1,10 +1,10 @@
 .post-container {
     display: grid;
-    grid-template-columns: 350px 300px;
+    grid-template-columns: 650px;
     grid-template-rows: 50px;
     grid-auto-rows: minmax(min-content, max-content);
     grid-template-areas:
-        "event-type submit";
+        "event-type";
 
     width: 900px;
     margin: 10px;
@@ -20,15 +20,6 @@
 }
 
 
-.submit-area {
-    grid-area: submit;
-    justify-self: end;
-    align-self: center;
-
-    margin-right: 0px;
-}
-
-
 .label {
     font-size: 25px;
     font-weight: bold;
@@ -39,6 +30,25 @@
     margin-left: 10px;
     font-size: 20px;
     width: 150px;
+}
+
+
+.post_event__password-area {
+    margin-top: 20px;
+}
+
+
+.post_event__password-label {
+    font-weight: bold;
+    font-size: 20px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.post_event__password-input {
+    margin-right: 10px;
 }
 
 
@@ -57,7 +67,19 @@
     background-color: #558866;
 }
 
+.post_event__response_message {
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    white-space: pre-wrap;
+    width: calc(400px - 20px);  /* As tournament's window size minus padding */
+}
 
+
+/**
+ * TODO(pyloolex): Inspect in browser whether this class
+ * is used anywhere.
+ */
 .form {
     grid-column: 1 / 3;
     grid-row: 2 / 3;

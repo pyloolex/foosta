@@ -22,7 +22,7 @@ class PostTournament extends React.Component
   handleScore = (event, teamId) =>
   {
     const teams = this.props.teams;
-    teams[teamId].result = event.target.value;
+    teams[teamId].result = +event.target.value;
     this.props.setStateTeams(teams);
   }
 
