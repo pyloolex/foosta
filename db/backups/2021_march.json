@@ -1,0 +1,687 @@
+[
+  {
+    "date": "2021-01-04",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 25,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Zemlyansky",
+          "Ryzhkov",
+          "Gleb"
+        ]
+      },
+      {
+        "result": 19,
+        "squad": [
+          "Klenov",
+          "Narkaytis",
+          "Ekub",
+          "Farid",
+          "Pavel S",
+          "Viktor"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-01-08",
+    "event_number": 0,
+    "event_type": "tournament",
+    "teams": [
+      {
+        "result": 1,
+        "squad": [
+          "Ignatov",
+          "Berezovsky",
+          "Maksim A",
+          "Zhanat",
+          "Pasha ot Vasi"
+        ]
+      },
+      {
+        "result": 2,
+        "squad": [
+          "Ivanov",
+          "Egorenko",
+          "Zemlyansky",
+          "Minasyan",
+          "Gleb"
+        ]
+      },
+      {
+        "result": 3,
+        "squad": [
+          "Narkaytis",
+          "Zhenya",
+          "Ekub",
+          "Farid",
+          "Rustam"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-01-11",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 15,
+        "squad": [
+          "Ignatov",
+          "Klenov",
+          "Ivanov",
+          "Ekub",
+          "Viktor"
+        ]
+      },
+      {
+        "result": 13,
+        "squad": [
+          "Narkaytis",
+          "Zhenya",
+          "Zemlyansky",
+          "Vasya",
+          "Ryzhkov",
+          "Gleb"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-01-14",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 14,
+        "squad": [
+          "Ignatov",
+          "Klenov",
+          "Narkaytis",
+          "Berezovsky",
+          "Maksim A",
+          "Viktor"
+        ]
+      },
+      {
+        "result": 11,
+        "squad": [
+          "Ivanov",
+          "Egorenko",
+          "Ekub",
+          "Ryzhkov",
+          "Zhanat",
+          "Ilzat"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-01-18",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 21,
+        "squad": [
+          "Klenov",
+          "Narkaytis",
+          "Filonov",
+          "Ryzhkov",
+          "Viktor",
+          "Ilzat"
+        ]
+      },
+      {
+        "result": 19,
+        "squad": [
+          "Ignatov",
+          "Berezovsky",
+          "Ekub",
+          "Maksim A",
+          "Zhanat"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-01-21",
+    "event_number": 0,
+    "event_type": "tournament",
+    "teams": [
+      {
+        "result": 1,
+        "squad": [
+          "Narkaytis",
+          "Berezovsky",
+          "Zemlyansky",
+          "Filonov",
+          "Ryzhkov"
+        ]
+      },
+      {
+        "result": 2,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Zhenya",
+          "Rustam",
+          "Ilzat"
+        ]
+      },
+      {
+        "result": 3,
+        "squad": [
+          "Klenov",
+          "Ekub",
+          "Vasya",
+          "Maksim A",
+          "Pasha ot Vasi"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-01-25",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 27,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Zemlyansky",
+          "Ekub",
+          "Ryzhkov"
+        ]
+      },
+      {
+        "result": 10,
+        "squad": [
+          "Aleksey",
+          "Narkaytis",
+          "Zhenya",
+          "Gleb",
+          "Viktor"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-01-28",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 25,
+        "squad": [
+          "Ignatov",
+          "Berezovsky",
+          "Vasya",
+          "Sergey Birukov",
+          "Gleb"
+        ]
+      },
+      {
+        "result": 20,
+        "squad": [
+          "Narkaytis",
+          "Ivanov",
+          "Ekub",
+          "Ryzhkov",
+          "Rustam",
+          "Zhanat"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-02-01",
+    "event_number": 0,
+    "event_type": "tournament",
+    "teams": [
+      {
+        "result": 2,
+        "squad": [
+          "Ignatov",
+          "Aleksey",
+          "Ryzhkov",
+          "Gleb"
+        ]
+      },
+      {
+        "result": 1,
+        "squad": [
+          "Narkaytis",
+          "Ivanov",
+          "Zhenya",
+          "Zemlyansky",
+          "Ekub",
+          "Sergey Birukov"
+        ]
+      },
+      {
+        "result": 3,
+        "squad": [
+          "Zhanat",
+          "Pasha ot Vasi"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-02-04",
+    "event_number": 0,
+    "event_type": "tournament",
+    "teams": [
+      {
+        "result": 1,
+        "squad": [
+          "Narkaytis",
+          "Ivanov",
+          "Zemlyansky"
+        ]
+      },
+      {
+        "result": 2,
+        "squad": [
+          "Berezovsky",
+          "Vasya",
+          "Ryzhkov"
+        ]
+      },
+      {
+        "result": 3,
+        "squad": [
+          "Klenov",
+          "Zhenya",
+          "Ekub",
+          "Gleb",
+          "Rustam",
+          "Viktor"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-02-08",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 20,
+        "squad": [
+          "Ignatov",
+          "Ekub",
+          "Vasya",
+          "Zhanat",
+          "Viktor"
+        ]
+      },
+      {
+        "result": 20,
+        "squad": [
+          "Zhenya",
+          "Zemlyansky",
+          "Filonov",
+          "Ryzhkov",
+          "Gleb",
+          "Farid",
+          "Pavel Akimov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-02-11",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 20,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Vasya",
+          "Gleb",
+          "Farid"
+        ]
+      },
+      {
+        "result": 18,
+        "squad": [
+          "Zhenya",
+          "Zemlyansky",
+          "Pugovkin",
+          "Ryzhkov",
+          "Viktor"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-02-15",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 28,
+        "squad": [
+          "Narkaytis",
+          "Zhenya",
+          "Egorenko",
+          "Zemlyansky",
+          "Ekub",
+          "Ryzhkov",
+          "Farid"
+        ]
+      },
+      {
+        "result": 25,
+        "squad": [
+          "Aleksey",
+          "Ivanov",
+          "Vasya",
+          "Gleb",
+          "Zhanat",
+          "Viktor",
+          "Pasha ot Vasi"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-02-18",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 35,
+        "squad": [
+          "Egorenko",
+          "Ryzhkov",
+          "Gleb",
+          "Rustam",
+          "Zhanat"
+        ]
+      },
+      {
+        "result": 20,
+        "squad": [
+          "Narkaytis",
+          "Ivanov",
+          "Pugovkin",
+          "Farid"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-02-22",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 18,
+        "squad": [
+          "Narkaytis",
+          "Ivanov",
+          "Ryzhkov",
+          "Gleb"
+        ]
+      },
+      {
+        "result": 17,
+        "squad": [
+          "Ignatov",
+          "Klenov",
+          "Zhenya",
+          "Pugovkin",
+          "Pavel Akimov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-01",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 21,
+        "squad": [
+          "Ignatov",
+          "Berezovsky",
+          "Egorenko",
+          "Pugovkin",
+          "Vasya",
+          "Pavel Akimov"
+        ]
+      },
+      {
+        "result": 17,
+        "squad": [
+          "Aleksey",
+          "Ivanov",
+          "Gleb",
+          "Farid",
+          "Viktor"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-08",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 18,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Lesha ot Vasi",
+          "Gleb",
+          "Viktor",
+          "Pasha ot Vasi"
+        ]
+      },
+      {
+        "result": 17,
+        "squad": [
+          "Zhenya",
+          "Vasya"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-11",
+    "event_number": 0,
+    "event_type": "tournament",
+    "teams": [
+      {
+        "result": 1,
+        "squad": [
+          "Zhenya",
+          "Vasya"
+        ]
+      },
+      {
+        "result": 2,
+        "squad": [
+          "Aleksey",
+          "Gleb",
+          "Pavel S",
+          "Viktor",
+          "Pasha ot Vasi"
+        ]
+      },
+      {
+        "result": 3,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Egorenko",
+          "Pugovkin",
+          "Ekub",
+          "Ryzhkov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-15",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 26,
+        "squad": [
+          "Aleksey",
+          "Narkaytis",
+          "Ivanov",
+          "Gleb",
+          "Zhanat",
+          "Viktor"
+        ]
+      },
+      {
+        "result": 14,
+        "squad": [
+          "Ignatov",
+          "Ekub",
+          "Vasya",
+          "Farid",
+          "Pasha ot Vasi"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-18",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 16,
+        "squad": [
+          "Ignatov",
+          "Klenov",
+          "Mescheryakov",
+          "Aleksey",
+          "Narkaytis",
+          "Berezovsky",
+          "Farid"
+        ]
+      },
+      {
+        "result": 16,
+        "squad": [
+          "Ekub",
+          "Vasya",
+          "Viktor",
+          "Pasha ot Vasi",
+          "Pavel Akimov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-22",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 22,
+        "squad": [
+          "Ignatov",
+          "Mescheryakov",
+          "Narkaytis",
+          "Ivanov"
+        ]
+      },
+      {
+        "result": 19,
+        "squad": [
+          "Klenov",
+          "Ekub",
+          "Gleb",
+          "Zhanat",
+          "Viktor",
+          "Pasha ot Vasi"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-25",
+    "event_number": 0,
+    "event_type": "tournament",
+    "teams": [
+      {
+        "result": 1,
+        "squad": [
+          "Ignatov",
+          "Mescheryakov",
+          "Narkaytis",
+          "Ivanov",
+          "Zhanat"
+        ]
+      },
+      {
+        "result": 2,
+        "squad": [
+          "Ryzhkov",
+          "Viktor",
+          "Pasha ot Vasi"
+        ]
+      },
+      {
+        "result": 3,
+        "squad": [
+          "Klenov",
+          "Aleksey",
+          "Zhenya",
+          "Vasya",
+          "Gleb"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2021-03-29",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 19,
+        "squad": [
+          "Ignatov",
+          "Aleksey",
+          "Narkaytis",
+          "Ivanov",
+          "Ryzhkov"
+        ]
+      },
+      {
+        "result": 18,
+        "squad": [
+          "Klenov",
+          "Mescheryakov",
+          "Berezovsky",
+          "Gleb",
+          "Zhanat",
+          "Pasha ot Vasi"
+        ]
+      }
+    ]
+  }
+]
