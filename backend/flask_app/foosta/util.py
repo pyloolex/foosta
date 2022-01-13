@@ -58,4 +58,21 @@ def translate_events(cursor):
         events[row['date'], row['event_number']]['teams'][
             row['team']]['squad'].append(row['player'])
 
+    # Sort result.
+    for event in events.values():
+        for team in event['teams'].values():
+            team['squad'].sort()
+
+        event['teams'] = sorted(
+            event['teams'].values(),
+            key=lambda team: (team['result'], team['squad']))
+
     return events
+
+
+def translate_and_sort_events(cursor):
+    events = translate_events(cursor)
+    return sorted(
+        events.values(),
+        key=lambda event: (event['date'], event['event_number']),
+    )

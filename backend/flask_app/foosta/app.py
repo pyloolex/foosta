@@ -5,6 +5,8 @@ import os.path
 
 import flask
 
+from foosta import common
+from foosta import personal_stat
 from foosta import util
 import foosta.foosta_lollipop as s
 
@@ -13,9 +15,11 @@ app = flask.Flask(__name__)
 
 LOGGER = logging.getLogger(__name__)
 
+# TODO(pyloolex): Remove it from here as they are
+# already in elo.py
 DEFAULT_ELO = 1200
-ELO_DIFF = 200
-ELO_MULTIPLIER = 30
+ELO_DIFF = 400
+ELO_MULTIPLIER = 32
 
 
 def get_event_number(cursor, date):
@@ -116,6 +120,13 @@ def validate_and_prepare_data(cursor, payload):
 
 
 def flatten_event_to_db(connection, cursor, data):
+    # TODO(pyloolex): This is very bad. This provides huge room
+    # for SQL-injections. Instead, `psycopg.sql.SQL` and
+    # `cursor.execute(<query>, <arguments>)` must be used.
+    #
+    # Read
+    # stackoverflow.com/questions/45128902/psycopg2-and-sql-injection-security
+    # https://www.psycopg.org/docs/sql.html
     event_results = []
     event_squads = []
     for i, team_info in enumerate(data['teams']):
@@ -172,14 +183,11 @@ def get_events():
     events = util.translate_events(cursor)
 
     items = {
-        util.make_event_key(event['date'], event['event_number']): dict(
-            event,
-            teams=list(event['teams'].values())
-        )
+        util.make_event_key(event['date'], event['event_number']): event
         for event in events.values()
     }
 
-    return flask.jsonify({'items': items})
+    return flask.jsonify({'items': items}), 200
 
 
 @app.route('/stats/elo', methods=['GET'])
@@ -194,7 +202,7 @@ def get_elo():
     player_elo = collections.defaultdict(lambda: DEFAULT_ELO)
     participated = collections.defaultdict(int)
     for event in sorted(events.values(), key=lambda event: event['date']):
-        teams = list(event['teams'].values())
+        teams = event['teams']
         team_elo = {}
         for i, team in enumerate(teams):
             total = 0
@@ -244,6 +252,27 @@ def get_elo():
     }
 
     return flask.jsonify({'items': response})
+
+
+@app.route('/stats/<hero>', methods=['GET'])
+def get_personal_stats(hero):
+    _, cursor = util.connect_to_db()
+
+    events = util.translate_and_sort_events(cursor)
+
+    result_summary = common.build_result_summary(events)
+    if hero not in result_summary:
+        return flask.jsonify({
+            'errors': f"Player '{hero}' doesn't exist"}), 404
+
+    response = {
+        'elo': personal_stat.build_persisted_elo(events, hero),
+        'teammates': personal_stat.build_stat_teammates(events, hero),
+        'rivals': personal_stat.build_stat_rivals(events, hero),
+        'result_summary': result_summary[hero],
+    }
+
+    return flask.jsonify(response), 200
 
 
 if __name__ == '__main__':
