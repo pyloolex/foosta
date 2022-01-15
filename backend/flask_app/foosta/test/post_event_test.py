@@ -104,10 +104,7 @@ class PostEventTest(base.BaseFoostaApiTest):
     def assert_events(self, expected_events):
         translated_events = util.translate_events(self.db_cursor)
         actual_events = {
-            (str(key[0]), key[1]): dict(
-                event,
-                teams=list(event['teams'].values())
-            )
+            (str(key[0]), key[1]): event
             for key, event in translated_events.items()
         }
 
@@ -250,12 +247,12 @@ class PostEventTest(base.BaseFoostaApiTest):
                 'event_type': 'tournament',
                 'teams': [
                     {
-                        'result': 2,
-                        'squad': ['Aaron', 'Ben'],
-                    },
-                    {
                         'result': 1,
                         'squad': ['Brian', 'Charles'],
+                    },
+                    {
+                        'result': 2,
+                        'squad': ['Aaron', 'Ben'],
                     },
                     {
                         'result': 3,
@@ -278,7 +275,7 @@ class PostEventTest(base.BaseFoostaApiTest):
                     },
                     {
                         'result': 3,
-                        'squad': ['Vincent', 'Ben', 'Tim'],
+                        'squad': ['Ben', 'Tim', 'Vincent'],
                     },
                 ],
             },
@@ -306,6 +303,8 @@ class PostEventTest(base.BaseFoostaApiTest):
         )
         self.assertEqual(422, response.status_code)
 
+        self.assert_db_is_intact()
+
     def test_invalid_types(self):
         response = self.client.post(
             '/events',
@@ -332,6 +331,8 @@ class PostEventTest(base.BaseFoostaApiTest):
             response.json,
         )
         self.assertEqual(422, response.status_code)
+
+        self.assert_db_is_intact()
 
     def test_invalid_teams_object(self):
         response = self.client.post(
@@ -383,6 +384,8 @@ class PostEventTest(base.BaseFoostaApiTest):
         )
         self.assertEqual(422, response.status_code)
 
+        self.assert_db_is_intact()
+
     def test_invalid_squad_object(self):
         response = self.client.post(
             '/events',
@@ -430,6 +433,8 @@ class PostEventTest(base.BaseFoostaApiTest):
         )
         self.assertEqual(422, response.status_code)
 
+        self.assert_db_is_intact()
+
     def test_empty_teams(self):
         response = self.client.post(
             '/events',
@@ -450,6 +455,8 @@ class PostEventTest(base.BaseFoostaApiTest):
             response.json,
         )
         self.assertEqual(422, response.status_code)
+
+        self.assert_db_is_intact()
 
     def test_too_many_teams_in_match(self):
         response = self.client.post(
@@ -483,6 +490,8 @@ class PostEventTest(base.BaseFoostaApiTest):
             response.json,
         )
         self.assertEqual(422, response.status_code)
+
+        self.assert_db_is_intact()
 
     def test_not_unique_players_across_teams(self):
         response = self.client.post(
@@ -520,6 +529,8 @@ class PostEventTest(base.BaseFoostaApiTest):
             response.json,
         )
         self.assertEqual(422, response.status_code)
+
+        self.assert_db_is_intact()
 
     def test_too_many_events_within_a_day(self):
         for i in range(99):
@@ -611,6 +622,8 @@ class PostEventTest(base.BaseFoostaApiTest):
             response.json,
         )
         self.assertEqual(422, response.status_code)
+
+        self.assert_db_is_intact()
 
 
 if __name__ == '__main__':
