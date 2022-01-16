@@ -1,0 +1,209 @@
+.teammates__container {
+    display: grid;
+    grid-template-columns: 40px 250px 40px 40px 300px 50px 50px 50px 40px 300px 50px 50px 50px 50px;
+    grid-template-rows: 50px;
+    grid-template-areas:
+        "empty empty common matches matches matches matches matches tournaments tournaments tournaments tournaments tournaments tournaments"
+        "N name events match mchart W D L tournament tchart G S B E";
+
+    //grid-auto-rows: 24px;
+
+    margin: 10px;
+}
+
+.teammates__empty-header {
+    grid-area: empty;
+}
+
+.teammates__common-header {
+    grid-area: common;
+}
+
+.teammates__matches-header {
+    grid-area: matches;
+}
+
+.teammates__tournaments-header {
+    grid-area: tournaments;
+}
+
+
+.teammates__n-header {
+    grid-area: N;
+}
+
+.teammates__name-header {
+    grid-area: name;
+}
+
+.teammates__events-header {
+    grid-area: events;
+}
+
+.teammates__match-header {
+    grid-area: match;
+}
+
+.teammates__mchart-header {
+    grid-area: mchart;
+}
+
+.teammates__w-header {
+    grid-area: W;
+}
+
+.teammates__d-header {
+    grid-area: D;
+}
+
+.teammates__l-header {
+    grid-area: L;
+}
+
+.teammates__tournament-header {
+    grid-area: tournament;
+}
+
+.teammates__tchart-header {
+    grid-area: tchart;
+}
+
+.teammates__g-header {
+    grid-area: G;
+}
+
+.teammates__s-header {
+    grid-area: S;
+}
+
+.teammates__b-header {
+    grid-area: B;
+}
+
+.teammates__e-header {
+    grid-area: E;
+}
+
+.teammates__border-base {
+    border-color: black;
+    border-style: solid;
+}
+
+.teammates__border-u {
+    border-width: 0px 1px 1px 1px;
+}
+
+.teammates__border-corner {
+    border-width: 0px 1px 1px 0px;
+}
+
+.teammates__border-full {
+    border-width: 1px;
+}
+
+.teammates__border-moon {
+    border-width: 1px 1px 1px 0px;
+}
+
+
+.teammates__font-default {
+    font-size: 20px;
+}
+
+.teammates__header {
+    font-size: 20px;
+    font-weight: bold;
+
+    display: grid;
+    place-content: center;
+}
+
+.teammates__sortable-header {
+    cursor: pointer;
+}
+
+.teammates__cell-data {
+    font-size: 20px;
+
+    display: grid;
+    place-content: center;
+}
+
+.teammates__cell-name {
+    font-size: 20px;
+
+    display: grid;
+    justify-content: start;
+    align-content: center;
+}
+
+.teammates__player-name {
+    margin-left: 10px;
+}
+
+
+.teammates__match-chart {
+    display: flex;
+    flex-flow: row nowrap;
+    //grid-template-areas: "w d l";
+    //place-content: stretch;
+    //width: 100%;
+}
+
+.teammates__w-section {
+    background-color: #88FFAA;
+    //width: 30%;
+    //min-width: 30%;
+    flex: 12 12;
+
+    display: flex;
+    justify-content: center;
+}
+
+.teammates__d-section {
+    background-color: #AAAAAA;
+
+    display: flex;
+    justify-content: center;
+}
+
+.teammates__l-section {
+    background-color: #FFAAAA;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+.teammates__tournament-chart {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.teammates__1-section {
+    background-color: #FFD700;
+
+    display: flex;
+    justify-content: center;
+}
+
+.teammates__2-section {
+    background-color: #D3D3D3;
+
+    display: flex;
+    justify-content: center;
+}
+
+.teammates__3-section {
+    background-color: #CD7F32;
+
+    display: flex;
+    justify-content: center;
+}
+
+.teammates__4-section {
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+}
