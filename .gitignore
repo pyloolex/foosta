@@ -2,6 +2,5 @@ codeforces/
 .DS_Store
 node_modules
 __pycache__
-trash.py
 ubuntu-bionic-18.04-cloudimg-console.log
 .vagrant
