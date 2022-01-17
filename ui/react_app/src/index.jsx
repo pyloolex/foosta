@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TrashUsers from './trashcan/users';
 import Navbar from './navbar';
 import Events from './components/events';
@@ -14,11 +14,11 @@ class MainRouter extends React.Component {
     return (
       <BrowserRouter>
         <Navbar.Navbar />
-        <Switch>
-          <Route path="/" exact component={Elo.Elo} />
-          <Route path="/rest" exact component={TrashUsers.Home} />
-          <Route path="/events" component={Events.EventsRouter} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Elo.Elo />} />
+          <Route path="/rest" element={<TrashUsers.Home />} />
+          <Route path="/events/*" element={<Events.EventsRouter />} />
+        </Routes>
       </BrowserRouter>
     );
   }

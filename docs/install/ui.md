@@ -3,6 +3,7 @@
 ## Deploying app with Docker
 
 First of all, make sure that `package.json` and `yarn.lock` are present in the directory, `node_modules`, in contrast, isn't. If it is, remove it.
+(Only the `package.json` is mandatory. `yarn.lock` doesn't need to be removed. But if there is no `yarn.lock`, it's not a problem.)
 
 Go to `foosta/ui` and build a docker image:
 ```bash
@@ -56,6 +57,7 @@ Rebuilding an image and recreating a container after every change during develop
 In order to build it in a VM, you need to install NodeJS and Yarn ([tutorial](/doc/install/nodejs_and_yarn.md)).
 
 Then navigate to `foosta/ui/react_app` and make sure that `package.json` and `yarn.lock` are present in the directory, `node_modules`, in contrast, isn't. If it is, remove it.
+(Only the `package.json` is mandatory. `yarn.lock` doesn't need to be removed. But if there is no `yarn.lock`, it's not a problem.)
 
 Then run:
 ```bash
@@ -115,4 +117,36 @@ and checking out `172.28.128.4:3000` in a browser.
 You might also need to install `react-router-dom`:
 ```bash
     yarn add react-router-dom
+```
+
+
+
+## Upgrading React
+Upgrading NodeJS and Yarn is easy. You just do the same that you did when installing them for the first time.
+
+Official guide: https://create-react-app.dev/docs/updating-to-new-releases/
+
+> When you run npx create-react-app my-app it automatically installs the latest version of Create React App.
+
+After you upgraded NodeJS, create new React app somewhere.
+```bash
+    npx create-react-app myapp
+```
+
+Open generated `package.json` and compare it to what you had in Foosta's `package.json`. The only interesting section is the `dependencies`.
+
+If you want to have everything latest, you need to set the same versions in you Foosta's `package.json` as in the newly generated app.
+Since Foosta has additional packages, the new app `dependencies` collection has fewer items. Install everything missing through `yarn add` so that the `dependencies` collections in `myapp` and Foosta's `package.json` contain the same number of items.
+For example,
+```bash
+    yarn add react-router-dom
+```
+
+Now set latest versions in your Foosta's `package.json`.
+
+Then remove `node_modules` directory. (You don't need to remove `yarn.lock`)
+
+Then run
+```bash
+    yarn install
 ```

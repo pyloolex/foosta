@@ -1,6 +1,6 @@
 import React from 'react';
 import './events.css';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Matches from './matches';
 import Tournaments from './tournaments';
 import PostEvent from './post_event';
@@ -81,10 +81,10 @@ class EventsRouter extends React.Component {
   render()
   {
     return (
-      <Switch>
-        <Route path="/events" exact component={ListEvents} />
-        <Route path="/events/new" exact component={PostEvent.PostEvent} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<ListEvents />} />
+        <Route path="/new" element={<PostEvent.PostEvent />} />
+      </Routes>
     );
   }
 }
