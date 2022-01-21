@@ -1,5 +1,7 @@
 import React from 'react';
 import './elo.css';
+import '../index.css';
+import { Link } from 'react-router-dom';
 
 
 class Elo extends React.Component {
@@ -75,7 +77,7 @@ class Elo extends React.Component {
           >
             <p className="player-name"
                key={'player_name' + data[idx].player}>
-              {data[idx].player}
+              <Link to={`/stats/${data[idx].player}`}>{data[idx].player}</Link>
             </p>
           </div>
           <div className="cell data-cell participated"
@@ -89,6 +91,7 @@ class Elo extends React.Component {
         </React.Fragment>
       );
     }
+
     return response;
   };
 
@@ -98,17 +101,17 @@ class Elo extends React.Component {
     {
       if (this.state.sorting[0].type === 1)
       {
-        return <img className="sorting"
+        return <img className="sorting-icon"
                     src="sort_up.png"
                     alt="sort_up"
                />;
       }
-      return <img className="sorting"
+      return <img className="sorting-icon"
                   src="sort_down.png"
                   alt="sort_down"
              />;
     }
-    return <img className="sorting"
+    return <img className="sorting-icon"
                 src="sortable.png"
                 alt="sortable"
                 style={{'opacity': 0.2}}

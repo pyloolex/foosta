@@ -50,3 +50,8 @@ body {
     padding-right: 10px;
     text-align: right;
 }
+
+.sorting-icon {
+    width: 10px;
+    margin-left: 5px;
+}

@@ -29,7 +29,7 @@ class GetTournament extends React.Component
       return '#CD7F32';
     }
     // This is the foosta's base background color.
-    return '#F0FFFB'
+    return '#F0FFFB';
   }
 
   render()
