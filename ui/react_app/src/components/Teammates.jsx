@@ -261,7 +261,10 @@ const Teammates = props =>
                           + "teammates__cell-name"}
                style={{'backgroundColor': rowColor}}>
             <p className="teammates__player-name">
-              <Link to={`/stats/${data.name}`}>{data.name}</Link>
+              <Link className="player-name-link"
+                    to={`/stats/${data.name}`}>
+                {data.name}
+              </Link>
             </p>
           </div>
           <div className={"teammates__border-base "
@@ -374,7 +377,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('name')}>
         <div>
           Name
@@ -385,7 +388,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('events')}>
         <div>
           #
@@ -396,7 +399,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('match')}>
         <div>
           #
@@ -407,7 +410,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('match_result')}>
         <div>
           Result
@@ -418,7 +421,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('perc_W')}>
         <div>
           W
@@ -429,7 +432,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('perc_D')}>
         <div>
           D
@@ -440,7 +443,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('perc_L')}>
         <div>
           L
@@ -451,7 +454,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('tournament')}>
         <div>
           #
@@ -462,7 +465,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('tournament_result')}>
         <div>
           Result
@@ -473,7 +476,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('perc_1')}>
         <div>
           1
@@ -484,7 +487,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('perc_2')}>
         <div>
           2
@@ -495,7 +498,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('perc_3')}>
         <div>
           3
@@ -506,7 +509,7 @@ const Teammates = props =>
                       + "teammates__border-base "
                       + "teammates__border-corner "
                       + "teammates__header "
-                      + "teammates__sortable-header"}
+                      + "sortable-header"}
            onClick={() => handleHeaderClick('perc_4')}>
         <div>
           4+
