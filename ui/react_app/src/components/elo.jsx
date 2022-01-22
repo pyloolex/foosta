@@ -77,7 +77,10 @@ class Elo extends React.Component {
           >
             <p className="player-name"
                key={'player_name' + data[idx].player}>
-              <Link to={`/stats/${data[idx].player}`}>{data[idx].player}</Link>
+              <Link className="player-name-link"
+                    to={`/stats/${data[idx].player}`}>
+                {data[idx].player}
+              </Link>
             </p>
           </div>
           <div className="cell data-cell participated"
