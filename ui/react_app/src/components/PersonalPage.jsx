@@ -17,7 +17,9 @@ const PersonalPage = props =>
       <select value="Teammates" onChange={()=>{}}>
         <option value="teammates">Teammates</option>
       </select>
-      <Teammates.Teammates hero={hero} />
+      {/* Passing key so that the component rerenders
+          after the hero is changed */}
+      <Teammates.Teammates key={hero} hero={hero} />
     </div>
   );
 }

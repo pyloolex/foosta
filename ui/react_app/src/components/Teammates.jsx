@@ -1,33 +1,147 @@
 import React, { useEffect, useState } from 'react';
 import './teammates.css'
 import '../index.css';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+
+
+const DEFAULT_SORTING = [{column: 'match_result', order: -1}];
 
 
 const Teammates = props =>
 {
   const MIN_PERC_TO_DRAW = 12;
 
-  const [teammates, setTeammates] = useState({});
-  const [resultSummary, setResultSummary] = useState({});
-  const [sorting, setSorting] = useState([{
-    column: 'match_result',
-    order: -1,
-  }]);
+  const parseSorting = (strSorting) =>
+  {
+    const POSSIBLE_VALUES = new Set([
+      'name', 'events', 'match', 'match_result',
+      'perc_W', 'perc_D', 'perc_L',
+      'tournament', 'tournament_result',
+      'perc_1', 'perc_2', 'perc_3', 'perc_4',
+    ]);
 
-  useEffect(() =>
+    const parseToken = (token, order) =>
     {
-      fetch(`/api/stats/${props.hero}`).then(
-        response => response.json()).then(
-          responseJson =>
-          {
-            setTeammates(responseJson['teammates']);
-            setResultSummary(responseJson['result_summary']);
-          }
-        );
-    },
-    [props.hero],
-  );
+      if (POSSIBLE_VALUES.has(token.slice(0, -2)))
+      {
+        return {
+          column: token.slice(0, -2),
+          order: order,
+        };
+      }
+      else
+      {
+        console.log('Unknown sorting parameter:', token.slice(0, -2));
+        return null;
+      }
+    }
+
+    const response = [];
+
+    const tokens = strSorting.split(',');
+    for (let i = 0; i < tokens.length; i++)
+    {
+      let parsedToken = null;
+      if (tokens[i].endsWith('_A'))
+      {
+        parsedToken = parseToken(tokens[i], 1);
+      }
+      else if (tokens[i].endsWith('_D'))
+      {
+        parsedToken = parseToken(tokens[i], -1);
+      }
+      else
+      {
+        console.log('Sorting parameter should end with "_A" or "_D":',
+                    tokens[i]);
+      }
+
+      if (parsedToken === null)
+      {
+        return null;
+      }
+
+      response.push(parsedToken);
+    }
+
+    return response;
+  }
+
+  const obtainInitialSorting = () =>
+  {
+    const params = Object.fromEntries(searchParams.entries());
+    if (!params.hasOwnProperty('sort'))
+    {
+      return DEFAULT_SORTING;
+    }
+
+    const parsedSorting = parseSorting(params.sort);
+    if (parsedSorting === null)
+    {
+      return DEFAULT_SORTING;
+    }
+
+    return parsedSorting;
+  }
+
+  const transformSortingToString = (newSorting) =>
+  {
+    const transformSortingElemToStr = (element) =>
+    {
+      return element.column + (element.order === 1 ? '_A' : '_D');
+    }
+
+    let sortingString = transformSortingElemToStr(newSorting[0]);
+    for (let i = 1; i < newSorting.length; i++)
+    {
+      sortingString += ',' + transformSortingElemToStr(newSorting[i]);
+    }
+    return sortingString;
+  }
+
+  const updateSortingAndDeps = (newSorting) =>
+  {
+    setSearchParams({
+      ...searchParams,
+      sort: transformSortingToString(newSorting),
+    });
+    setSorting(newSorting);
+  }
+
+  const handleHeaderClick = (columnName) =>
+  {
+    let pos = -1;
+    for (let i = 0; i < sorting.length; i++)
+    {
+      if (sorting[i].column === columnName)
+      {
+        pos = i;
+        break;
+      }
+    }
+
+    let element;
+    if (pos === 0)
+    {
+      element = { ...sorting[pos] };
+      element.order *= -1;
+    }
+    else
+    {
+      element = {column: columnName, order: 1};
+    }
+
+    const newSorting = [element];
+    for (let i = 0; i < sorting.length; i++)
+    {
+      if (i !== pos)
+      {
+        newSorting.push(sorting[i]);
+      }
+    }
+
+    updateSortingAndDeps(newSorting);
+  }
 
   const getSortingIcon = (columnName) =>
   {
@@ -50,41 +164,6 @@ const Teammates = props =>
                 alt="sortable"
                 style={{'opacity': 0.2}}
            />;
-  }
-
-  const handleHeaderClick = (columnName) =>
-  {
-    let pos = -1;
-    for (let i = 0; i < sorting.length; i++)
-    {
-      if (sorting[i].column === columnName)
-      {
-        pos = i;
-        break;
-      }
-    }
-
-    let element;
-    if (pos === -1)
-    {
-      element = {column: columnName, order: 1};
-    }
-    else
-    {
-      element = { ...sorting[pos] };
-      element.order *= -1;
-    }
-
-    const newSorting = [element];
-    for (let i = 0; i < sorting.length; i++)
-    {
-      if (i !== pos)
-      {
-        newSorting.push(sorting[i]);
-      }
-    }
-
-    setSorting(newSorting);
   }
 
   const getPercent = (value, total) =>
@@ -347,6 +426,27 @@ const Teammates = props =>
 
     return response;
   }
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [teammates, setTeammates] = useState({});
+  const [resultSummary, setResultSummary] = useState({});
+
+  const [sorting, setSorting] = useState(obtainInitialSorting());
+
+  useEffect(() =>
+    {
+      fetch(`/api/stats/${props.hero}`).then(
+        response => response.json()).then(
+          responseJson =>
+          {
+            setTeammates(responseJson['teammates']);
+            setResultSummary(responseJson['result_summary']);
+          }
+        );
+    },
+    [props.hero],
+  );
 
   return (
     <div className="teammates__container">
