@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './teammates.css'
 import '../index.css';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 const DEFAULT_SORTING = [{column: 'match_result', order: -1}];
 
 
-const Teammates = props =>
+const Teammates = ({ teammates, resultSummary }) =>
 {
   const MIN_PERC_TO_DRAW = 12;
 
@@ -429,24 +429,7 @@ const Teammates = props =>
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [teammates, setTeammates] = useState({});
-  const [resultSummary, setResultSummary] = useState({});
-
   const [sorting, setSorting] = useState(obtainInitialSorting());
-
-  useEffect(() =>
-    {
-      fetch(`/api/stats/${props.hero}`).then(
-        response => response.json()).then(
-          responseJson =>
-          {
-            setTeammates(responseJson['teammates']);
-            setResultSummary(responseJson['result_summary']);
-          }
-        );
-    },
-    [props.hero],
-  );
 
   return (
     <div className="teammates__container">
