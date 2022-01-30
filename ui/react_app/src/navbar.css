@@ -3,7 +3,8 @@
     background-color: #447755;
     display:flex;
     align-items:center;
-    /*justify-content:center;*/
+    /* The widest table is 1360px */
+    min-width: 1400px;
 }
 
 #foosta-logo-navbar {
