@@ -19,7 +19,8 @@ class MainRouter extends React.Component {
           <Route path="/" element={<Elo.Elo />} />
           <Route path="/rest" element={<TrashUsers.Home />} />
           <Route path="/events/*" element={<Events.EventsRouter />} />
-          <Route path="/stats/:hero" element={<PersonalPage.PersonalPage />} />
+          <Route path="/stats/:hero" element={
+                   <PersonalPage.PersonalPageProxy />} />
         </Routes>
       </BrowserRouter>
     );

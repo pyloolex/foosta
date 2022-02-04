@@ -327,7 +327,7 @@ const Teammates = ({ teammates, resultSummary }) =>
     for (let data of sortedTeammates)
     {
       // Foosta's base background color or a bit brighter.
-      const rowColor = idx % 2 ? '#e3f5ff' : '#F0FFFB';
+      const rowColor = idx % 2 ? '#E3F5FF' : '#F0FFFB';
       response.push(
         <React.Fragment key={data.name}>
           <div className={"teammates__border-base "

@@ -3,7 +3,8 @@
     padding: 0;
 }
 body {
-    background-color: #f0fffb;
+    /* Foosta's base color. */
+    background-color: #F0FFFB;
 }
 
 .read-match {
@@ -51,9 +52,17 @@ body {
     text-align: right;
 }
 
+
 .sorting-icon {
     width: 10px;
     margin-left: 5px;
+}
+
+.sortable-header {
+    cursor: pointer;
+}
+.sortable-header:hover {
+    text-decoration: underline;
 }
 
 
@@ -66,9 +75,13 @@ body {
 }
 
 
-.sortable-header {
-    cursor: pointer;
+.border1-base {
+    border-color: black;
+    border-style: solid;
 }
-.sortable-header:hover {
-    text-decoration: underline;
+.border1-rd {
+    border-width: 0px 1px 1px 0px;
+}
+.border1-d {
+    border-width: 0px 0px 1px 0px;
 }
