@@ -198,9 +198,9 @@ const EloGraph = (props) =>
   const drawMonthLines = () =>
   {
     const response = [];
-    for (let i = 1; i < 6; i++)
+    for (let i = 1; i < 4; i++)
     {
-      const x = i * MAIN_AREA_WIDTH / 6;
+      const x = i * MAIN_AREA_WIDTH / 4;
       response.push(
         <line x1={x} y1="0" x2={x} y2={MAIN_AREA_HEIGHT}
               stroke="black" strokeDasharray= "6 6"
@@ -215,34 +215,24 @@ const EloGraph = (props) =>
   const drawMonthNames = () =>
   {
     const y = MAIN_AREA_MARGIN_VERTICAL + MAIN_AREA_HEIGHT + 20;
-    const step = MAIN_AREA_WIDTH / 6;
+    const step = MAIN_AREA_WIDTH / 4;
 
     return (
       <React.Fragment>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 1 - 30} y={y}
+        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 1 - 10} y={y}
               fontSize="20px"
         >
-          March
+          25
         </text>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 2 - 22} y={y}
+        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 2 - 10} y={y}
               fontSize="20px"
         >
-          May
+          50
         </text>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 3 - 17} y={y}
+        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 3 - 10} y={y}
               fontSize="20px"
         >
-          July
-        </text>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 4 - 40} y={y}
-              fontSize="20px"
-        >
-          September
-        </text>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 5 - 42} y={y}
-              fontSize="20px"
-        >
-          November
+          75
         </text>
       </React.Fragment>
     );
