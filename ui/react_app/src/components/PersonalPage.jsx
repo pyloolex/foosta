@@ -4,6 +4,7 @@ import './personal_page.css';
 import { useParams } from 'react-router-dom';
 import EloGraph from './EloGraph';
 import PersonalEvents from './PersonalEvents';
+import PersonalSummary from './PersonalSummary';
 import Teammates from './Teammates';
 
 
@@ -67,6 +68,10 @@ const PersonalPage = props =>
   return (
     <div>
       <h1 className="personalpage__hero-name">{hero}</h1>
+      <PersonalSummary.PersonalSummary
+        elo={apiData.elo}
+        resultSummary={apiData.result_summary}
+      />
       <EloGraph.EloGraph elo={apiData.elo}
                          hovered={hovered}
                          setHovered={setHovered}

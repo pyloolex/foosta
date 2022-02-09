@@ -1,0 +1,9 @@
+.psummary__container {
+    display: grid;
+
+    /* Total: 480 */
+    grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 80px;
+    grid-template-rows: 30px 30px;
+
+    margin: 10px;
+}
