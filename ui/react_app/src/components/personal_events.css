@@ -1,0 +1,86 @@
+.pevents__container {
+    display: grid;
+
+    grid-template-columns: 480px;
+    grid-template-rows: 30px 300px;
+
+    grid-template-areas:
+        "header"
+        "data";
+
+    margin: 10px;
+}
+
+.pevents__container-header {
+    grid-area: header;
+
+    display: grid;
+
+    /* Total: 480px */
+    grid-template-columns: 50px 170px 100px 156px;
+    grid-template-rows: 30px;
+    grid-template-areas:
+        "N date result elo";
+
+    border-color: black;
+    border-style: solid;
+    border-width: 2px 2px 0px 2px;
+}
+
+.pevents__container-data {
+    grid-area: data;
+
+    display: grid;
+
+    /* Total: 480px */
+    grid-template-columns: 50px 170px 100px 156px;
+    grid-auto-rows: 30px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-color: black;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+}
+
+.pevents__header {
+    font-size: 20px;
+    font-weight: bold;
+
+    display: grid;
+    place-content: center;
+
+    background-color: #DDDDDD;
+}
+
+.pevents__N-header {
+    grid-area: N;
+
+    border-width: 0px 1px 0px 0px;
+}
+
+.pevents__date-header {
+    grid-area: date;
+
+    border-width: 0px 1px 0px 0px;
+}
+
+.pevents__result-header {
+    grid-area: result;
+
+    border-width: 0px 1px 0px 0px;
+}
+
+.pevents__elo-header {
+    grid-area: elo;
+
+    border-width: 0px;
+}
+
+.pevents__data-cell {
+    font-size: 20px;
+
+    display: grid;
+    place-content: center;
+}

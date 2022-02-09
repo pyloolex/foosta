@@ -14,6 +14,10 @@ const MINMAX_MARGIN = 50;
 
 const EloGraph = (props) =>
 {
+  const calcX = (step) =>
+  {
+    return step * MAIN_AREA_WIDTH / MAX_EVENT_COUNT;
+  }
   const calcY = (rating) =>
   {
     return MAIN_AREA_HEIGHT - (rating - minValShifted) * resizeCoef;
@@ -21,11 +25,6 @@ const EloGraph = (props) =>
 
   const drawLinePath = () =>
   {
-    const calcX = (step) =>
-    {
-      return step * MAIN_AREA_WIDTH / MAX_EVENT_COUNT;
-    }
-
     const response = [];
     let lastX = null;
     let lastY = null;
@@ -38,9 +37,10 @@ const EloGraph = (props) =>
 
       const x = calcX(i);
       const y = calcY(props.elo[i].rating);
+      const radius = i === props.hovered ? 4 : 2;
 
       response.push(
-        <circle cx={x} cy={y} r="2" key={'point_' + i} />
+        <circle cx={x} cy={y} r={radius} key={'point_' + i} />
       );
 
       if (lastX !== null)
@@ -200,7 +200,7 @@ const EloGraph = (props) =>
     const response = [];
     for (let i = 1; i < 4; i++)
     {
-      const x = i * MAIN_AREA_WIDTH / 4;
+      const x = calcX(i * 25 - 1);
       response.push(
         <line x1={x} y1="0" x2={x} y2={MAIN_AREA_HEIGHT}
               stroke="black" strokeDasharray= "6 6"
@@ -215,27 +215,42 @@ const EloGraph = (props) =>
   const drawMonthNames = () =>
   {
     const y = MAIN_AREA_MARGIN_VERTICAL + MAIN_AREA_HEIGHT + 20;
-    const step = MAIN_AREA_WIDTH / 4;
 
     return (
       <React.Fragment>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 1 - 10} y={y}
+        <text x={MAIN_AREA_MARGIN_HORIZONTAL + calcX(24) - 10} y={y}
               fontSize="20px"
         >
           25
         </text>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 2 - 10} y={y}
+        <text x={MAIN_AREA_MARGIN_HORIZONTAL + calcX(49) - 10} y={y}
               fontSize="20px"
         >
           50
         </text>
-        <text x={MAIN_AREA_MARGIN_HORIZONTAL + step * 3 - 10} y={y}
+        <text x={MAIN_AREA_MARGIN_HORIZONTAL + calcX(74) - 10} y={y}
               fontSize="20px"
         >
           75
         </text>
       </React.Fragment>
     );
+  }
+
+  const handleHover = (event) =>
+  {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const eventX = event.clientX - bounds.left;
+    const idx = Math.round(eventX / (MAIN_AREA_WIDTH / MAX_EVENT_COUNT));
+    console.assert(idx >= 0);
+    props.setHovered(idx);
+    props.setScrolled(idx);
+  }
+
+  const handleNoHover = (event) =>
+  {
+    props.setHovered(-1);
+    props.setScrolled(-1);
   }
 
   const [minValShifted, maxValShifted, resizeCoef] = calcMinMax();
@@ -249,7 +264,10 @@ const EloGraph = (props) =>
         {drawMonthNames()}
 
         <g transform={`translate(${MAIN_AREA_MARGIN_HORIZONTAL},` +
-                      `${MAIN_AREA_MARGIN_VERTICAL})`}>
+                      `${MAIN_AREA_MARGIN_VERTICAL})`}
+           onMouseMove={handleHover}
+           onMouseOut={handleNoHover}
+        >
           {drawColorRectangles()}
           {drawColorPartitions()}
           {drawMonthLines()}
