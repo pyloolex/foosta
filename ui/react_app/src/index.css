@@ -75,6 +75,7 @@ body {
 }
 
 
+/* Remove them and replace by the new classes. */
 .border1-base {
     border-color: black;
     border-style: solid;
@@ -84,4 +85,34 @@ body {
 }
 .border1-d {
     border-width: 0px 0px 1px 0px;
+}
+
+/* These are the new classes. */
+.border-solid-black {
+    border-color: black;
+    border-style: solid;
+}
+.border-0110 {
+    border-width: 0px 1px 1px 0px;
+}
+.border-0111 {
+    border-width: 0px 1px 1px 1px;
+}
+.border-1110 {
+    border-width: 1px 1px 1px 0px;
+}
+.border-1111 {
+    border-width: 1px 1px 1px 1px;
+}
+
+.font-20 {
+    font-size: 20px;
+}
+.font-bold {
+    font-weight: bold;
+}
+
+.grid-content-center {
+    display: grid;
+    place-content: center;
 }
