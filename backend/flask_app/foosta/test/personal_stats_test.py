@@ -535,6 +535,60 @@ class PersonalStatsTest(base.BaseFoostaApiTest):
         )
         self.assertEqual(200, response.status_code)
 
+        response = self.client.get('/stats/Charles')
+
+        self.assertEqual(
+            {
+                'elo': [
+                    {'date': '2010-01-01',
+                     'event_number': 0,
+                     'rating': 1184,
+                     'result': 'L'},
+                ],
+                'rivals': {
+                    'Aaron': {
+                        '1': 0,
+                        '2': 0,
+                        '3': 0,
+                        '4+': 0,
+                        'D': 0,
+                        'L': 1,
+                        'W': 0,
+                        'events': 1,
+                        'match': 1,
+                        'tournament': 0,
+                    },
+                    tricky_name: {
+                        '1': 0,
+                        '2': 0,
+                        '3': 0,
+                        '4+': 0,
+                        'D': 0,
+                        'L': 1,
+                        'W': 0,
+                        'events': 1,
+                        'match': 1,
+                        'tournament': 0,
+                    },
+                },
+                'teammates': {},
+                'result_summary': {
+                    '1': 0,
+                    '2': 0,
+                    '3': 0,
+                    '4+': 0,
+                    'D': 0,
+                    'L': 1,
+                    'W': 0,
+                    'events': 1,
+                    'match': 1,
+                    'tournament': 0,
+                },
+            },
+            response.json,
+        )
+        self.assertEqual(200, response.status_code)
+
 
 if __name__ == '__main__':
     unittest.main()
