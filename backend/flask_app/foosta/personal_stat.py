@@ -1,7 +1,7 @@
 import collections
 
-from foosta import common
 from foosta import elo
+from foosta import shared
 
 
 def build_persisted_elo(events, hero):
@@ -14,7 +14,7 @@ def build_persisted_elo(events, hero):
         response.append({
             'date': event['date'],
             'event_number': event['event_number'],
-            'result': common.represent_result(
+            'result': shared.represent_result(
                 event['event_type'], event['teams'], hero),
             'rating': player_elo[hero],
         })
@@ -23,15 +23,15 @@ def build_persisted_elo(events, hero):
 
 
 def build_stat_teammates(events, hero):
-    response = collections.defaultdict(common.default_result_summary)
+    response = collections.defaultdict(shared.default_result_summary)
 
     for event in events:
-        team_id = common.find_player_team(event['teams'], hero)
+        team_id = shared.find_player_team(event['teams'], hero)
         if team_id is None:
             # Hero doesn't play this game.
             continue
 
-        result = common.represent_result(
+        result = shared.represent_result(
             event['event_type'], event['teams'], hero, team_id)
         for player in event['teams'][team_id]['squad']:
             if player == hero:
@@ -45,15 +45,15 @@ def build_stat_teammates(events, hero):
 
 
 def build_stat_rivals(events, hero):
-    response = collections.defaultdict(common.default_result_summary)
+    response = collections.defaultdict(shared.default_result_summary)
 
     for event in events:
-        team_id = common.find_player_team(event['teams'], hero)
+        team_id = shared.find_player_team(event['teams'], hero)
         if team_id is None:
             # Hero doesn't play this game.
             continue
 
-        result = common.represent_result(
+        result = shared.represent_result(
             event['event_type'], event['teams'], hero, team_id)
         for i, team in enumerate(event['teams']):
             if i == team_id:

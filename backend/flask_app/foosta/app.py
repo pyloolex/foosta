@@ -5,8 +5,9 @@ import os.path
 
 import flask
 
-from foosta import common
 from foosta import personal_stat
+from foosta import shared
+from foosta import total_stat
 from foosta import util
 import foosta.foosta_lollipop as s
 
@@ -254,13 +255,29 @@ def get_elo():
     return flask.jsonify({'items': response})
 
 
+@app.route('/stats', methods=['GET'])
+def get_total_stats():
+    _, cursor = util.connect_to_db()
+    events = util.translate_and_sort_events(cursor)
+
+    total = total_stat.build_total_stat(events)
+
+    response = {
+        'total': total,
+        'streaks': total_stat.build_streaks(events, total.keys()),
+        'goals': total_stat.build_goals(events),
+    }
+
+    return flask.jsonify(response), 200
+
+
 @app.route('/stats/<hero>', methods=['GET'])
 def get_personal_stats(hero):
     _, cursor = util.connect_to_db()
 
     events = util.translate_and_sort_events(cursor)
 
-    result_summary = common.build_result_summary(events)
+    result_summary = shared.build_result_summary(events)
     if hero not in result_summary:
         return flask.jsonify({
             'errors': f"Player '{hero}' doesn't exist"}), 404
