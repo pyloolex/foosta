@@ -1,4 +1,6 @@
 import React from 'react';
+import Utils from '../utils/utils';
+
 import './elo_graph.css'
 
 
@@ -126,38 +128,12 @@ const EloGraph = (props) =>
     return response;
   }
 
-  const calcColorFromRating = (rating) =>
-  {
-    if (rating < 1000)
-    {
-      return '#CCCCCC';
-    }
-    if (rating < 1100)
-    {
-      return '#AAFFAA';
-    }
-    if (rating < 1200)
-    {
-      return '#AACCFF';
-    }
-    if (rating < 1300)
-    {
-      return '#DDAAFF';
-    }
-    if (rating < 1400)
-    {
-      return '#FFAA66';
-    }
-
-    return '#FF8888';
-  }
-
   const drawColorRect = (low, high) =>
   {
     return (
       <rect x="0" y={calcY(high)}
             width={MAIN_AREA_WIDTH} height={calcY(low) - calcY(high)}
-            fill={calcColorFromRating(low)}
+            fill={Utils.getEloColor(low)}
             key={low} />
     );
   }

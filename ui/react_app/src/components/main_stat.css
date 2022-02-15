@@ -1,0 +1,23 @@
+.mainstat__container {
+    display: grid;
+    grid-template-columns: 40px 250px 40px 80px 40px 40px 40px 40px 60px 50px 40px 40px 40px 40px 40px 60px;
+    grid-template-areas:
+        "empty empty common common matches matches matches matches matches matches tournaments tournaments tournaments tournaments tournaments tournaments"
+        "N name events elo match W D L pW pts tournament G S B E pG";
+
+    grid-auto-rows: 30px;
+    margin: 10px;
+}
+
+.mainstat__header-empty {
+    grid-area: empty;
+}
+.mainstat__header-common {
+    grid-area: common;
+}
+.mainstat__header-matches {
+    grid-area: matches;
+}
+.mainstat__header-tournaments {
+    grid-area: tournaments;
+}

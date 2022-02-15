@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-//import ReactDOM from 'react-dom';
-import './personal_page.css';
 import { useParams } from 'react-router-dom';
 import EloGraph from './EloGraph';
 import PersonalEvents from './PersonalEvents';
 import PersonalSummary from './PersonalSummary';
 import Teammates from './Teammates';
+
+import './personal_page.css';
+import '../index.css';
 
 
 const PersonalPage = props =>
@@ -40,22 +41,60 @@ const PersonalPage = props =>
                 {
                   'date': '2021-02-04',
                   'event_number': 0,
-                  'rating': 1250,
-                  'result': 'W',
-                },
-                {
-                  'date': '2021-02-05',
-                  'event_number': 0,
-                  'rating': 1250,
+                  'rating': 1700,
                   'result': 'W',
                 },
                 {
                   'date': '2021-02-04',
                   'event_number': 0,
-                  'rating': 1250,
+                  'rating': 1600,
+                  'result': 'W',
+                },
+                {
+                  'date': '2021-02-05',
+                  'event_number': 0,
+                  'rating': 1000,
+                  'result': 'W',
+                },
+                {
+                  'date': '2021-02-04',
+                  'event_number': 0,
+                  'rating': 1010,
                   'result': 'W',
                 }
               ],
+            });
+            */
+
+            /*
+            setApiData({
+              ...responseJson,
+              'result_summary': {
+                'events': 13,
+                'match': 0,
+                'tournament': 13,
+                'W': 0,
+                'D': 0,
+                'L': 0,
+                '1': 2,
+                '2': 3,
+                '3': 6,
+                '4+': 2,
+              },
+              'teammates': {
+                'Fred': {
+                  'events': 4,
+                  'match': 0,
+                  'tournament': 4,
+                  'W': 0,
+                  'D': 0,
+                  'L': 0,
+                  '1': 1,
+                  '2': 1,
+                  '3': 1,
+                  '4+': 1,
+                },
+              },
             });
             */
           }
@@ -84,10 +123,13 @@ const PersonalPage = props =>
                                      setScrolled={setScrolled}
       />
 
-      <label>Statistics</label>
-      <select value="Teammates" onChange={()=>{}}>
-        <option value="teammates">Teammates</option>
-      </select>
+      <div className="statistics-select-holder">
+        <label className="statistics-label">Statistics: </label>
+        <select className="statistics-select" value="Teammates"
+                onChange={()=>{}}>
+          <option value="teammates">Teammates</option>
+        </select>
+      </div>
       <Teammates.Teammates
         key={hero}
         teammates={apiData.teammates}

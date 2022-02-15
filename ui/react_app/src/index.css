@@ -58,10 +58,8 @@ body {
     margin-left: 5px;
 }
 
-.sortable-header {
-    cursor: pointer;
-}
 .sortable-header:hover {
+    cursor: pointer;
     text-decoration: underline;
 }
 
@@ -112,7 +110,28 @@ body {
     font-weight: bold;
 }
 
+.margin-left {
+    margin-left: 10px;
+}
+
 .grid-content-center {
     display: grid;
     place-content: center;
+}
+.grid-content-left {
+    display: grid;
+    justify-content: left;
+    align-content: center;
+}
+
+.statistics-select-holder {
+    margin: 10px;
+}
+.statistics-label {
+    font-size: 22px;
+    font-weight: bold;
+}
+.statistics-select {
+    font-size: 22px;
+    background-color: #E3F5FF;
 }

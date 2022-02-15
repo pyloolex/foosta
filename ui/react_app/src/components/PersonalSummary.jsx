@@ -1,4 +1,6 @@
 import React from 'react';
+import Utils from '../utils/utils';
+
 import './personal_summary.css';
 import '../index.css';
 
@@ -134,6 +136,7 @@ const PersonalSummary = (props) =>
                       "border-0110 " +
                       "font-20 " +
                       "grid-content-center "}
+           style={{'backgroundColor': Utils.getEloColor(rating)}}
       >{rating}</div>
     </div>
   );

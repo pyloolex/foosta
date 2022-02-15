@@ -6,7 +6,7 @@ import PersonalPage from './components/PersonalPage';
 import TrashUsers from './trashcan/users';
 import Navbar from './navbar';
 import Events from './components/events';
-import Elo from './components/elo';
+import TotalPage from './components/TotalPage';
 
 
 class MainRouter extends React.Component {
@@ -16,7 +16,7 @@ class MainRouter extends React.Component {
       <BrowserRouter>
         <Navbar.Navbar />
         <Routes>
-          <Route path="/" element={<Elo.Elo />} />
+          <Route path="/" element={<TotalPage.TotalPage />} />
           <Route path="/rest" element={<TrashUsers.Home />} />
           <Route path="/events/*" element={<Events.EventsRouter />} />
           <Route path="/stats/:hero" element={

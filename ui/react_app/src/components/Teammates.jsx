@@ -2,185 +2,22 @@ import React, { useState } from 'react';
 import './teammates.css'
 import '../index.css';
 import { Link, useSearchParams } from 'react-router-dom';
+import SortingUtils from '../utils/Sorting';
+import Utils from '../utils/utils';
 
 
 const DEFAULT_SORTING = [{column: 'match_result', order: -1}];
+const POSSIBLE_SORT_VALUES = new Set([
+  'name', 'events', 'match', 'match_result',
+  'perc_W', 'perc_D', 'perc_L',
+  'tournament', 'tournament_result',
+  'perc_1', 'perc_2', 'perc_3', 'perc_4',
+]);
 
 
 const Teammates = ({ teammates, resultSummary }) =>
 {
   const MIN_PERC_TO_DRAW = 12;
-
-  const parseSorting = (strSorting) =>
-  {
-    const POSSIBLE_VALUES = new Set([
-      'name', 'events', 'match', 'match_result',
-      'perc_W', 'perc_D', 'perc_L',
-      'tournament', 'tournament_result',
-      'perc_1', 'perc_2', 'perc_3', 'perc_4',
-    ]);
-
-    const parseToken = (token, order) =>
-    {
-      if (POSSIBLE_VALUES.has(token.slice(0, -2)))
-      {
-        return {
-          column: token.slice(0, -2),
-          order: order,
-        };
-      }
-      else
-      {
-        console.log('Unknown sorting parameter:', token.slice(0, -2));
-        return null;
-      }
-    }
-
-    const response = [];
-
-    const tokens = strSorting.split(',');
-    for (let i = 0; i < tokens.length; i++)
-    {
-      let parsedToken = null;
-      if (tokens[i].endsWith('_A'))
-      {
-        parsedToken = parseToken(tokens[i], 1);
-      }
-      else if (tokens[i].endsWith('_D'))
-      {
-        parsedToken = parseToken(tokens[i], -1);
-      }
-      else
-      {
-        console.log('Sorting parameter should end with "_A" or "_D":',
-                    tokens[i]);
-      }
-
-      if (parsedToken === null)
-      {
-        return null;
-      }
-
-      response.push(parsedToken);
-    }
-
-    return response;
-  }
-
-  const obtainInitialSorting = () =>
-  {
-    const params = Object.fromEntries(searchParams.entries());
-    if (!params.hasOwnProperty('sort'))
-    {
-      return DEFAULT_SORTING;
-    }
-
-    const parsedSorting = parseSorting(params.sort);
-    if (parsedSorting === null)
-    {
-      return DEFAULT_SORTING;
-    }
-
-    return parsedSorting;
-  }
-
-  const transformSortingToString = (newSorting) =>
-  {
-    const transformSortingElemToStr = (element) =>
-    {
-      return element.column + (element.order === 1 ? '_A' : '_D');
-    }
-
-    let sortingString = transformSortingElemToStr(newSorting[0]);
-    for (let i = 1; i < newSorting.length; i++)
-    {
-      sortingString += ',' + transformSortingElemToStr(newSorting[i]);
-    }
-    return sortingString;
-  }
-
-  const updateSortingAndDeps = (newSorting) =>
-  {
-    setSearchParams({
-      ...searchParams,
-      sort: transformSortingToString(newSorting),
-    });
-    setSorting(newSorting);
-  }
-
-  const handleHeaderClick = (columnName) =>
-  {
-    let pos = -1;
-    for (let i = 0; i < sorting.length; i++)
-    {
-      if (sorting[i].column === columnName)
-      {
-        pos = i;
-        break;
-      }
-    }
-
-    let element;
-    if (pos === 0)
-    {
-      element = { ...sorting[pos] };
-      element.order *= -1;
-    }
-    else
-    {
-      element = {column: columnName, order: 1};
-    }
-
-    const newSorting = [element];
-    for (let i = 0; i < sorting.length; i++)
-    {
-      if (i !== pos)
-      {
-        newSorting.push(sorting[i]);
-      }
-    }
-
-    updateSortingAndDeps(newSorting);
-  }
-
-  const getSortingIcon = (columnName) =>
-  {
-    if (sorting[0].column === columnName)
-    {
-      if (sorting[0].order === 1)
-      {
-        return <img className="sorting-icon"
-                    src="/sort_up.png"
-                    alt="sort_up"
-               />;
-      }
-      return <img className="sorting-icon"
-                  src="/sort_down.png"
-                  alt="sort_down"
-             />;
-    }
-    return <img className="sorting-icon"
-                src="/sortable.png"
-                alt="sortable"
-                style={{'opacity': 0.2}}
-           />;
-  }
-
-  const getPercent = (value, total) =>
-  {
-    if (value === 0) return 0;
-    return value * 100 / total;
-  }
-
-  const drawPercent = (value, total) =>
-  {
-    const perc = getPercent(value, total);
-    if (perc > 0)
-    {
-      return perc.toFixed(1);
-    }
-    return 0;
-  }
 
   const drawSection = (value, total, className) =>
   {
@@ -251,69 +88,28 @@ const Teammates = ({ teammates, resultSummary }) =>
         'name': player,
 
         'match_result': [
-          getPercent(element['W'], element['match']),
-          getPercent(element['D'], element['match']),
-          getPercent(element['L'], element['match']),
+          Utils.getPercent(element['W'], element['match']),
+          Utils.getPercent(element['D'], element['match']),
+          Utils.getPercent(element['L'], element['match']),
         ],
         'tournament_result': [
-          getPercent(element['1'], element['tournament']),
-          getPercent(element['2'], element['tournament']),
-          getPercent(element['3'], element['tournament']),
-          getPercent(element['4+'], element['tournament']),
+          Utils.getPercent(element['1'], element['tournament']),
+          Utils.getPercent(element['2'], element['tournament']),
+          Utils.getPercent(element['3'], element['tournament']),
+          Utils.getPercent(element['4+'], element['tournament']),
         ],
 
-        'perc_W': getPercent(element['W'], resultSummary['W']),
-        'perc_D': getPercent(element['D'], resultSummary['D']),
-        'perc_L': getPercent(element['L'], resultSummary['L']),
-        'perc_1': getPercent(element['1'], resultSummary['1']),
-        'perc_2': getPercent(element['2'], resultSummary['2']),
-        'perc_3': getPercent(element['3'], resultSummary['3']),
-        'perc_4': getPercent(element['4+'], resultSummary['4+']),
+        'perc_W': Utils.getPercent(element['W'], resultSummary['W']),
+        'perc_D': Utils.getPercent(element['D'], resultSummary['D']),
+        'perc_L': Utils.getPercent(element['L'], resultSummary['L']),
+        'perc_1': Utils.getPercent(element['1'], resultSummary['1']),
+        'perc_2': Utils.getPercent(element['2'], resultSummary['2']),
+        'perc_3': Utils.getPercent(element['3'], resultSummary['3']),
+        'perc_4': Utils.getPercent(element['4+'], resultSummary['4+']),
       });
     }
 
-    const compare = (a, b) =>
-    {
-      if (a.constructor === Array)
-      {
-        console.assert(b.constructor === Array && a.length === b.length);
-
-        for (let i = 0; i < a.length; i++)
-        {
-          if (compare(a[i], b[i]) !== 0)
-          {
-            return compare(a[i], b[i]);
-          }
-        }
-
-        return 0;
-      }
-
-      if (a === b)
-      {
-        return 0;
-      }
-      if (a > b)
-      {
-        return 1;
-      }
-      return -1;
-    }
-
-    data.sort((a, b) =>
-      {
-        for (let param of sorting)
-        {
-          const compared = compare(a[param.column], b[param.column]);
-          if (compared !== 0)
-          {
-            return param.order * compared;
-          }
-        }
-        return 0;
-      }
-    );
-
+    SortingUtils.sortData(sorting, data);
     return data;
   }
 
@@ -323,18 +119,18 @@ const Teammates = ({ teammates, resultSummary }) =>
 
     const sortedTeammates = sortTeammates();
 
-    let idx = 1;
-    for (let data of sortedTeammates)
+    for (let i = 0; i < sortedTeammates.length; i++)
     {
-      // Foosta's base background color or a bit brighter.
-      const rowColor = idx % 2 ? '#E3F5FF' : '#F0FFFB';
+      const data = sortedTeammates[i];
+      const rowColor = Utils.getRowColor(i);
+
       response.push(
         <React.Fragment key={data.name}>
           <div className={"teammates__border-base "
                           + "teammates__border-u "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-          {idx}</div>
+          {i + 1}</div>
           <div className={"teammates__border-base "
                           + "teammates__border-corner "
                           + "teammates__cell-name"}
@@ -369,19 +165,19 @@ const Teammates = ({ teammates, resultSummary }) =>
                           + "teammates__border-corner "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-            {drawPercent(data.W, resultSummary.W)}
+            {Utils.roundPercent(data.W, resultSummary.W)}
           </div>
           <div className={"teammates__border-base "
                           + "teammates__border-corner "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-            {drawPercent(data.D, resultSummary.D)}
+            {Utils.roundPercent(data.D, resultSummary.D)}
           </div>
           <div className={"teammates__border-base "
                           + "teammates__border-corner "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-            {drawPercent(data.L, resultSummary.L)}
+            {Utils.roundPercent(data.L, resultSummary.L)}
           </div>
           <div className={"teammates__border-base "
                           + "teammates__border-corner "
@@ -398,38 +194,38 @@ const Teammates = ({ teammates, resultSummary }) =>
                           + "teammates__border-corner "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-            {drawPercent(data['1'], resultSummary['1'])}
+            {Utils.roundPercent(data['1'], resultSummary['1'])}
           </div>
           <div className={"teammates__border-base "
                           + "teammates__border-corner "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-            {drawPercent(data['2'], resultSummary['2'])}
+            {Utils.roundPercent(data['2'], resultSummary['2'])}
           </div>
           <div className={"teammates__border-base "
                           + "teammates__border-corner "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-            {drawPercent(data['3'], resultSummary['3'])}
+            {Utils.roundPercent(data['3'], resultSummary['3'])}
           </div>
           <div className={"teammates__border-base "
                           + "teammates__border-corner "
                           + "teammates__cell-data"}
                style={{'backgroundColor': rowColor}}>
-            {drawPercent(data['4+'], resultSummary['4+'])}
+            {Utils.roundPercent(data['4+'], resultSummary['4+'])}
           </div>
         </React.Fragment>
       );
-
-      idx++;
     }
 
     return response;
   }
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamsEntries = Object.fromEntries(searchParams.entries());
 
-  const [sorting, setSorting] = useState(obtainInitialSorting());
+  const [sorting, setSorting] = useState(SortingUtils.obtainInitialSorting(
+    searchParamsEntries, DEFAULT_SORTING, POSSIBLE_SORT_VALUES));
 
   return (
     <div className="teammates__container">
@@ -461,10 +257,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('name')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'name')}>
         <div>
           Name
-          {getSortingIcon('name')}
+          {SortingUtils.getSortingIcon(sorting, 'name')}
         </div>
       </div>
       <div className={"teammates__events-header "
@@ -472,10 +270,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('events')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'events')}>
         <div>
           #
-          {getSortingIcon('events')}
+          {SortingUtils.getSortingIcon(sorting, 'events')}
         </div>
       </div>
       <div className={"teammates__match-header "
@@ -483,10 +283,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('match')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'match')}>
         <div>
           #
-          {getSortingIcon('match')}
+          {SortingUtils.getSortingIcon(sorting, 'match')}
         </div>
       </div>
       <div className={"teammates__mchart-header "
@@ -494,10 +296,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('match_result')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'match_result')}>
         <div>
           Result
-          {getSortingIcon('match_result')}
+          {SortingUtils.getSortingIcon(sorting, 'match_result')}
         </div>
       </div>
       <div className={"teammates__w-header "
@@ -505,10 +309,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('perc_W')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'perc_W')}>
         <div>
           W
-          {getSortingIcon('perc_W')}
+          {SortingUtils.getSortingIcon(sorting, 'perc_W')}
         </div>
       </div>
       <div className={"teammates__d-header "
@@ -516,10 +322,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('perc_D')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'perc_D')}>
         <div>
           D
-          {getSortingIcon('perc_D')}
+          {SortingUtils.getSortingIcon(sorting, 'perc_D')}
         </div>
       </div>
       <div className={"teammates__l-header "
@@ -527,10 +335,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('perc_L')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'perc_L')}>
         <div>
           L
-          {getSortingIcon('perc_L')}
+          {SortingUtils.getSortingIcon(sorting, 'perc_L')}
         </div>
       </div>
       <div className={"teammates__tournament-header "
@@ -538,10 +348,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('tournament')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'tournament')}>
         <div>
           #
-          {getSortingIcon('tournament')}
+          {SortingUtils.getSortingIcon(sorting, 'tournament')}
         </div>
       </div>
       <div className={"teammates__tchart-header "
@@ -549,10 +361,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('tournament_result')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'tournament_result')}>
         <div>
           Result
-          {getSortingIcon('tournament_result')}
+          {SortingUtils.getSortingIcon(sorting, 'tournament_result')}
         </div>
       </div>
       <div className={"teammates__g-header "
@@ -560,10 +374,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('perc_1')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'perc_1')}>
         <div>
           1
-          {getSortingIcon('perc_1')}
+          {SortingUtils.getSortingIcon(sorting, 'perc_1')}
         </div>
       </div>
       <div className={"teammates__s-header "
@@ -571,10 +387,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('perc_2')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'perc_2')}>
         <div>
           2
-          {getSortingIcon('perc_2')}
+          {SortingUtils.getSortingIcon(sorting, 'perc_2')}
         </div>
       </div>
       <div className={"teammates__b-header "
@@ -582,10 +400,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('perc_3')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'perc_3')}>
         <div>
           3
-          {getSortingIcon('perc_3')}
+          {SortingUtils.getSortingIcon(sorting, 'perc_3')}
         </div>
       </div>
       <div className={"teammates__e-header "
@@ -593,10 +413,12 @@ const Teammates = ({ teammates, resultSummary }) =>
                       + "teammates__border-corner "
                       + "teammates__header "
                       + "sortable-header"}
-           onClick={() => handleHeaderClick('perc_4')}>
+           onClick={() => SortingUtils.handleHeaderClick(
+             sorting, setSorting, searchParamsEntries, setSearchParams,
+             'perc_4')}>
         <div>
           4+
-          {getSortingIcon('perc_4')}
+          {SortingUtils.getSortingIcon(sorting, 'perc_4')}
         </div>
       </div>
 

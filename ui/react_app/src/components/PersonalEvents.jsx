@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from 'react';
+import Utils from '../utils/utils';
+
 import './personal_events.css';
 import '../index.css';
 
@@ -30,7 +32,33 @@ const PersonalEvents = (props) =>
         strDiff = '+' + strDiff;
       }
 
-      return props.elo[idx].rating + ' (' + strDiff + ')';
+      return (
+        <p>
+          <span style={{'textColor': 'black'}}>
+            {props.elo[idx].rating + ' ('}
+          </span>
+          <span style={{'color': ((diff >= 0) ? 'green' : 'red')}}>
+            {strDiff}
+          </span>
+          <span style={{'textColor': 'black'}}>
+            {')'}
+          </span>
+        </p>
+      );
+    }
+
+    const getEloStyle = (event, idx) =>
+    {
+      const response = {
+        'backgroundColor': Utils.getEloColor(event.rating),
+      };
+
+      if (idx === props.hovered)
+      {
+        response.fontWeight = 'bold';
+      }
+
+      return response;
     }
 
     const response = [];
@@ -72,7 +100,7 @@ const PersonalEvents = (props) =>
           <div className={"pevents__data-cell "
                           + "border1-d "
                           + "border1-base "}
-               style={{'backgroundColor': getBackgroundColor(i)}}
+               style={getEloStyle(event, i)}
                onMouseOver={(event) => props.setHovered(i)}
           >
             {drawRatingField(i)}
