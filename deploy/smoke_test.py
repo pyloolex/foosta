@@ -1,5 +1,8 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+
 
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
@@ -20,5 +23,22 @@ driver = webdriver.Chrome(options=options)
 
 driver.get('http://localhost')
 
-assert 'First_player_ever' in driver.page_source
-assert 'Indispensable warrior' in driver.page_source
+
+def verify():
+    assert 'First_player_ever' in driver.page_source
+    assert 'Indispensable warrior' in driver.page_source
+
+
+def wait_for_completion():
+    # The page loading might take some time. Wait for it
+    # making 1sec pauses.
+    for i in range(10):
+        try:
+            return verify()
+        except:
+            pass
+
+        time.sleep(1)
+
+
+wait_for_completion()

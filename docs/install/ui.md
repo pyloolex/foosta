@@ -119,6 +119,12 @@ You might also need to install `react-router-dom`:
     yarn add react-router-dom
 ```
 
+And install `eslint`:
+```bash
+    yarn add eslint --dev
+```
+
+`--dev` means it's needed only for development. When you deploy your app, `eslint` won't be a dependency.
 
 
 ## Upgrading React
