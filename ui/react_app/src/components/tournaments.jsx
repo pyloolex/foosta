@@ -1,20 +1,25 @@
 import React from 'react';
-import './tournaments.css';
-import './events.css';
 
+import PropTypesUtils from 'utils/PropTypes';
+
+import 'components/events.css';
+import 'components/tournaments.css';
+
+
+/* eslint-disable require-jsdoc */
 class GetTournament extends React.Component
 {
   getTeams = () =>
   {
     return this.props.event.teams.sort(
-      (a, b) =>
-      {
-        return a.result - b.result;
-      }
+        (a, b) =>
+        {
+          return a.result - b.result;
+        },
     );
-  }
+  };
 
-  getPrizeColor = place =>
+  getPrizeColor = (place) =>
   {
     if (place === 1)
     {
@@ -30,9 +35,9 @@ class GetTournament extends React.Component
     }
     // This is the foosta's base background color.
     return '#F0FFFB';
-  }
+  };
 
-  render()
+  render = () =>
   {
     return (
       <div className="tournament-container">
@@ -40,42 +45,42 @@ class GetTournament extends React.Component
           <p>{this.props.event.date}</p>
         </div>
         {this.getTeams().map((team, idx) =>
-          {
-            return (
-              <React.Fragment key={'fragment' + idx}>
-                <div className="tournament-team-list"
-                     key={'squad' + idx}
-                     style={{
-                       "gridRow": 2 + idx,
-                       "gridColumn": 1,
-                       "backgroundColor": this.getPrizeColor(team.result),
-                     }}
-                >
-                  {team.squad.map(player =>
-                    {
-                      return (
-                        <p className="tournament-player-name"
-                           key={player}
-                        >
-                          {player}
-                        </p>
-                      );
-                    }
-                  )}
-                </div>
-                <div className="tournament-result-cell"
-                     key={'result' + idx}
-                     style={{
-                       "gridRow": 2 + idx,
-                       "gridColumn": 2,
-                       "backgroundColor": this.getPrizeColor(team.result),
-                     }}
-                >
-                  <p className="tournament-result-number">{team.result}</p>
-                </div>
-              </React.Fragment>
-            );
-          }
+        {
+          return (
+            <React.Fragment key={'fragment' + idx}>
+              <div className="tournament-team-list"
+                key={'squad' + idx}
+                style={{
+                  'gridRow': 2 + idx,
+                  'gridColumn': 1,
+                  'backgroundColor': this.getPrizeColor(team.result),
+                }}
+              >
+                {team.squad.map((player) =>
+                {
+                  return (
+                    <p className="tournament-player-name"
+                      key={player}
+                    >
+                      {player}
+                    </p>
+                  );
+                },
+                )}
+              </div>
+              <div className="tournament-result-cell"
+                key={'result' + idx}
+                style={{
+                  'gridRow': 2 + idx,
+                  'gridColumn': 2,
+                  'backgroundColor': this.getPrizeColor(team.result),
+                }}
+              >
+                <p className="tournament-result-number">{team.result}</p>
+              </div>
+            </React.Fragment>
+          );
+        },
         )}
       </div>
     );
@@ -83,7 +88,12 @@ class GetTournament extends React.Component
 }
 
 
-const export_default = {
+GetTournament.propTypes = {
+  event: PropTypesUtils.EVENT_SCHEMA.isRequired,
+};
+
+
+const exportDefault = {
   GetTournament,
-}
-export default export_default;
+};
+export default exportDefault;

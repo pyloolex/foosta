@@ -1,46 +1,44 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PersonalPage from './components/PersonalPage';
-import TrashUsers from './trashcan/users';
-import Navbar from './navbar';
-import Events from './components/events';
-import TotalPage from './components/TotalPage';
+import * as ReactRouterDom from 'react-router-dom';
+
+import PersonalPage from 'components/PersonalPage';
+import Navbar from 'components/Navbar';
+import Events from 'components/events';
+import TotalPage from 'components/TotalPage';
+
+import 'index.css';
 
 
-class MainRouter extends React.Component {
-  render()
-  {
-    return (
-      <BrowserRouter>
-        <Navbar.Navbar />
-        <Routes>
-          <Route path="/" element={<TotalPage.TotalPage />} />
-          <Route path="/rest" element={<TrashUsers.Home />} />
-          <Route path="/events/*" element={<Events.EventsRouter />} />
-          <Route path="/stats/:hero" element={
-                   <PersonalPage.PersonalPageProxy />} />
-        </Routes>
-      </BrowserRouter>
-    );
-  }
-}
+const MainRouter = () =>
+{
+  return <ReactRouterDom.BrowserRouter
+  >
+    <Navbar.Navbar />
+    <ReactRouterDom.Routes>
+      <ReactRouterDom.Route
+        path="/" element={<TotalPage.TotalPage />}
+      />
+      <ReactRouterDom.Route
+        path="/events/*" element={<Events.EventsRouter />}
+      />
+      <ReactRouterDom.Route
+        path="/stats/:hero" element={<PersonalPage.PersonalPageProxy />}
+      />
+    </ReactRouterDom.Routes>
+  </ReactRouterDom.BrowserRouter>;
+};
 
 
-class Foosta extends React.Component {
-  render()
-  {
-    return (
-      <MainRouter />
-    );
-  }
-}
+const Foosta = () =>
+{
+  return <MainRouter />;
+};
 
 
 // ========================================
 
 ReactDOM.render(
-  <Foosta />,
-  document.getElementById('root')
+    <Foosta />,
+    document.getElementById('root'),
 );

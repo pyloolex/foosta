@@ -1,4 +1,6 @@
-import '../index.css';
+import React from 'react';
+
+import 'index.css';
 
 
 const getSortingIcon = (sorting, columnName) =>
@@ -7,34 +9,36 @@ const getSortingIcon = (sorting, columnName) =>
   {
     if (sorting[0].order === 1)
     {
-      return <img className="sorting-icon"
-                  src="/sort_up.png"
-                  alt="sort_up"
-             />;
+      return <img
+        className="sorting-icon"
+        src="/sort_up.png"
+        alt="sort_up"
+      />;
     }
-    return <img className="sorting-icon"
-                src="/sort_down.png"
-                alt="sort_down"
-           />;
+    return <img
+      className="sorting-icon"
+      src="/sort_down.png"
+      alt="sort_down"
+    />;
   }
-  return <img className="sorting-icon"
-              src="/sortable.png"
-              alt="sortable"
-              style={{'opacity': 0.2}}
-         />;
-}
+  return <img
+    className="sorting-icon"
+    src="/sortable.png"
+    alt="sortable"
+    style={{'opacity': 0.2}}
+  />;
+};
 
 
-const handleHeaderClick = (sorting, setSorting,
-                           searchParamsEntries, setSearchParams,
-                           columnName) =>
+const handleHeaderClick = (
+    sorting, setSorting, searchParamsEntries, setSearchParams, columnName) =>
 {
   const transformSortingToString = (newSorting) =>
   {
     const transformSortingElemToStr = (element) =>
     {
       return element.column + (element.order === 1 ? '_A' : '_D');
-    }
+    };
 
     let sortingString = transformSortingElemToStr(newSorting[0]);
     for (let i = 1; i < newSorting.length; i++)
@@ -42,7 +46,7 @@ const handleHeaderClick = (sorting, setSorting,
       sortingString += ',' + transformSortingElemToStr(newSorting[i]);
     }
     return sortingString;
-  }
+  };
 
   let pos = -1;
   for (let i = 0; i < sorting.length; i++)
@@ -57,7 +61,7 @@ const handleHeaderClick = (sorting, setSorting,
   let element;
   if (pos === 0)
   {
-    element = { ...sorting[pos] };
+    element = {...sorting[pos]};
     element.order *= -1;
   }
   else
@@ -79,11 +83,11 @@ const handleHeaderClick = (sorting, setSorting,
     sort: transformSortingToString(newSorting),
   });
   setSorting(newSorting);
-}
+};
 
 
-const obtainInitialSorting = (searchParamsEntries, defaultSorting,
-                              possibleValues) =>
+const obtainInitialSorting = (
+    searchParamsEntries, defaultSorting, possibleValues) =>
 {
   const parseSorting = (strSorting) =>
   {
@@ -101,7 +105,7 @@ const obtainInitialSorting = (searchParamsEntries, defaultSorting,
         console.error('Unknown sorting parameter:', token.slice(0, -2));
         return null;
       }
-    }
+    };
 
     const response = [];
 
@@ -119,8 +123,8 @@ const obtainInitialSorting = (searchParamsEntries, defaultSorting,
       }
       else
       {
-        console.error('Sorting parameter should end with "_A" or "_D":',
-                      tokens[i]);
+        console.error(
+            'Sorting parameter should end with "_A" or "_D":', tokens[i]);
       }
 
       if (parsedToken === null)
@@ -132,7 +136,7 @@ const obtainInitialSorting = (searchParamsEntries, defaultSorting,
     }
 
     return response;
-  }
+  };
 
   if (!searchParamsEntries.hasOwnProperty('sort'))
   {
@@ -146,7 +150,7 @@ const obtainInitialSorting = (searchParamsEntries, defaultSorting,
   }
 
   return parsedSorting;
-}
+};
 
 
 const sortData = (sorting, data) =>
@@ -178,22 +182,21 @@ const sortData = (sorting, data) =>
       return 1;
     }
     return -1;
-  }
+  };
 
   data.sort((a, b) =>
+  {
+    for (const param of sorting)
     {
-      for (let param of sorting)
+      const compared = compare(a[param.column], b[param.column]);
+      if (compared !== 0)
       {
-        const compared = compare(a[param.column], b[param.column]);
-        if (compared !== 0)
-        {
-          return param.order * compared;
-        }
+        return param.order * compared;
       }
-      return 0;
     }
-  );
-}
+    return 0;
+  });
+};
 
 
 const exportDefault = {
@@ -201,5 +204,5 @@ const exportDefault = {
   handleHeaderClick,
   obtainInitialSorting,
   sortData,
-}
+};
 export default exportDefault;

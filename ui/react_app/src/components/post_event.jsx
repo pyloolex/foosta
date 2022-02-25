@@ -4,21 +4,23 @@ import PostMatch from './post_match';
 import PostTournament from './post_tournament';
 
 
-var ResponseStatus = {
+const ResponseStatus = {
   NOT_SET: 0,
   OK: 1,
   ERROR: 2,
 };
 
 
-class PostEvent extends React.Component {
+/* eslint-disable require-jsdoc */
+class PostEvent extends React.Component
+{
   constructor(props)
   {
     super(props);
 
     this.state = {
       // Preparing payload for the POST request.
-      event_type: 'match',
+      eventType: 'match',
 
       date: '',
       teams: this.genTeamsState('match'),
@@ -39,72 +41,71 @@ class PostEvent extends React.Component {
 
   cachePlayers = () =>
   {
-    fetch('/api/stats/elo').then(response => response.json()).then(
-      responseJson => {
-        this.setState(
-          {
-            cachedPlayers: new Set(Object.keys(responseJson.items))
-          }
-        );
-      }
+    fetch('/api/stats/elo').then((response) => response.json()).then(
+        (responseJson) =>
+        {
+          this.setState(
+              {
+                cachedPlayers: new Set(Object.keys(responseJson.items)),
+              },
+          );
+        },
     );
-  }
+  };
 
-  genTeamsState = (event_type) =>
+  genTeamsState = (eventType) =>
   {
     return (
-      event_type === 'match'
-        ?
+      eventType === 'match' ?
         [
           {result: '', squad: []},
           {result: '', squad: []},
-        ]
-        :  // event_type === 'tournament'
+        ] : // eventType === 'tournament'
         [
           {result: '', squad: []},
         ]
     );
-  }
+  };
 
   resetForm = () =>
   {
     this.setState({
       date: '',
-      teams: this.genTeamsState(this.state.event_type),
+      teams: this.genTeamsState(this.state.eventType),
       // Let password remain the same.
     });
-  }
+  };
 
   handleEventType = (event) =>
   {
-    const event_type = event.target.value;
+    const eventType = event.target.value;
     this.setState({
-      event_type: event_type,
-      teams: this.genTeamsState(event_type),
+      eventType: eventType,
+      teams: this.genTeamsState(eventType),
     });
-  }
+  };
 
   setStateDate = (date) =>
   {
-    this.setState({ date });
-  }
+    this.setState({date});
+  };
 
   setStateTeams = (teams) =>
   {
-    this.setState({ teams });
-  }
+    this.setState({teams});
+  };
 
   addTeam = () =>
   {
     const teams = this.state.teams;
-    teams.push({ result: '', squad: [] });
-    this.setState({ teams });
-  }
+    teams.push({result: '', squad: []});
+    this.setState({teams});
+  };
 
   handlePassword = (event) =>
   {
-    this.setState({ password: event.target.value });
-  }
+    this.setState({password: event.target.value});
+  };
 
   handleSubmit = () =>
   {
@@ -112,7 +113,7 @@ class PostEvent extends React.Component {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        event_type: this.state.event_type,
+        event_type: this.state.eventType,
         date: this.state.date,
         teams: this.state.teams,
         password: this.state.password,
@@ -120,32 +121,32 @@ class PostEvent extends React.Component {
     };
 
     fetch('/api/events', requestOptions).then(this.processResponse);
-  }
+  };
 
   processResponse = (response) =>
   {
-    response.json().then(responseJson =>
+    response.json().then((responseJson) =>
+    {
+      if (response.status === 201)
       {
-        if (response.status === 201)
-        {
-          this.cachePlayers();
-          this.resetForm();
+        this.cachePlayers();
+        this.resetForm();
 
-          this.setState({
-            responseStatus: ResponseStatus.OK,
-            responseMessage: `Event "${responseJson['id']}" has been added.`,
-          });
-        }
-        else
-        {
-          this.setState({
-            responseStatus: ResponseStatus.ERROR,
-            responseMessage: JSON.stringify(responseJson, null, 2),
-          });
-        }
+        this.setState({
+          responseStatus: ResponseStatus.OK,
+          responseMessage: `Event "${responseJson['id']}" has been added.`,
+        });
       }
-    )
-  }
+      else
+      {
+        this.setState({
+          responseStatus: ResponseStatus.ERROR,
+          responseMessage: JSON.stringify(responseJson, null, 2),
+        });
+      }
+    },
+    );
+  };
 
   drawResponseMessage = () =>
   {
@@ -159,11 +160,11 @@ class PostEvent extends React.Component {
           '#aaeeff' : '#ffaaaa';
     return (
       <pre className="post_event__response_message"
-           style={{"background-color": color}}>
+        style={{'backgroundColor': color}}>
         {this.state.responseMessage}
       </pre>
     );
-  }
+  };
 
   render()
   {
@@ -173,40 +174,40 @@ class PostEvent extends React.Component {
           <div className="event-type-area">
             <label className="label">Event type:</label>
             <select className="select"
-                    onChange={this.handleEventType}
-                    value={this.state.event_type}
+              onChange={this.handleEventType}
+              value={this.state.eventType}
             >
               <option value="match">Match</option>
               <option value="tournament">Tournament</option>
             </select>
           </div>
-            {this.state.event_type === 'match'
-             ? <PostMatch.PostMatch date={this.state.date}
-                                      setStateDate={this.setStateDate}
-                                      teams={this.state.teams}
-                                      setStateTeams={this.setStateTeams}
-                                      cachedPlayers={this.state.cachedPlayers}
-               />
-             : <PostTournament.PostTournament date={this.state.date}
-                                              setStateDate={this.setStateDate}
-                                              teams={this.state.teams}
-                                              setStateTeams={this.setStateTeams}
-                                              cachedPlayers={
-                                                this.state.cachedPlayers}
-                                              addTeam={this.addTeam}
-               />
-            }
+          {this.state.eventType === 'match' ?
+             <PostMatch.PostMatch date={this.state.date}
+               setStateDate={this.setStateDate}
+               teams={this.state.teams}
+               setStateTeams={this.setStateTeams}
+               cachedPlayers={this.state.cachedPlayers}
+             /> :
+             <PostTournament.PostTournament date={this.state.date}
+               setStateDate={this.setStateDate}
+               teams={this.state.teams}
+               setStateTeams={this.setStateTeams}
+               cachedPlayers={
+                 this.state.cachedPlayers}
+               addTeam={this.addTeam}
+             />
+          }
         </div>
 
         <div className="post_event__password-area">
           <label className="post_event__password-label">Password:</label>
           <input className="post_event__password-input"
-                 value={this.state.password}
-                 onChange={this.handlePassword}
+            value={this.state.password}
+            onChange={this.handlePassword}
           />
 
           <button className="submit-button"
-                  onClick={this.handleSubmit}
+            onClick={this.handleSubmit}
           >Submit
           </button>
         </div>
@@ -218,7 +219,8 @@ class PostEvent extends React.Component {
 }
 
 
-const export_default = {
+const exportDefault =
+{
   PostEvent,
-}
-export default export_default;
+};
+export default exportDefault;

@@ -39,5 +39,10 @@
   "resolutions": {
     "mini-css-extract-plugin": "NOTE(pyloolex): Remove it after the next upgrade. It's just a workaround for https://github.com/facebook/create-react-app/issues/11930",
     "mini-css-extract-plugin": "2.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.29.2"
   }
 }

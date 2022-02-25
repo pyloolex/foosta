@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import * as ReactRouterDom from 'react-router-dom';
 
-import MainStat from './MainStat';
-import Utils from '../utils/utils';
+import MainStat from 'components/MainStat';
+import Utils from 'utils/utils';
 
-import '../index.css';
+import 'index.css';
 
 
 const POSSIBLE_CHOSEN_VALUES = new Set(['main', 'streaks', 'goals']);
 
 
-const TotalPage = props =>
+const TotalPage = (props) =>
 {
   const getChosenTable = () =>
   {
     if (chosen === 'main')
     {
       return <MainStat.MainStat total={apiData.total}
-                                searchParams={searchParamsEntries}
-                                setSearchParams={setSearchParams}
-             />;
+        searchParamsEntries={searchParamsEntries}
+        setSearchParams={setSearchParams}
+      />;
     }
     if (chosen === 'streaks')
     {
-      //return <Streaks.Streaks />;
+      // return <Streaks.Streaks />;
       return <h1>Streaks</h1>;
     }
-    //console.assert(chosen === 'goals');
-    //return <Goals.Goals />;
-    return <h1>Goals</h1>
-  }
+    // console.assert(chosen === 'goals');
+    // return <Goals.Goals />;
+    return <h1>Goals</h1>;
+  };
 
   const [searchParams, setSearchParams] = ReactRouterDom.useSearchParams();
   const searchParamsEntries = Object.fromEntries(searchParams.entries());
 
   const [chosen, setChosen] = useState(Utils.obtainInitialChosen(
-    searchParamsEntries, 'main', POSSIBLE_CHOSEN_VALUES));
+      searchParamsEntries, 'main', POSSIBLE_CHOSEN_VALUES));
   const [apiData, setApiData] = useState({
     'total': {},
     'streaks': {},
@@ -43,14 +43,14 @@ const TotalPage = props =>
   });
 
   useEffect(() =>
-    {
-      fetch(`/api/stats`).then(
-        response => response.json()).then(
-          responseJson =>
-          {
-            setApiData(responseJson);
+  {
+    fetch(`/api/stats`).then(
+        (response) => response.json()).then(
+        (responseJson) =>
+        {
+          setApiData(responseJson);
 
-            /*
+          /*
             setApiData({
               ...responseJson,
               'total': {
@@ -70,10 +70,10 @@ const TotalPage = props =>
               },
             });
             */
-          }
-        );
-    },
-    [],
+        },
+    );
+  },
+  [],
   );
 
   return (
@@ -81,9 +81,9 @@ const TotalPage = props =>
       <div className="statistics-select-holder">
         <label className="statistics-label">Statistics: </label>
         <select className="statistics-select"
-                value={chosen}
-                onChange={(event) => Utils.handleChosenChange(
-                  setChosen, setSearchParams, event.target.value)}
+          value={chosen}
+          onChange={(event) => Utils.handleChosenChange(
+              setChosen, setSearchParams, event.target.value)}
         >
           <option value="main">Main</option>
           <option value="streaks">Streaks</option>
@@ -93,10 +93,11 @@ const TotalPage = props =>
       {getChosenTable()}
     </React.Fragment>
   );
-}
+};
 
 
-const export_default = {
+const exportDefault =
+{
   TotalPage,
-}
-export default export_default;
+};
+export default exportDefault;

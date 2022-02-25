@@ -7,6 +7,48 @@ on:
         branches: [ master ]
 
 jobs:
+    pep8:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Install-Python-requirements
+          run: |
+              sudo apt-get install -y python3-pip python3-dev libpq-dev
+              pip3 install -r backend/requirements.txt
+              pip3 install -r backend/test-requirements.txt
+
+        - name: Run-checks
+          run: |
+              source foosta.env
+
+              # Using two separate commands for pylint in order to exclude
+              # messages like "Similar lines in 2 files".
+              # Yes, there are similar lines in `db/` and `backend/`, and it's
+              # expected because `db/` is a kinda standalone package.
+              pylint -j8 --rcfile=pep8/pylintrc -sn db/
+              pylint -j8 --rcfile=pep8/pylintrc -sn backend/
+
+              flake8 -j8 --config=pep8/flake8 db/
+              flake8 -j8 --config=pep8/flake8 backend/
+
+
+    eslint:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: Install UI
+          run: |
+              yarn --cwd=ui/react_app/ install
+
+        - name: Run-eslint
+          run: |
+              yarn --cwd=ui/react_app/ run eslint src/ --ext=jsx --max-warnings=0
+
+
     db-tests:
         runs-on: ubuntu-latest
 
@@ -22,6 +64,12 @@ jobs:
           run: |
               # Configure password.
               mkdir /tmp/foosta_shared
+              echo 'DB--'
+              ls db
+              echo 'Back--'
+              ls backend
+              echo '--'
+              echo '"db-pass"' > db/shared/password_db.json
               echo '"db-pass"' > /tmp/foosta_shared/password_db.json
 
               # Create role and tables.
@@ -71,32 +119,6 @@ jobs:
               source foosta.env
               pytest --disable-warnings backend/
 
-
-    pep8:
-        runs-on: ubuntu-latest
-
-        steps:
-        - uses: actions/checkout@v2
-
-        - name: Install-Python-requirements
-          run: |
-              sudo apt-get install -y python3-pip python3-dev libpq-dev
-              pip3 install -r backend/requirements.txt
-              pip3 install -r backend/test-requirements.txt
-
-        - name: Run-checks
-          run: |
-              source foosta.env
-
-              # Using two separate commands for pylint in order to exclude
-              # messages like "Similar lines in 2 files".
-              # Yes, there are similar lines in `db/` and `backend/`, and it's
-              # expected because `db/` is a kinda standalone package.
-              pylint -j8 --rcfile=pep8/pylintrc -sn db/
-              pylint -j8 --rcfile=pep8/pylintrc -sn backend/
-
-              flake8 -j8 --config=pep8/flake8 db/
-              flake8 -j8 --config=pep8/flake8 backend/
 
     deploy-tests:
         runs-on: ubuntu-latest

@@ -1,7 +1,11 @@
 import React from 'react';
-import './post_match.css';
+
+import PropTypesUtils from 'utils/PropTypes';
+
+import 'components/post_match.css';
 
 
+/* eslint-disable require-jsdoc */
 class PostMatch extends React.Component
 {
   constructor(props)
@@ -11,20 +15,20 @@ class PostMatch extends React.Component
     this.state =
     {
       dropdownOptions: [[], []],
-    }
+    };
   }
 
   handleDate = (event) =>
   {
     this.props.setStateDate(event.target.value);
-  }
+  };
 
   handleScore = (event, teamId) =>
   {
     const teams = this.props.teams;
     teams[teamId].result = +event.target.value;
     this.props.setStateTeams(teams);
-  }
+  };
 
   handleNewPlayer = (event, teamId) =>
   {
@@ -40,7 +44,7 @@ class PostMatch extends React.Component
 
     event.target.value = '';
     this.handlePlayerInput(event, teamId);
-  }
+  };
 
   handleTabKey = (event, teamId) =>
   {
@@ -57,7 +61,7 @@ class PostMatch extends React.Component
     event.preventDefault();
 
     let pos = -1;
-    for (let i in options)
+    for (const i in options)
     {
       if (event.target.value.toLowerCase() === options[i].toLowerCase())
       {
@@ -66,14 +70,14 @@ class PostMatch extends React.Component
       }
     }
     event.target.value = options[(pos + 1) % options.length];
-  }
+  };
 
   handlePlayerInput = (event, teamId) =>
   {
     const value = event.target.value;
-    let result = [];
+    const result = [];
     const teams = this.props.teams;
-    for (let player of this.props.cachedPlayers)
+    for (const player of this.props.cachedPlayers)
     {
       if (value === '')
       {
@@ -81,8 +85,8 @@ class PostMatch extends React.Component
         continue;
       }
 
-      if (teams[0].squad.includes(player)
-          || teams[1].squad.includes(player))
+      if (teams[0].squad.includes(player) ||
+          teams[1].squad.includes(player))
       {
         continue;
       }
@@ -95,15 +99,15 @@ class PostMatch extends React.Component
 
     const dropdownOptions = this.state.dropdownOptions;
     dropdownOptions[teamId] = result;
-    this.setState({ dropdownOptions });
-  }
+    this.setState({dropdownOptions});
+  };
 
   listPlayers = (teamId) =>
   {
-    const result = []
+    const result = [];
 
     const squad = this.props.teams[teamId].squad;
-    for (let i in squad)
+    for (let i = 0; i < squad.length; i++)
     {
       const name = squad[squad.length - 1 - i];
       if (this.props.cachedPlayers.has(name))
@@ -114,17 +118,17 @@ class PostMatch extends React.Component
       {
         if (teamId === 0)
         {
-          result.push(name + " (new?)");
+          result.push(name + ' (new?)');
         }
         else
         {
-          result.push("(new?) " + name);
+          result.push('(new?) ' + name);
         }
       }
     }
 
     return result;
-  }
+  };
 
   render()
   {
@@ -132,63 +136,63 @@ class PostMatch extends React.Component
       <div className="post_match__match-container">
         <div className="post_match__header">
           <input className="post_match__date"
-                 type="date"
-                 value={this.props.date}
-                 onChange={this.handleDate} />
+            type="date"
+            value={this.props.date}
+            onChange={this.handleDate} />
         </div>
 
         <div className="post_match__first-team">
           <input className="post_match__player-input"
-                 onKeyUp={(event) => this.handleNewPlayer(event, 0)}
-                 onKeyDown={(event) => this.handleTabKey(event, 0)}
-                 onChange={(event) => this.handlePlayerInput(event, 0)}
-                 list="post_match__options-first" />
+            onKeyUp={(event) => this.handleNewPlayer(event, 0)}
+            onKeyDown={(event) => this.handleTabKey(event, 0)}
+            onChange={(event) => this.handlePlayerInput(event, 0)}
+            list="post_match__options-first" />
           <datalist id="post_match__options-first">
-            {this.state.dropdownOptions[0].map(name =>
-              <option key={name}>{name}</option>
+            {this.state.dropdownOptions[0].map((name) =>
+              <option key={name}>{name}</option>,
             )}
           </datalist>
-          {this.listPlayers(0).map(name =>
+          {this.listPlayers(0).map((name) =>
             <p className="match-player-name"
-               key={name}>
-               {name}
-            </p>
+              key={name}>
+              {name}
+            </p>,
           )}
         </div>
 
         <div className="post_match__score-area">
           <div>
-          <input className="post_match__score-input"
-                 type="number" min="0"
-                 value={this.props.teams[0].result}
-                 onChange={(event) => this.handleScore(event, 0)}
-          />
-          <p className="colon">:</p>
-          <input className="post_match__score-input"
-                 type="number" min="0"
-                 value={this.props.teams[1].result}
-                 onChange={(event) => this.handleScore(event, 1)}
-          />
-            </div>
+            <input className="post_match__score-input"
+              type="number" min="0"
+              value={this.props.teams[0].result}
+              onChange={(event) => this.handleScore(event, 0)}
+            />
+            <p className="colon">:</p>
+            <input className="post_match__score-input"
+              type="number" min="0"
+              value={this.props.teams[1].result}
+              onChange={(event) => this.handleScore(event, 1)}
+            />
+          </div>
         </div>
 
         <div className="post_match__second-team">
           <input className="post_match__player-input"
-                 onKeyUp={(event) => this.handleNewPlayer(event, 1)}
-                 onKeyDown={(event) => this.handleTabKey(event, 1)}
-                 onChange={(event) => this.handlePlayerInput(event, 1)}
-                 list="post_match__options-second"
+            onKeyUp={(event) => this.handleNewPlayer(event, 1)}
+            onKeyDown={(event) => this.handleTabKey(event, 1)}
+            onChange={(event) => this.handlePlayerInput(event, 1)}
+            list="post_match__options-second"
           />
           <datalist id="post_match__options-second">
-            {this.state.dropdownOptions[1].map(name =>
-              <option key={name}>{name}</option>
+            {this.state.dropdownOptions[1].map((name) =>
+              <option key={name}>{name}</option>,
             )}
           </datalist>
-          {this.listPlayers(1).map(name =>
+          {this.listPlayers(1).map((name) =>
             <p className="match-player-name"
-               key={name}>
+              key={name}>
               {name}
-            </p>
+            </p>,
           )}
         </div>
       </div>
@@ -197,7 +201,10 @@ class PostMatch extends React.Component
 }
 
 
-const export_default = {
+PostMatch.propTypes = PropTypesUtils.POST_MATCH_FIELDS;
+
+
+const exportDefault = {
   PostMatch,
-}
-export default export_default;
+};
+export default exportDefault;
