@@ -1,13 +1,15 @@
 import React from 'react';
 import './events.css';
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Matches from './matches';
 import Tournaments from './tournaments';
 import PostEvent from './post_event';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
-class ListEvents extends React.Component {
+/* eslint-disable require-jsdoc */
+class ListEvents extends React.Component
+{
   constructor(props)
   {
     super(props);
@@ -22,10 +24,11 @@ class ListEvents extends React.Component {
     this.fetchEvents();
   }
 
-  fetchEvents = () => {
+  fetchEvents = () =>
+  {
     fetch('/api/events').then(
-      response => response.json()).then(
-        responseJson => this.handleFetchedEvents(responseJson));
+        (response) => response.json()).then(
+        (responseJson) => this.handleFetchedEvents(responseJson));
   };
 
   handleFetchedEvents = (responseJson) =>
@@ -37,24 +40,24 @@ class ListEvents extends React.Component {
   {
     const result = [];
     const events = this.state.events;
-    for (let id of Object.keys(events).sort().reverse())
+    for (const id of Object.keys(events).sort().reverse())
     {
       if (events[id].event_type === 'match')
       {
         result.push(
-          <Matches.GetMatch
-            key={id}
-            event={events[id]}
-          />
+            <Matches.GetMatch
+              key={id}
+              event={events[id]}
+            />,
         );
       }
       else
       {
         result.push(
-          <Tournaments.GetTournament
-            key={id}
-            event={events[id]}
-          />
+            <Tournaments.GetTournament
+              key={id}
+              event={events[id]}
+            />,
         );
       }
     }
@@ -77,7 +80,8 @@ class ListEvents extends React.Component {
 }
 
 
-class EventsRouter extends React.Component {
+class EventsRouter extends React.Component
+{
   render()
   {
     return (
@@ -90,7 +94,7 @@ class EventsRouter extends React.Component {
 }
 
 
-const export_default = {
+const exportDefault = {
   EventsRouter,
-}
-export default export_default;
+};
+export default exportDefault;

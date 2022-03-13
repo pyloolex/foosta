@@ -96,6 +96,11 @@ Restart nginx:
 
 And use `172.28.128.4:7350` as an entry point in the browser.
 
+If ESlint is too annoying, it can be disabled by adding `DISABLE_ESLINT_PLUGIN=true` like this:
+```bash
+    DISABLE_ESLINT_PLUGIN=true yarn --cwd=/vagrant/ui/react_app/ start
+```
+
 
 
 ## Creating new app
@@ -125,6 +130,71 @@ And install `eslint`:
 ```
 
 `--dev` means it's needed only for development. When you deploy your app, `eslint` won't be a dependency.
+
+Create new ESlint config:
+```bash
+    yarn create @eslint/config
+```
+
+Choose the following:
+```
+    - How would you like to use ESLint?
+    To check syntax, find problems, and enforce code style
+
+    - What type of modules does your project use?
+    JavaScript modules (import/export)
+
+    - Which framework does your project use?
+    React
+
+    - Does your project use TypeScript?
+    No
+
+    - Where does your code run?
+    Browser
+
+    - How would you like to define a style for your project?
+    Use a popular style guide
+
+    - Which style guide do you want to follow?
+    Google: https://github.com/google/eslint-config-google
+
+    - What format do you want your config file to be in?
+    JSON
+
+    - The config that you've selected requires the following dependencies:
+      eslint-plugin-react@latest eslint-config-google@latest eslint@>=5.16.0
+      ? Would you like to install them now with npm?
+    No
+```
+
+After that, install `eslint-plugin-react@latest` and `eslint-config-google@latest`:
+```bash
+    yarn add --dev eslint-plugin-react@latest eslint-config-google@latest
+```
+
+Now enforce Allman style in ESlint config. Add the following rule under the `rules` key:
+```json
+    "brace-style": ["error", "allman", { "allowSingleLine": true }]
+```
+
+Now you can run ESlint:
+```bash
+    yarn run eslint src/components/Teammates.jsx
+```
+
+If you see the warning
+```
+    Warning: React version not specified in eslint-plugin-react settings.
+```
+
+Add the following to the ESlint config:
+```json
+    "settings": {
+      "react": {
+        "version": "detect"
+    }
+```
 
 
 ## Upgrading React

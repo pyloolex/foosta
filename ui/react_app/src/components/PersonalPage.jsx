@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import EloGraph from './EloGraph';
 import PersonalEvents from './PersonalEvents';
 import PersonalSummary from './PersonalSummary';
@@ -9,10 +9,10 @@ import './personal_page.css';
 import '../index.css';
 
 
-const PersonalPage = props =>
+const PersonalPage = (props) =>
 {
   // Pass `hero` as a prop here.
-  const { hero } = useParams();
+  const {hero} = useParams();
 
   const [apiData, setApiData] = useState({
     'elo': [],
@@ -25,16 +25,16 @@ const PersonalPage = props =>
   const [scrolled, setScrolled] = useState(-1);
 
   useEffect(() =>
-    {
-      fetch(`/api/stats/${hero}`).then(
-        response => response.json()).then(
-          responseJson =>
-          {
-            setApiData(responseJson);
+  {
+    fetch(`/api/stats/${hero}`).then(
+        (response) => response.json()).then(
+        (responseJson) =>
+        {
+          setApiData(responseJson);
 
-            //setScrolled(1000);
+          // setScrolled(1000);
 
-            /*
+          /*
             setApiData({
               ...apiData,
               'elo': [
@@ -66,7 +66,7 @@ const PersonalPage = props =>
             });
             */
 
-            /*
+          /*
             setApiData({
               ...responseJson,
               'result_summary': {
@@ -97,11 +97,11 @@ const PersonalPage = props =>
               },
             });
             */
-          }
-        );
-      window.scrollTo(0, 0);
-    },
-    [hero],
+        },
+    );
+    window.scrollTo(0, 0);
+  },
+  [hero],
   );
 
   return (
@@ -112,21 +112,21 @@ const PersonalPage = props =>
         resultSummary={apiData.result_summary}
       />
       <EloGraph.EloGraph elo={apiData.elo}
-                         hovered={hovered}
-                         setHovered={setHovered}
-                         setScrolled={setScrolled}
+        hovered={hovered}
+        setHovered={setHovered}
+        setScrolled={setScrolled}
       />
       <PersonalEvents.PersonalEvents elo={apiData.elo}
-                                     hovered={hovered}
-                                     setHovered={setHovered}
-                                     scrolled={scrolled}
-                                     setScrolled={setScrolled}
+        hovered={hovered}
+        setHovered={setHovered}
+        scrolled={scrolled}
+        setScrolled={setScrolled}
       />
 
       <div className="statistics-select-holder">
         <label className="statistics-label">Statistics: </label>
         <select className="statistics-select" value="Teammates"
-                onChange={()=>{}}>
+          onChange={()=>{}}>
           <option value="teammates">Teammates</option>
         </select>
       </div>
@@ -137,19 +137,20 @@ const PersonalPage = props =>
       />
     </div>
   );
-}
+};
 
 
 const PersonalPageProxy = (props) =>
 {
-  const { hero } = useParams();
+  const {hero} = useParams();
   // Passing key so that the component rerenders
   // after the hero is changed.
   return <PersonalPage key={hero} {...props} />;
-}
+};
 
 
-const export_default = {
+const exportDefault =
+{
   PersonalPageProxy,
-}
-export default export_default;
+};
+export default exportDefault;
