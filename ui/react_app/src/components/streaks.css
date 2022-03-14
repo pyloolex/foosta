@@ -1,0 +1,44 @@
+.streaks__container {
+    display: grid;
+    grid-template-columns: 40px 250px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+    grid-template-areas:
+        "empty1 empty1 empty2 empty2 matches matches matches matches tournaments tournaments tournaments tournaments"
+        "empty3 empty3 events events wins wins no_wins no_wins gold gold no_gold no_gold";
+
+    grid-auto-rows: 30px;
+    margin: 10px;
+}
+
+/* First-level headers */
+.streaks__header-empty1 {
+    grid-area: empty1;
+}
+.streaks__header-empty2 {
+    grid-area: empty2;
+}
+.streaks__header-matches {
+    grid-area: matches;
+}
+.streaks__header-tournaments {
+    grid-area: tournaments;
+}
+
+/* Second-level headers */
+.streaks__header-empty3 {
+    grid-area: empty3;
+}
+.streaks__header-events {
+    grid-area: events;
+}
+.streaks__header-wins {
+    grid-area: wins;
+}
+.streaks__header-no-wins {
+    grid-area: no_wins;
+}
+.streaks__header-gold {
+    grid-area: gold;
+}
+.streaks__header-no-gold {
+    grid-area: no_gold;
+}

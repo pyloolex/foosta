@@ -3,6 +3,12 @@ import React from 'react';
 import 'index.css';
 
 
+const SORTING_SEPARATOR = '--';
+const ASCENDING_MARK = '<';
+const DESCENDING_MARK = '>';
+console.assert(ASCENDING_MARK.length === DESCENDING_MARK.length);
+
+
 const getSortingIcon = (sorting, columnName) =>
 {
   if (sorting[0].column === columnName)
@@ -37,13 +43,15 @@ const handleHeaderClick = (
   {
     const transformSortingElemToStr = (element) =>
     {
-      return element.column + (element.order === 1 ? '_A' : '_D');
+      return element.column + (
+          element.order === 1 ? ASCENDING_MARK : DESCENDING_MARK);
     };
 
     let sortingString = transformSortingElemToStr(newSorting[0]);
     for (let i = 1; i < newSorting.length; i++)
     {
-      sortingString += ',' + transformSortingElemToStr(newSorting[i]);
+      sortingString += SORTING_SEPARATOR +
+          transformSortingElemToStr(newSorting[i]);
     }
     return sortingString;
   };
@@ -93,38 +101,40 @@ const obtainInitialSorting = (
   {
     const parseToken = (token, order) =>
     {
-      if (possibleValues.has(token.slice(0, -2)))
+      if (possibleValues.has(token.slice(0, -ASCENDING_MARK.length)))
       {
         return {
-          column: token.slice(0, -2),
+          column: token.slice(0, -ASCENDING_MARK.length),
           order: order,
         };
       }
       else
       {
-        console.error('Unknown sorting parameter:', token.slice(0, -2));
+        console.error('Unknown sorting parameter:',
+            token.slice(0, -ASCENDING_MARK.length));
         return null;
       }
     };
 
     const response = [];
 
-    const tokens = strSorting.split(',');
+    const tokens = strSorting.split(SORTING_SEPARATOR);
     for (let i = 0; i < tokens.length; i++)
     {
       let parsedToken = null;
-      if (tokens[i].endsWith('_A'))
+      if (tokens[i].endsWith(ASCENDING_MARK))
       {
         parsedToken = parseToken(tokens[i], 1);
       }
-      else if (tokens[i].endsWith('_D'))
+      else if (tokens[i].endsWith(DESCENDING_MARK))
       {
         parsedToken = parseToken(tokens[i], -1);
       }
       else
       {
         console.error(
-            'Sorting parameter should end with "_A" or "_D":', tokens[i]);
+            `Sorting parameter should end with "${ASCENDING_MARK}" ` +
+            `or "${DESCENDING_MARK}":`, tokens[i]);
       }
 
       if (parsedToken === null)

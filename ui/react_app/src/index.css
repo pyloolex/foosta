@@ -90,11 +90,20 @@ body {
     border-color: black;
     border-style: solid;
 }
+.border-0101 {
+    border-width: 0px 1px 0px 1px;
+}
 .border-0110 {
     border-width: 0px 1px 1px 0px;
 }
 .border-0111 {
     border-width: 0px 1px 1px 1px;
+}
+.border-1100 {
+    border-width: 1px 1px 0px 0px;
+}
+.border-1101 {
+    border-width: 1px 1px 0px 1px;
 }
 .border-1110 {
     border-width: 1px 1px 1px 0px;

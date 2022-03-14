@@ -125,6 +125,10 @@ const ELO_ARRAY_ELEMENT_FIELDS =
 const ELO_ARRAY_SCHEMA = PropTypes.arrayOf(PropTypes.exact(
     ELO_ARRAY_ELEMENT_FIELDS));
 
+const STREAK_PARAMS = PropTypes.exact({
+  'current': PropTypes.number.isRequired,
+  'longest': PropTypes.number.isRequired,
+});
 
 const exportDefault =
 {
@@ -135,5 +139,6 @@ const exportDefault =
   RESULT_SUMMARY_FIELDS_OPTIONAL,
   RESULT_SUMMARY_FIELDS_REQUIRED,
   SEARCH_PARAMS_SCHEMA,
+  STREAK_PARAMS,
 };
 export default exportDefault;

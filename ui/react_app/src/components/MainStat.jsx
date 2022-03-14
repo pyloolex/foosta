@@ -3,19 +3,20 @@ import React from 'react';
 import * as ReactRouterDom from 'react-router-dom';
 
 import PropTypesUtils from 'utils/PropTypes';
-import SortingUtils from '../utils/Sorting';
-import Utils from '../utils/utils';
+import SortingUtils from 'utils/Sorting';
+import TableUtils from 'utils/Table';
+import Utils from 'utils/utils';
 
-import '../index.css';
-import './main_stat.css';
+import 'index.css';
+import 'components/main_stat.css';
 
 
 const DEFAULT_SORTING = [{column: 'elo', order: -1}];
 const POSSIBLE_SORT_VALUES = new Set([
   'name',
   'events', 'elo',
-  'match', 'W', 'D', 'L', '%W', 'pts',
-  'tournament', '1', '2', '3', '4+', '%1',
+  'match', 'W', 'D', 'L', 'perc_W', 'pts',
+  'tournament', '1', '2', '3', '4', 'perc_1',
 ]);
 
 
@@ -27,21 +28,21 @@ const MainStat = (props) =>
       <React.Fragment>
         <div className={'mainstat__header-empty ' +
                         'border-solid-black ' +
-                        'border-1111 ' +
+                        'border-1101 ' +
                         'font-20 ' +
                         'font-bold ' +
                         'grid-content-center '}>
         </div>
         <div className={'mainstat__header-common ' +
                         'border-solid-black ' +
-                        'border-1110 ' +
+                        'border-1100 ' +
                         'font-20 ' +
                         'font-bold ' +
                         'grid-content-center '}>
         </div>
         <div className={'mainstat__header-matches ' +
                         'border-solid-black ' +
-                        'border-1110 ' +
+                        'border-1100 ' +
                         'font-20 ' +
                         'font-bold ' +
                         'grid-content-center '}>
@@ -49,7 +50,7 @@ const MainStat = (props) =>
         </div>
         <div className={'mainstat__header-tournaments ' +
                         'border-solid-black ' +
-                        'border-1110 ' +
+                        'border-1100 ' +
                         'font-20 ' +
                         'font-bold ' +
                         'grid-content-center '}>
@@ -57,258 +58,73 @@ const MainStat = (props) =>
         </div>
 
         <div className={'border-solid-black ' +
-                        'border-0111 ' +
+                        'border-1111 ' +
                         'font-20 ' +
                         'font-bold ' +
                         'grid-content-center '}
         >
           N
         </div>
-        {/* TODO(pyloolex): Could be refactored.
-            smth('name', 'Name'),
-            smth('events', '#'),
-            . . .
-         */}
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'name')}
-        >
-          <div>
-            Name
-            {SortingUtils.getSortingIcon(sorting, 'name')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'events')}
-        >
-          <div>
-            #
-            {SortingUtils.getSortingIcon(sorting, 'events')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'elo')}
-        >
-          <div>
-            Elo
-            {SortingUtils.getSortingIcon(sorting, 'elo')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'match')}
-        >
-          <div>
-            #
-            {SortingUtils.getSortingIcon(sorting, 'match')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'W')}
-        >
-          <div>
-            W
-            {SortingUtils.getSortingIcon(sorting, 'W')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'D')}
-        >
-          <div>
-            D
-            {SortingUtils.getSortingIcon(sorting, 'D')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'L')}
-        >
-          <div>
-            L
-            {SortingUtils.getSortingIcon(sorting, 'L')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, '%W')}
-        >
-          <div>
-            %W
-            {SortingUtils.getSortingIcon(sorting, '%W')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'pts')}
-        >
-          <div>
-            Pts
-            {SortingUtils.getSortingIcon(sorting, 'pts')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, 'tournament')}
-        >
-          <div>
-            #
-            {SortingUtils.getSortingIcon(sorting, 'tournament')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, '1')}
-        >
-          <div>
-            1
-            {SortingUtils.getSortingIcon(sorting, '1')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, '2')}
-        >
-          <div>
-            2
-            {SortingUtils.getSortingIcon(sorting, '2')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, '3')}
-        >
-          <div>
-            3
-            {SortingUtils.getSortingIcon(sorting, '3')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, '4+')}
-        >
-          <div>
-            4+
-            {SortingUtils.getSortingIcon(sorting, '4+')}
-          </div>
-        </div>
-        <div
-          className={'border-solid-black ' +
-                     'border-0110 ' +
-                     'font-20 ' +
-                     'font-bold ' +
-                     'grid-content-center ' +
-                     'sortable-header '}
-          onClick={() => SortingUtils.handleHeaderClick(
-              sorting, setSorting, props.searchParamsEntries,
-              props.setSearchParams, '%1')}
-        >
-          <div>
-            %1
-            {SortingUtils.getSortingIcon(sorting, '%1')}
-          </div>
-        </div>
+        {TableUtils.makeSortableHeader(
+            'Name', 'name',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '#', 'events',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            'Elo', 'elo',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '#', 'match',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            'W', 'W',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            'D', 'D',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            'L', 'L',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '%W', 'perc_W',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            'Pts', 'pts',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '#', 'tournament',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '1', '1',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '2', '2',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '3', '3',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '4+', '4',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
+        {TableUtils.makeSortableHeader(
+            '%1', 'perc_1',
+            sorting, setSorting,
+            props.searchParamsEntries, props.setSearchParams)}
       </React.Fragment>);
   };
 
@@ -321,9 +137,12 @@ const MainStat = (props) =>
       data.push({
         ...element,
         'name': player,
-        '%W': Utils.getPercent(element['W'], element['match']),
+        'perc_W': Utils.getPercent(element['W'], element['match']),
         'pts': element['W'] * 3 + element['D'],
-        '%1': Utils.getPercent(element['1'], element['tournament']),
+        // It's needed in order to make query string prettier, namely
+        // in order to avoid "%2B" in a query string.
+        '4': element['4+'],
+        'perc_1': Utils.getPercent(element['1'], element['tournament']),
       });
     });
 
@@ -399,125 +218,22 @@ const MainStat = (props) =>
                 </ReactRouterDom.Link>
               </p>
             </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data.events}
-            </div>
+            {TableUtils.makeStandardDataCell(data.events, rowColor)}
             {drawElo(data.elo, data.events, rowColor)}
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data.match}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['W']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['D']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['L']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {Utils.roundPercent(data['W'], data.match)}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['W'] * 3 + data['D']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data.tournament}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['1']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['2']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['3']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {data['4+']}
-            </div>
-            <div
-              className={'border-solid-black ' +
-                         'border-0110 ' +
-                         'font-20 ' +
-                         'grid-content-center '}
-              style={{'backgroundColor': rowColor}}
-            >
-              {Utils.roundPercent(data['1'], data.tournament)}
-            </div>
-
+            {TableUtils.makeStandardDataCell(data.match, rowColor)}
+            {TableUtils.makeStandardDataCell(data['W'], rowColor)}
+            {TableUtils.makeStandardDataCell(data['D'], rowColor)}
+            {TableUtils.makeStandardDataCell(data['L'], rowColor)}
+            {TableUtils.makeStandardDataCell(
+                Utils.drawPercent(data['perc_W']), rowColor)}
+            {TableUtils.makeStandardDataCell(data['pts'], rowColor)}
+            {TableUtils.makeStandardDataCell(data.tournament, rowColor)}
+            {TableUtils.makeStandardDataCell(data['1'], rowColor)}
+            {TableUtils.makeStandardDataCell(data['2'], rowColor)}
+            {TableUtils.makeStandardDataCell(data['3'], rowColor)}
+            {TableUtils.makeStandardDataCell(data['4'], rowColor)}
+            {TableUtils.makeStandardDataCell(
+                Utils.drawPercent(data['perc_1']), rowColor)}
           </React.Fragment>,
       );
     }
