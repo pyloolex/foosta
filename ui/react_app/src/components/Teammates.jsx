@@ -169,19 +169,19 @@ const Teammates = ({teammates, resultSummary}) =>
                           'teammates__border-corner ' +
                           'teammates__cell-data'}
             style={{'backgroundColor': rowColor}}>
-              {Utils.roundPercent(data.W, resultSummary.W)}
+              {Utils.drawPercent(data['perc_W'])}
             </div>
             <div className={'teammates__border-base ' +
                           'teammates__border-corner ' +
                           'teammates__cell-data'}
             style={{'backgroundColor': rowColor}}>
-              {Utils.roundPercent(data.D, resultSummary.D)}
+              {Utils.drawPercent(data['perc_D'])}
             </div>
             <div className={'teammates__border-base ' +
                           'teammates__border-corner ' +
                           'teammates__cell-data'}
             style={{'backgroundColor': rowColor}}>
-              {Utils.roundPercent(data.L, resultSummary.L)}
+              {Utils.drawPercent(data['perc_L'])}
             </div>
             <div className={'teammates__border-base ' +
                           'teammates__border-corner ' +
@@ -198,25 +198,25 @@ const Teammates = ({teammates, resultSummary}) =>
                           'teammates__border-corner ' +
                           'teammates__cell-data'}
             style={{'backgroundColor': rowColor}}>
-              {Utils.roundPercent(data['1'], resultSummary['1'])}
+              {Utils.drawPercent(data['perc_1'])}
             </div>
             <div className={'teammates__border-base ' +
                           'teammates__border-corner ' +
                           'teammates__cell-data'}
             style={{'backgroundColor': rowColor}}>
-              {Utils.roundPercent(data['2'], resultSummary['2'])}
+              {Utils.drawPercent(data['perc_2'])}
             </div>
             <div className={'teammates__border-base ' +
                           'teammates__border-corner ' +
                           'teammates__cell-data'}
             style={{'backgroundColor': rowColor}}>
-              {Utils.roundPercent(data['3'], resultSummary['3'])}
+              {Utils.drawPercent(data['perc_3'])}
             </div>
             <div className={'teammates__border-base ' +
                           'teammates__border-corner ' +
                           'teammates__cell-data'}
             style={{'backgroundColor': rowColor}}>
-              {Utils.roundPercent(data['4+'], resultSummary['4+'])}
+              {Utils.drawPercent(data['perc_4'])}
             </div>
           </React.Fragment>,
       );

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import * as ReactRouterDom from 'react-router-dom';
 
 import MainStat from 'components/MainStat';
+import Streaks from 'components/Streaks';
 import Utils from 'utils/utils';
 
 import 'index.css';
@@ -23,8 +24,11 @@ const TotalPage = (props) =>
     }
     if (chosen === 'streaks')
     {
-      // return <Streaks.Streaks />;
-      return <h1>Streaks</h1>;
+      return <Streaks.Streaks
+        streaks={apiData.streaks}
+        searchParamsEntries={searchParamsEntries}
+        setSearchParams={setSearchParams}
+      />;
     }
     // console.assert(chosen === 'goals');
     // return <Goals.Goals />;

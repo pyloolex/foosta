@@ -35,9 +35,8 @@ const getPercent = (value, total) =>
 };
 
 
-const roundPercent = (value, total) =>
+const drawPercent = (perc) =>
 {
-  const perc = getPercent(value, total);
   if (perc > 0)
   {
     return perc.toFixed(1);
@@ -81,11 +80,11 @@ const getEloColor = (rating) =>
 
 
 const exportDefault = {
+  drawPercent,
   getEloColor,
   getPercent,
   getRowColor,
   handleChosenChange,
   obtainInitialChosen,
-  roundPercent,
 };
 export default exportDefault;
