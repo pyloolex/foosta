@@ -99,6 +99,9 @@ body {
 .border-0111 {
     border-width: 0px 1px 1px 1px;
 }
+.border-0210 {
+    border-width: 0px 2px 1px 0px;
+}
 .border-1100 {
     border-width: 1px 1px 0px 0px;
 }

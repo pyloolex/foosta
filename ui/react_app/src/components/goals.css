@@ -1,0 +1,23 @@
+.goals__container {
+    display: grid;
+    grid-template-columns: 40px 250px 40px 100px 100px 100px 100px 100px 100px;
+    grid-template-areas:
+        "empty1 empty1 empty2 total total total average average average";
+
+    grid-auto-rows: 30px;
+    margin: 10px;
+}
+
+/* Headers */
+.goals__header-empty1 {
+    grid-area: empty1;
+}
+.goals__header-empty2 {
+    grid-area: empty2;
+}
+.goals__header-total {
+    grid-area: total;
+}
+.goals__header-average {
+    grid-area: average;
+}

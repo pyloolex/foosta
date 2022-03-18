@@ -26,11 +26,11 @@ const makeSortableHeader = (
   </div>;
 };
 
-const makeStandardDataCell = (data, rowColor) =>
+const makeStandardDataCell = (data, rowColor, border='0110') =>
 {
   return <div
     className={'border-solid-black ' +
-               'border-0110 ' +
+               'border-' + border + ' ' +
                'font-20 ' +
                'grid-content-center '}
     style={{'backgroundColor': rowColor}}

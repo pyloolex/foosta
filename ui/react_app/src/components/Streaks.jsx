@@ -204,12 +204,12 @@ const Streaks = (props) =>
             {TableUtils.makeIndexNumberCell(i + 1, rowColor)}
             {TableUtils.makePlayerNameCell(data.name, rowColor)}
             {TableUtils.makeStandardDataCell(data['e_c'], rowColor)}
-            {TableUtils.makeStandardDataCell(data['e_l'], rowColor)}
-            {TableUtils.makeStandardDataCell(data['w_c'], rowColor)}
+            {TableUtils.makeStandardDataCell(data['e_l'], rowColor, '0210')}
+            {TableUtils.makeStandardDataCell(data['w_c'], rowColor, '0111')}
             {TableUtils.makeStandardDataCell(data['w_l'], rowColor)}
             {TableUtils.makeStandardDataCell(data['nw_c'], rowColor)}
-            {TableUtils.makeStandardDataCell(data['nw_l'], rowColor)}
-            {TableUtils.makeStandardDataCell(data['g_c'], rowColor)}
+            {TableUtils.makeStandardDataCell(data['nw_l'], rowColor, '0210')}
+            {TableUtils.makeStandardDataCell(data['g_c'], rowColor, '0111')}
             {TableUtils.makeStandardDataCell(data['g_l'], rowColor)}
             {TableUtils.makeStandardDataCell(data['ng_c'], rowColor)}
             {TableUtils.makeStandardDataCell(data['ng_l'], rowColor)}
