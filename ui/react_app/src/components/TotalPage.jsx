@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import * as ReactRouterDom from 'react-router-dom';
 
+import Goals from 'components/Goals';
 import MainStat from 'components/MainStat';
 import Streaks from 'components/Streaks';
 import Utils from 'utils/utils';
@@ -30,9 +31,12 @@ const TotalPage = (props) =>
         setSearchParams={setSearchParams}
       />;
     }
-    // console.assert(chosen === 'goals');
-    // return <Goals.Goals />;
-    return <h1>Goals</h1>;
+    console.assert(chosen === 'goals');
+    return <Goals.Goals
+      goals={apiData.goals}
+      searchParamsEntries={searchParamsEntries}
+      setSearchParams={setSearchParams}
+    />;
   };
 
   const [searchParams, setSearchParams] = ReactRouterDom.useSearchParams();

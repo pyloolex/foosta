@@ -157,7 +157,7 @@ const MainStat = (props) =>
       return (
         <div
           className={'border-solid-black ' +
-                     'border-0110 ' +
+                     'border-0210 ' +
                      'font-20 ' +
                      'grid-content-center '}
           style={{'backgroundColor': rowColor}}
@@ -170,7 +170,7 @@ const MainStat = (props) =>
     return (
       <div
         className={'border-solid-black ' +
-                   'border-0110 ' +
+                   'border-0210 ' +
                    'font-20 ' +
                    'grid-content-center '}
         style={{'backgroundColor': Utils.getEloColor(elo)}}
@@ -220,14 +220,15 @@ const MainStat = (props) =>
             </div>
             {TableUtils.makeStandardDataCell(data.events, rowColor)}
             {drawElo(data.elo, data.events, rowColor)}
-            {TableUtils.makeStandardDataCell(data.match, rowColor)}
+            {TableUtils.makeStandardDataCell(data.match, rowColor, '0111')}
             {TableUtils.makeStandardDataCell(data['W'], rowColor)}
             {TableUtils.makeStandardDataCell(data['D'], rowColor)}
             {TableUtils.makeStandardDataCell(data['L'], rowColor)}
             {TableUtils.makeStandardDataCell(
                 Utils.drawPercent(data['perc_W']), rowColor)}
-            {TableUtils.makeStandardDataCell(data['pts'], rowColor)}
-            {TableUtils.makeStandardDataCell(data.tournament, rowColor)}
+            {TableUtils.makeStandardDataCell(data['pts'], rowColor, '0210')}
+            {TableUtils.makeStandardDataCell(
+                data.tournament, rowColor, '0111')}
             {TableUtils.makeStandardDataCell(data['1'], rowColor)}
             {TableUtils.makeStandardDataCell(data['2'], rowColor)}
             {TableUtils.makeStandardDataCell(data['3'], rowColor)}
