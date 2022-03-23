@@ -1,0 +1,96 @@
+.cpi__container {
+    display: grid;
+    /* Total: 1360px */
+    grid-template-columns: 40px 250px 40px 40px 300px 50px 50px 50px 40px 300px 50px 50px 50px 50px;
+    grid-template-areas:
+        "empty empty common matches matches matches matches matches tournaments tournaments tournaments tournaments tournaments tournaments";
+
+    grid-auto-rows: 30px;
+
+    margin: 10px;
+}
+
+.cpi__header-empty {
+    grid-area: empty;
+}
+
+.cpi__header-common {
+    grid-area: common;
+}
+
+.cpi__header-matches {
+    grid-area: matches;
+}
+
+.cpi__header-tournaments {
+    grid-area: tournaments;
+}
+
+
+.cpi__match-chart {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.cpi__w-section {
+    background-color: #88FFAA;
+    flex: 12 12;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cpi__d-section {
+    background-color: #AAAAAA;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cpi__l-section {
+    background-color: #FFAAAA;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.cpi__tournament-chart {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.cpi__1-section {
+    background-color: #FFD700;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cpi__2-section {
+    background-color: #D3D3D3;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cpi__3-section {
+    background-color: #CD7F32;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cpi__4-section {
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

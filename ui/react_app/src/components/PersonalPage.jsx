@@ -1,18 +1,44 @@
+import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import * as ReactRouterDom from 'react-router-dom';
+
+import CrossPlayerInteractions from 'components/CrossPlayerInteractions';
 import EloGraph from './EloGraph';
 import PersonalEvents from './PersonalEvents';
 import PersonalSummary from './PersonalSummary';
-import Teammates from './Teammates';
+
+import Utils from 'utils/utils';
 
 import './personal_page.css';
 import '../index.css';
 
 
+const POSSIBLE_CHOSEN_VALUES = new Set(['teammates', 'rivals']);
+
+
 const PersonalPage = (props) =>
 {
-  // Pass `hero` as a prop here.
-  const {hero} = useParams();
+  const getChosenTable = () =>
+  {
+    let playerData;
+    if (chosen === 'teammates')
+    {
+      playerData = apiData.teammates;
+    }
+    else
+    {
+      console.assert(chosen === 'rivals');
+      playerData = apiData.rivals;
+    }
+
+    return <CrossPlayerInteractions.CrossPlayerInteractions
+      key={props.hero + chosen}
+      playerData={playerData}
+      resultSummary={apiData.result_summary}
+      searchParamsEntries={searchParamsEntries}
+      setSearchParams={setSearchParams}
+    />;
+  };
 
   const [apiData, setApiData] = useState({
     'elo': [],
@@ -24,9 +50,15 @@ const PersonalPage = (props) =>
   const [hovered, setHovered] = useState(-1);
   const [scrolled, setScrolled] = useState(-1);
 
+  const [searchParams, setSearchParams] = ReactRouterDom.useSearchParams();
+  const searchParamsEntries = Object.fromEntries(searchParams.entries());
+
+  const [chosen, setChosen] = useState(Utils.obtainInitialChosen(
+      searchParamsEntries, 'teammates', POSSIBLE_CHOSEN_VALUES));
+
   useEffect(() =>
   {
-    fetch(`/api/stats/${hero}`).then(
+    fetch(`/api/stats/${props.hero}`).then(
         (response) => response.json()).then(
         (responseJson) =>
         {
@@ -101,12 +133,12 @@ const PersonalPage = (props) =>
     );
     window.scrollTo(0, 0);
   },
-  [hero],
+  [props.hero],
   );
 
   return (
     <div>
-      <h1 className="personalpage__hero-name">{hero}</h1>
+      <h1 className="personalpage__hero-name">{props.hero}</h1>
       <PersonalSummary.PersonalSummary
         elo={apiData.elo}
         resultSummary={apiData.result_summary}
@@ -125,27 +157,33 @@ const PersonalPage = (props) =>
 
       <div className="statistics-select-holder">
         <label className="statistics-label">Statistics: </label>
-        <select className="statistics-select" value="Teammates"
-          onChange={()=>{}}>
+        <select
+          className="statistics-select"
+          value={chosen}
+          onChange={(event) => Utils.handleChosenChange(
+              setChosen, setSearchParams, event.target.value)}
+        >
           <option value="teammates">Teammates</option>
+          <option value="rivals">Rivals</option>
         </select>
       </div>
-      <Teammates.Teammates
-        key={hero}
-        teammates={apiData.teammates}
-        resultSummary={apiData.result_summary}
-      />
+      {getChosenTable()}
     </div>
   );
 };
 
 
+PersonalPage.propTypes = {
+  hero: PropTypes.string.isRequired,
+};
+
+
 const PersonalPageProxy = (props) =>
 {
-  const {hero} = useParams();
+  const {hero} = ReactRouterDom.useParams();
   // Passing key so that the component rerenders
   // after the hero is changed.
-  return <PersonalPage key={hero} {...props} />;
+  return <PersonalPage key={hero} hero={hero} {...props} />;
 };
 
 
