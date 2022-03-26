@@ -18,6 +18,9 @@ COPY . /my_workdir_foosta_ui
 # - more caching levels take place to optimize performance
 ENV NODE_ENV production
 
+# Eslint is needed only during development.
+ENV DISABLE_ESLINT_PLUGIN true
+
 RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/react_app", "install", "--production"]
 RUN ["yarn", "--cwd", "/my_workdir_foosta_ui/react_app", "build"]
 

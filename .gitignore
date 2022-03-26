@@ -1,6 +1,5 @@
 codeforces/
 .DS_Store
-node_modules
 password_backend.json
 password_db.json
 __pycache__

@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# You need to have nginx installed before
-# continuing!
-
 set -ex
 
+# Install nginx.
+sudo apt install -y nginx
 
 # Copy nginx config making it listen to port 80.
 sudo cp nginx_foosta_global.conf /etc/nginx/conf.d/

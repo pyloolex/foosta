@@ -6,11 +6,9 @@
 set -ex
 
 
-# Build everything in parallel.
-./deploy/build_db.sh | sed 's/^/DB: /' &
-./deploy/build_backend.sh | sed 's/^/Backend: /' &
-./deploy/build_ui.sh | sed 's/^/UI: /' &
-./deploy/build_server.sh | sed 's/^/Server: /' &
+./deploy/build_db.sh
+./deploy/build_backend.sh
+./deploy/build_ui.sh
+./deploy/build_server.sh
 
-wait
 echo "Build is successful!"
