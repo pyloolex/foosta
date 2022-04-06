@@ -14,8 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network "forwarded_port", guest: 9001, host: 8801
   #config.vm.network "private_network", type: "dhcp"
-  #config.vm.network "private_network", ip: "172.28.128.4"
-  config.vm.network "private_network", ip: "44.4.4.4"
+  config.vm.network "private_network", ip: "192.168.56.4"
 
 
   config.vm.provider "virtualbox" do |vb|

@@ -15,7 +15,7 @@ jobs:
 
         - name: Install-Python-requirements
           run: |
-              sudo apt-get install -y python3-pip python3-dev libpq-dev
+              sudo apt-get install -y python3-pip
               pip3 install -r backend/requirements.txt
               pip3 install -r backend/test-requirements.txt
 
@@ -64,11 +64,6 @@ jobs:
           run: |
               # Configure password.
               mkdir /tmp/foosta_shared
-              echo 'DB--'
-              ls db
-              echo 'Back--'
-              ls backend
-              echo '--'
               echo '"db-pass"' > db/shared/password_db.json
               echo '"db-pass"' > /tmp/foosta_shared/password_db.json
 
@@ -78,7 +73,7 @@ jobs:
 
         - name: Install-Python-requirements
           run: |
-              sudo apt-get install -y python3-pip python3-dev libpq-dev
+              sudo apt-get install -y python3-pip
               pip3 install -r db/test-requirements.txt
 
         - name: Run-tests
@@ -110,7 +105,7 @@ jobs:
 
         - name: Install-Python-requirements
           run: |
-              sudo apt-get install -y python3-pip python3-dev libpq-dev
+              sudo apt-get install -y python3-pip
               pip3 install -r backend/requirements.txt
               pip3 install -r backend/test-requirements.txt
 

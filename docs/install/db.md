@@ -57,7 +57,16 @@ Install `pip3`:
     sudo apt install python3-pip
 ```
 
-Also, the `python3-dev` package is required for compilation of Python extensions written in C or C++, like `psycopg2`:
+#### Option 1: installing psycopg2 from binary
+
+Just install test-requirements. There is `psycopg2-binary` specified there.
+```bash
+    pip3 install -r test-requirements.txt
+```
+
+#### Option2: Building psycopg2 from source
+
+The `python3-dev` package is required for compilation of Python extensions written in C or C++, like `psycopg2`:
 ```bash
     sudo apt install python3-dev
 ```
@@ -67,9 +76,9 @@ And again, in order to install `psycopg2`, you need to install `libpq-dev` first
     sudo apt install libpq-dev
 ```
 
-Install Python requirements to work with the DB locally.
+Install Psycopg2 (latest, not tested).
 ```bash
-    pip3 install -r db/test-requirements.txt
+    pip3 install psycopg2
 ```
 
 Now `manage_db.py` tool can be used.
