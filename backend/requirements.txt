@@ -1,5 +1,5 @@
 # Product requirements.
 Flask==2.1.0
 lollipop==1.1.7
-psycopg2==2.9.1
+psycopg2-binary==2.9.3
 uWSGI==2.0.20
