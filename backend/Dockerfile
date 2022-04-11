@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-RUN apt-get update -y && apt-get install -y python3-pip python3-dev libpq-dev
+RUN apt-get update -y && apt-get install -y python3-pip #python3-dev libpq-dev
 
 WORKDIR /my_workdir_foosta
 COPY . /my_workdir_foosta
