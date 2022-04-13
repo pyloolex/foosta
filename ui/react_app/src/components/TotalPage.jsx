@@ -104,8 +104,37 @@ const TotalPage = (props) =>
 };
 
 
+let proxyKey;
+
+const TotalPageProxy = (props) =>
+{
+  // This proxy is needed in order to handle search params reset.
+  // When a user clicks on "Stats" button or on a Foosta logo,
+  // he gets to the "/" location without search params.
+  //
+  // By default, the component doesn't get remounted. It leads
+  // to the search params and component properties being out of sync.
+  //
+  // In order to handle that, let's change component's key every time
+  // the search params get reset to empty dict.
+  //
+  // Notice that when a user changes sorting order or stat type, the
+  // component shouldn't be remounted. That's why the key should be
+  // preserved in that cases.
+  const [searchParams, _] = ReactRouterDom.useSearchParams();
+  const searchParamsEntries = Object.fromEntries(searchParams.entries());
+
+  if (Object.keys(searchParamsEntries).length === 0)
+  {
+    proxyKey = Math.random();
+  }
+
+  return <TotalPage key={proxyKey} {...props} />;
+};
+
+
 const exportDefault =
 {
-  TotalPage,
+  TotalPageProxy,
 };
 export default exportDefault;

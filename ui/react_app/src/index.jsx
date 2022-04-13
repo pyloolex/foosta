@@ -17,7 +17,7 @@ const MainRouter = () =>
     <Navbar.Navbar />
     <ReactRouterDom.Routes>
       <ReactRouterDom.Route
-        path="/" element={<TotalPage.TotalPage />}
+        path="/" element={<TotalPage.TotalPageProxy />}
       />
       <ReactRouterDom.Route
         path="/events/*" element={<Events.EventsRouter />}
