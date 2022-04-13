@@ -112,10 +112,9 @@ const Goals = (props) =>
         't_s': element['scored'],
         't_c': element['conceded'],
         't_d': element['scored'] - element['conceded'],
-        'a_s': (element['scored'] / element['match']).toFixed(1),
-        'a_c': (element['conceded'] / element['match']).toFixed(1),
-        'a_d': ((element['scored'] - element['conceded']) /
-                element['match']).toFixed(1),
+        'a_s': element['scored'] / element['match'],
+        'a_c': element['conceded'] / element['match'],
+        'a_d': (element['scored'] - element['conceded']) / element['match'],
       });
     });
 
@@ -142,9 +141,12 @@ const Goals = (props) =>
             {TableUtils.makeStandardDataCell(data['t_s'], rowColor, '0111')}
             {TableUtils.makeStandardDataCell(data['t_c'], rowColor)}
             {TableUtils.makeStandardDataCell(data['t_d'], rowColor, '0210')}
-            {TableUtils.makeStandardDataCell(data['a_s'], rowColor, '0111')}
-            {TableUtils.makeStandardDataCell(data['a_c'], rowColor)}
-            {TableUtils.makeStandardDataCell(data['a_d'], rowColor)}
+            {TableUtils.makeStandardDataCell(
+                data['a_s'].toFixed(1), rowColor, '0111')}
+            {TableUtils.makeStandardDataCell(
+                data['a_c'].toFixed(1), rowColor)}
+            {TableUtils.makeStandardDataCell(
+                data['a_d'].toFixed(1), rowColor)}
           </React.Fragment>,
       );
     }
