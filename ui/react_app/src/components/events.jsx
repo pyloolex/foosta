@@ -4,7 +4,6 @@ import {Routes, Route} from 'react-router-dom';
 import Matches from './matches';
 import Tournaments from './tournaments';
 import PostEvent from './post_event';
-import {Link} from 'react-router-dom';
 
 
 /* eslint-disable require-jsdoc */
@@ -69,10 +68,6 @@ class ListEvents extends React.Component
   {
     return (
       <div>
-        <Link to="/events/new">
-          create new match
-        </Link>
-
         {this.getEvents()}
       </div>
     );

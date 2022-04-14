@@ -18,7 +18,15 @@
         "react"
     ],
     "rules": {
-      "brace-style": ["error", "allman", { "allowSingleLine": true }]
+      "brace-style": ["error", "allman", { "allowSingleLine": true }],
+      "no-unused-vars": [
+        "error", {
+          "args": "NOTE(pyloolex): It's from Google's default settings.",
+          "args": "none",
+          "varsIgnorePattern": "NOTE(pyloolex): This is in order to allow variable '_' be unused.",
+          "varsIgnorePattern": "^_$"
+        }
+      ]
     },
     "settings": {
       "react": {
