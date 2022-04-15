@@ -1,0 +1,30 @@
+.legends__container {
+    background-color: #FFFFBB;
+    margin: 10px;
+}
+
+.legends__container-cpi {
+    /* Equals to the CrossPlayerInteractions table width. */
+    width: 1360px;
+}
+.legends__container-goals {
+    /* Equals to the Streaks table width. */
+    width: 930px;
+}
+.legends__container-main {
+    /* Equals to the Main table width. */
+    width: 940px;
+}
+.legends__container-streaks {
+    /* Equals to the Streaks table width. */
+    width: 1290px;
+}
+
+.legends__content {
+    margin: 10px;
+    line-height: 25px;
+}
+
+.legends__bold-header {
+    font-weight: bold;
+}

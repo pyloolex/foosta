@@ -1,5 +1,6 @@
 .mainstat__container {
     display: grid;
+    /* 940 px width in total. */
     grid-template-columns: 40px 250px 40px 80px 40px 40px 40px 40px 60px 50px 40px 40px 40px 40px 40px 60px;
     grid-template-areas:
         "empty empty common common matches matches matches matches matches matches tournaments tournaments tournaments tournaments tournaments tournaments"
