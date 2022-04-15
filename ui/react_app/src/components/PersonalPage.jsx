@@ -4,6 +4,7 @@ import * as ReactRouterDom from 'react-router-dom';
 
 import CrossPlayerInteractions from 'components/CrossPlayerInteractions';
 import EloGraph from './EloGraph';
+import Legends from './Legends';
 import PersonalEvents from './PersonalEvents';
 import PersonalSummary from './PersonalSummary';
 
@@ -168,6 +169,7 @@ const PersonalPage = (props) =>
         </select>
       </div>
       {getChosenTable()}
+      <Legends.CrossPlayerInteractions chosen={chosen} hero={props.hero} />
     </div>
   );
 };

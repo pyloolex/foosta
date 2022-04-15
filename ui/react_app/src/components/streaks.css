@@ -1,5 +1,6 @@
 .streaks__container {
     display: grid;
+    /* Total: 1290px */
     grid-template-columns: 40px 250px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
     grid-template-areas:
         "empty1 empty1 empty2 empty2 matches matches matches matches tournaments tournaments tournaments tournaments"

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import * as ReactRouterDom from 'react-router-dom';
 
 import Goals from 'components/Goals';
+import Legends from 'components/Legends';
 import MainStat from 'components/MainStat';
 import Streaks from 'components/Streaks';
 import Utils from 'utils/utils';
@@ -18,25 +19,35 @@ const TotalPage = (props) =>
   {
     if (chosen === 'main')
     {
-      return <MainStat.MainStat total={apiData.total}
-        searchParamsEntries={searchParamsEntries}
-        setSearchParams={setSearchParams}
-      />;
+      return <React.Fragment>
+        <MainStat.MainStat
+          total={apiData.total}
+          searchParamsEntries={searchParamsEntries}
+          setSearchParams={setSearchParams}
+        />
+        <Legends.Main />
+      </React.Fragment>;
     }
     if (chosen === 'streaks')
     {
-      return <Streaks.Streaks
-        streaks={apiData.streaks}
-        searchParamsEntries={searchParamsEntries}
-        setSearchParams={setSearchParams}
-      />;
+      return <React.Fragment>
+        <Streaks.Streaks
+          streaks={apiData.streaks}
+          searchParamsEntries={searchParamsEntries}
+          setSearchParams={setSearchParams}
+        />
+        <Legends.Streaks />
+      </React.Fragment>;
     }
     console.assert(chosen === 'goals');
-    return <Goals.Goals
-      goals={apiData.goals}
-      searchParamsEntries={searchParamsEntries}
-      setSearchParams={setSearchParams}
-    />;
+    return <React.Fragment>
+      <Goals.Goals
+        goals={apiData.goals}
+        searchParamsEntries={searchParamsEntries}
+        setSearchParams={setSearchParams}
+      />
+      <Legends.Goals />
+    </React.Fragment>;
   };
 
   const [searchParams, setSearchParams] = ReactRouterDom.useSearchParams();
