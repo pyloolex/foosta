@@ -1,0 +1,831 @@
+[
+  {
+    "date": "2022-01-10",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 22,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Sergey Biryukov",
+          "Shakhban"
+        ]
+      },
+      {
+        "result": 25,
+        "squad": [
+          "Ilzat",
+          "Zhanat"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-01-13",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 25,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Gleb"
+        ]
+      },
+      {
+        "result": 20,
+        "squad": [
+          "Generalov",
+          "Sasha Petrenko",
+          "Sergey Kalyamin",
+          "Artem"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-01-17",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 24,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Filonov",
+          "Narkaytis"
+        ]
+      },
+      {
+        "result": 13,
+        "squad": [
+          "Gleb",
+          "Sasha Petrenko",
+          "Aleksey",
+          "Mescheryakov",
+          "Nikolas"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-01-27",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 20,
+        "squad": [
+          "Ignatov",
+          "Ekub",
+          "Gleb",
+          "Sergey Kalyamin",
+          "Filonov",
+          "Sasha X"
+        ]
+      },
+      {
+        "result": 14,
+        "squad": [
+          "Shakhban",
+          "Sasha Petrenko",
+          "Aleksey",
+          "Narkaytis",
+          "Klenov",
+          "Nikolas"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-01-31",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 22,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Shakhban",
+          "Sergey Kalyamin",
+          "Sasha X"
+        ]
+      },
+      {
+        "result": 16,
+        "squad": [
+          "Gleb",
+          "Aleksey",
+          "Narkaytis",
+          "Nikolas",
+          "Vasya",
+          "Zhenya"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-02-03",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 21,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Sergey Kalyamin",
+          "Klenov"
+        ]
+      },
+      {
+        "result": 16,
+        "squad": [
+          "Lalov",
+          "Shakhban",
+          "Nikita",
+          "Aleksey"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-02-17",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 23,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Sergey Kalyamin",
+          "Mescheryakov",
+          "Sergey Biryukov"
+        ]
+      },
+      {
+        "result": 18,
+        "squad": [
+          "Gleb",
+          "Vasya",
+          "Sasha Petrenko",
+          "Filonov",
+          "Narkaytis"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-02-24",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 25,
+        "squad": [
+          "Ignatov",
+          "Ekub",
+          "Gleb",
+          "Sergey Kalyamin",
+          "Murashov"
+        ]
+      },
+      {
+        "result": 15,
+        "squad": [
+          "Ivanov",
+          "Klenov",
+          "Vasya",
+          "Sasha Petrenko",
+          "Narkaytis",
+          "Gusev"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-02-28",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 16,
+        "squad": [
+          "Ignatov",
+          "Ekub",
+          "Gleb",
+          "Klenov",
+          "Sergey Biryukov",
+          "Narkaytis"
+        ]
+      },
+      {
+        "result": 11,
+        "squad": [
+          "Ivanov",
+          "Shakhban",
+          "Sasha X"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-03",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 24,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Aleksey",
+          "Klenov",
+          "Sergey Biryukov",
+          "Sasha Petrenko"
+        ]
+      },
+      {
+        "result": 20,
+        "squad": [
+          "Shakhban",
+          "Sergey Kalyamin",
+          "Sasha X"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-07",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 20,
+        "squad": [
+          "Rustam",
+          "Farid"
+        ]
+      },
+      {
+        "result": 16,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Aleksey",
+          "Sasha Petrenko",
+          "Mescheryakov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-10",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 18,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Klenov",
+          "Sergey Biryukov"
+        ]
+      },
+      {
+        "result": 16,
+        "squad": [
+          "Shakhban",
+          "Aleksey",
+          "Sasha X"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-17",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 17,
+        "squad": [
+          "Ekub",
+          "Klenov",
+          "Sergey Biryukov",
+          "Mescheryakov",
+          "Pugovkin",
+          "Vasya"
+        ]
+      },
+      {
+        "result": 9,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Gleb",
+          "Sergey Kalyamin",
+          "Sasha Petrenko"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-21",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 25,
+        "squad": [
+          "Ekub",
+          "Gleb",
+          "Klenov",
+          "Sergey Biryukov",
+          "Pasha ot Vasi"
+        ]
+      },
+      {
+        "result": 19,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Sergey Kalyamin",
+          "Aleksey",
+          "Sasha Petrenko",
+          "Vasya"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-24",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 19,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Klenov",
+          "Sergey Biryukov",
+          "Vasya"
+        ]
+      },
+      {
+        "result": 14,
+        "squad": [
+          "Ignatov",
+          "Sergey Kalyamin",
+          "Aleksey",
+          "Ryzhkov",
+          "Zhanat"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-28",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 17,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Sergey Kalyamin",
+          "Ryzhkov",
+          "Viktor"
+        ]
+      },
+      {
+        "result": 15,
+        "squad": [
+          "Ekub",
+          "Gleb",
+          "Sergey Biryukov",
+          "Sasha Petrenko",
+          "Mescheryakov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-03-31",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 25,
+        "squad": [
+          "Gleb",
+          "Klenov",
+          "Sergey Biryukov",
+          "Pugovkin",
+          "Ryzhkov"
+        ]
+      },
+      {
+        "result": 15,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Shakhban",
+          "Lesha ot Vasi",
+          "Zemlyansky"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-04-04",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 17,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Klenov",
+          "Sergey Biryukov",
+          "Vasya"
+        ]
+      },
+      {
+        "result": 12,
+        "squad": [
+          "Ignatov",
+          "Gleb",
+          "Mescheryakov",
+          "Ryzhkov",
+          "Viktor"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-04-07",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 20,
+        "squad": [
+          "Sergey Biryukov",
+          "Sasha X",
+          "Lesha ot Vasi"
+        ]
+      },
+      {
+        "result": 18,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Mescheryakov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-04-11",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 12,
+        "squad": [
+          "Ivanov",
+          "Gleb",
+          "Sergey Biryukov",
+          "Sasha Petrenko",
+          "Ryzhkov"
+        ]
+      },
+      {
+        "result": 5,
+        "squad": [
+          "Ignatov",
+          "Ekub",
+          "Sergey Kalyamin",
+          "Klenov",
+          "Murashov",
+          "Lalov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-04-21",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 8,
+        "squad": [
+          "Ekub",
+          "Gleb",
+          "Klenov",
+          "Sergey Biryukov",
+          "Nikita",
+          "Gusev"
+        ]
+      },
+      {
+        "result": 8,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Sergey Kalyamin",
+          "Murashov",
+          "Lalov",
+          "Ryzhkov",
+          "Artem",
+          "Danil Kovynev"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-04-25",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 23,
+        "squad": [
+          "Gleb",
+          "Murashov",
+          "Sergey Biryukov",
+          "Nikita",
+          "Gusev",
+          "Danil Kovynev"
+        ]
+      },
+      {
+        "result": 15,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Ilzat",
+          "Klenov",
+          "Sasha Petrenko",
+          "Lalov",
+          "Artem"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-04-28",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 15,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Gleb",
+          "Sergey Biryukov",
+          "Gusev",
+          "Lalov",
+          "Pavel Tatarinov",
+          "Danil Pachev",
+          "Generalov"
+        ]
+      },
+      {
+        "result": 6,
+        "squad": [
+          "Sergey Kalyamin",
+          "Klenov",
+          "Murashov",
+          "Sasha Petrenko",
+          "Vasya",
+          "Ryzhkov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-05-02",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 25,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Gleb",
+          "Alekseev",
+          "Mescheryakov"
+        ]
+      },
+      {
+        "result": 8,
+        "squad": [
+          "Rustam",
+          "Artem"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-05-05",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 13,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Sergey Biryukov",
+          "Ryzhkov"
+        ]
+      },
+      {
+        "result": 10,
+        "squad": [
+          "Ignatov",
+          "Klenov",
+          "Murashov",
+          "Sasha Petrenko"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-05-16",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 20,
+        "squad": [
+          "Ignatov",
+          "Gleb",
+          "Sergey Kalyamin",
+          "Klenov",
+          "Sergey Biryukov",
+          "Lalov"
+        ]
+      },
+      {
+        "result": 15,
+        "squad": [
+          "Sasha Petrenko",
+          "Shakhban"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-05-19",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 8,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Gleb",
+          "Shakhban",
+          "Ryzhkov",
+          "Oleg",
+          "Askhat"
+        ]
+      },
+      {
+        "result": 8,
+        "squad": [
+          "Ekub",
+          "Klenov",
+          "Murashov",
+          "Sergey Biryukov",
+          "Sasha Petrenko",
+          "Mescheryakov",
+          "Lalov",
+          "Lesha ot Vasi"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-05-23",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 12,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Gleb",
+          "Klenov",
+          "Sergey Biryukov",
+          "Shakhban"
+        ]
+      },
+      {
+        "result": 11,
+        "squad": [
+          "Ignatov",
+          "Sasha Petrenko",
+          "Farid",
+          "Ryzhkov",
+          "Oleg"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-05-26",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 11,
+        "squad": [
+          "Ivanov",
+          "Ekub",
+          "Alekseev",
+          "Klenov",
+          "Sergey Biryukov",
+          "Mescheryakov",
+          "Zhanat",
+          "Oleg"
+        ]
+      },
+      {
+        "result": 11,
+        "squad": [
+          "Ignatov",
+          "Gleb",
+          "Sergey Kalyamin",
+          "Pasha ot Vasi",
+          "Farid",
+          "Shakhban",
+          "Ryzhkov"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2022-05-30",
+    "event_number": 0,
+    "event_type": "match",
+    "teams": [
+      {
+        "result": 16,
+        "squad": [
+          "Ekub",
+          "Gleb",
+          "Sergey Biryukov",
+          "Sasha Petrenko",
+          "Shakhban",
+          "Oleg",
+          "Aleksey"
+        ]
+      },
+      {
+        "result": 11,
+        "squad": [
+          "Ignatov",
+          "Ivanov",
+          "Klenov",
+          "Pugovkin",
+          "Vasya"
+        ]
+      }
+    ]
+  }
+]
