@@ -13,7 +13,11 @@ def process_page(page):
         lnk = elem.find_elements_by_css_selector(
             '.mf-product-thumbnail')[0].find_elements_by_css_selector('a')[0]
         number = lnk.get_attribute('href').rstrip('/').rpartition('/')[-1]
-        price = elem.find_elements_by_css_selector('bdi')[0].text[1:]
+        try:
+            price = elem.find_elements_by_css_selector('bdi')[0].text[1:]
+        except:
+            continue
+
         res.append({
             'number': number,
             'price': price,

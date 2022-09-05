@@ -1,23 +1,33 @@
 import json
+import os
+import pdb
 import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-N = 28  # 28
+N = 25  # 25
 
 def process_page(page):
-    data = page.find_elements_by_css_selector('.product-inner.clearfix')
-    res = []
+    #pdb.set_trace()
+    data = page.find_elements(By.CSS_SELECTOR, '.product')
+    res = {}
     for elem in data:
-        lnk = elem.find_elements_by_css_selector(
-            '.mf-product-thumbnail')[0].find_elements_by_css_selector('a')[0]
-        number = lnk.get_attribute('href').rstrip('/').rpartition('/')[-1]
-        price = elem.find_elements_by_css_selector('bdi')[0].text[1:]
-        res.append({
-            'number': number,
+        number = elem.find_element(By.CSS_SELECTOR, '.name').text.replace(' ', '')
+        price = elem.find_element(By.CSS_SELECTOR, 'div.price').text.rpartition(' ')[-1].replace(',', '.')
+
+        bad = False
+        for c in number:
+            if not c.isdigit():
+                bad = True
+                print(c)
+                break
+        if bad:
+            continue
+
+        res[number] = {
             'price': price,
-        })
+        }
 
     return res
 
@@ -40,10 +50,10 @@ def main():
 
     driver = webdriver.Chrome(options=options)
 
-    result = []
+    result = {}
     for page_number in range(1, N):
         address = (
-            'https://06express.nl/product-categorie/alle-06-nummers/page/' +
+            'https://www.easy06.nl/webshop/mooi-06-nummer/?page=' +
             str(page_number)
         )
         print(address)
@@ -52,9 +62,11 @@ def main():
         temp = process_page(driver)
         #time.sleep(1)
 
-        result.extend(temp)
+        result.update(temp)
 
-    fl = open('res.json', 'w')
+
+    fl_name = os.path.join(os.path.dirname(__file__), 'res.json')
+    fl = open(fl_name, 'w')
     json.dump(result, fl, indent=2)
 
 

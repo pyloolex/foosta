@@ -4,7 +4,8 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-N = 28  # 28
+
+N = 2  # 28
 
 def process_page(page):
     data = page.find_elements_by_css_selector('.product-inner.clearfix')
@@ -19,7 +20,7 @@ def process_page(page):
             'price': price,
         })
 
-    return res
+    return result
 
 
 def main():
@@ -47,15 +48,18 @@ def main():
             str(page_number)
         )
         print(address)
-        #import pdb;pdb.set_trace()
-        driver.get(address)
-        temp = process_page(driver)
-        #time.sleep(1)
+        import pdb;pdb.set_trace()
+        page = driver.get(address)
+        temp = process_page(page)
+        time.sleep(2)
 
         result.extend(temp)
 
+
+
+
     fl = open('res.json', 'w')
-    json.dump(result, fl, indent=2)
+    json.dump(fl, result, indent=2)
 
 
 if __name__ == '__main__':
