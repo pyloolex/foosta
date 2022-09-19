@@ -1,4 +1,6 @@
 import json
+import os
+import pdb
 import time
 
 from selenium import webdriver
@@ -7,21 +9,30 @@ from selenium.webdriver.common.by import By
 N = 28  # 28
 
 def process_page(page):
-    data = page.find_elements_by_css_selector('.product-inner.clearfix')
-    res = []
+    #pdb.set_trace()
+
+    data = page.find_elements(By.CSS_SELECTOR, '.mf-product-details')
+    res = {}
     for elem in data:
-        lnk = elem.find_elements_by_css_selector(
-            '.mf-product-thumbnail')[0].find_elements_by_css_selector('a')[0]
-        number = lnk.get_attribute('href').rstrip('/').rpartition('/')[-1]
+        number = elem.find_element(By.CSS_SELECTOR, 'a').text
         try:
-            price = elem.find_elements_by_css_selector('bdi')[0].text[1:]
+            price = elem.find_element(By.CSS_SELECTOR, 'bdi').text[1:]
         except:
             continue
 
-        res.append({
-            'number': number,
+        bad = False
+        for c in number:
+            if not c.isdigit():
+                bad = True
+                print('Bad symbol', c, number)
+                #pdb.set_trace()
+                break
+        if bad:
+            continue
+
+        res[number] = {
             'price': price,
-        })
+        }
 
     return res
 
@@ -44,7 +55,7 @@ def main():
 
     driver = webdriver.Chrome(options=options)
 
-    result = []
+    result = {}
     for page_number in range(1, N):
         address = (
             'https://06express.nl/product-categorie/alle-06-nummers/page/' +
@@ -56,9 +67,10 @@ def main():
         temp = process_page(driver)
         #time.sleep(1)
 
-        result.extend(temp)
+        result.update(temp)
 
-    fl = open('res.json', 'w')
+    fl_name = os.path.join(os.path.dirname(__file__), 'res.json')
+    fl = open(fl_name, 'w')
     json.dump(result, fl, indent=2)
 
 

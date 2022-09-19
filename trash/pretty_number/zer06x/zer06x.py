@@ -18,7 +18,7 @@ def process_page(page):
         for c in number:
             if not c.isdigit():
                 bad = True
-                print(c)
+                print('Bad symbol', c, number)
                 break
         if bad:
             continue

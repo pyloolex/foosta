@@ -13,14 +13,14 @@ def process_page(page):
     data = page.find_elements(By.CSS_SELECTOR, '.product')
     res = {}
     for elem in data:
-        number = elem.find_element(By.CSS_SELECTOR, '.name').text.replace(' ', '')
+        number = elem.find_element(By.CSS_SELECTOR, '.name').text.replace(' ', '').replace('-', '').replace('/', '')
         price = elem.find_element(By.CSS_SELECTOR, 'div.price').text.rpartition(' ')[-1].replace(',', '.')
 
         bad = False
         for c in number:
             if not c.isdigit():
                 bad = True
-                print(c)
+                print('Bad symbol', c)
                 break
         if bad:
             continue

@@ -25,7 +25,9 @@ def main():
 
     res = []
     for number, entry in data.items():
-        assert number.startswith('06'), number
+        #assert number.startswith('06'), number
+        if not number.startswith('06'):
+            print('Bad number', number)
 
         if number.count('0') < 5:
             continue
