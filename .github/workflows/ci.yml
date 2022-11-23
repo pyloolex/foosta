@@ -8,7 +8,7 @@ on:
 
 jobs:
     pep8:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
 
         steps:
         - uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
 
 
     eslint:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
 
         steps:
         - uses: actions/checkout@v2
@@ -50,7 +50,7 @@ jobs:
 
 
     db-tests:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
 
         steps:
         - uses: actions/checkout@v2
@@ -66,10 +66,12 @@ jobs:
               mkdir /tmp/foosta_shared
               echo '"db-pass"' > db/shared/password_db.json
               echo '"db-pass"' > /tmp/foosta_shared/password_db.json
-
+              
+              cp -r db/initdb_scripts /tmp
+              
               # Create role and tables.
-              sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
-              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=db-pass" -af db/initdb_scripts/02-create-tables.sql
+              sudo -u postgres psql -af /tmp/initdb_scripts/01-create-database.sql
+              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=db-pass" -af /tmp/initdb_scripts/02-create-tables.sql
 
         - name: Install-Python-requirements
           run: |
@@ -83,7 +85,7 @@ jobs:
 
 
     backend-tests:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
 
         steps:
         - uses: actions/checkout@v2
@@ -99,9 +101,11 @@ jobs:
               mkdir /tmp/foosta_shared
               echo '"db-pass"' > /tmp/foosta_shared/password_db.json
 
+              cp -r db/initdb_scripts /tmp
+              
               # Create role and tables.
-              sudo -u postgres psql -af db/initdb_scripts/01-create-database.sql
-              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=db-pass" -af db/initdb_scripts/02-create-tables.sql
+              sudo -u postgres psql -af /tmp/initdb_scripts/01-create-database.sql
+              sudo -u postgres psql "host=localhost port=5432 dbname=foostadb user=foostauser password=db-pass" -af /tmp/initdb_scripts/02-create-tables.sql
 
         - name: Install-Python-requirements
           run: |
@@ -116,7 +120,7 @@ jobs:
 
 
     deploy-tests:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
 
         steps:
         - uses: actions/checkout@v2
