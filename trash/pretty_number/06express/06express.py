@@ -6,7 +6,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-N = 28  # 28
+N = 27  # 28
 
 def process_page(page):
     #pdb.set_trace()
@@ -14,7 +14,8 @@ def process_page(page):
     data = page.find_elements(By.CSS_SELECTOR, '.mf-product-details')
     res = {}
     for elem in data:
-        number = elem.find_element(By.CSS_SELECTOR, 'a').text
+        number = elem.find_element(By.CSS_SELECTOR, 'a').get_attribute(
+            'innerHTML').replace(' ', '')
         try:
             price = elem.find_element(By.CSS_SELECTOR, 'bdi').text[1:]
         except:

@@ -6,7 +6,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-N = 25  # 25
+N = 9  # 44
 
 def process_page(page):
     #pdb.set_trace()
@@ -53,7 +53,7 @@ def main():
     result = {}
     for page_number in range(1, N):
         address = (
-            'https://www.easy06.nl/webshop/mooi-06-nummer/?page=' +
+            'https://www.easy06.nl/webshop/vanaf-2999/?page=' +
             str(page_number)
         )
         print(address)
